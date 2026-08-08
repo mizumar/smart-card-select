@@ -128,3 +128,18 @@
     @apply font-sans;
   }
 }
+
+/* ★ Google Fonts（Noto Sans JP）を全体に適用 */
+body {
+  font-family:
+    var(--font-noto-sans-jp),
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

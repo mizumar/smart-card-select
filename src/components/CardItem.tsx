@@ -25,11 +25,12 @@ export const CardItem: React.FC<CardItemProps> = ({ card }) => {
   const isCompared = selectedIds.includes(card.id);
   const isMaxReached = selectedIds.length >= 2 && !isCompared;
 
+  // CardItem.tsx のメインコンテナ周辺の調整例
   return (
-    <div className="w-full bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-all p-4 mb-4 relative overflow-hidden">
-      {/* ★ 施策1: アイキャッチバッジ */}
+    <div className="w-full bg-white rounded-[24px] border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_6px_24px_rgba(0,0,0,0.06)] transition-all p-4 mb-3.5 relative overflow-hidden">
+      {/* バッジ */}
       {card.badge && (
-        <div className="inline-flex items-center gap-1 bg-linear-to-r from-amber-500 to-orange-500 text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full mb-2.5 shadow-sm">
+        <div className="inline-flex items-center gap-1 bg-linear-to-r from-amber-500 to-orange-500 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full mb-2.5 shadow-sm shadow-orange-500/20">
           <Award className="w-3 h-3" />
           <span>{card.badge}</span>
         </div>
@@ -37,11 +38,11 @@ export const CardItem: React.FC<CardItemProps> = ({ card }) => {
 
       {/* タグ ＆ 比較ボタン */}
       <div className="flex items-center justify-between mb-3 gap-2">
-        <div className="flex flex-wrap gap-1 overflow-hidden">
+        <div className="flex flex-wrap gap-1.5 overflow-hidden">
           {card.tags.map((tag) => (
             <span
               key={tag}
-              className="text-[10px] font-semibold px-2.5 py-0.5 bg-gray-100 text-gray-600 rounded-full"
+              className="text-[10px] font-medium px-2 py-0.5 bg-slate-100/80 text-slate-600 rounded-md"
             >
               #{tag}
             </span>
@@ -55,8 +56,8 @@ export const CardItem: React.FC<CardItemProps> = ({ card }) => {
             isCompared
               ? "bg-blue-50 border-blue-500 text-blue-600 font-bold"
               : isMaxReached
-                ? "border-gray-200 bg-gray-50 text-gray-300 cursor-not-allowed"
-                : "border-gray-200 text-gray-600 hover:bg-gray-50 font-medium"
+                ? "border-slate-100 bg-slate-50 text-slate-300 cursor-not-allowed"
+                : "border-slate-200 text-slate-600 hover:bg-slate-50 font-medium"
           }`}
         >
           {isCompared ? (
@@ -68,30 +69,33 @@ export const CardItem: React.FC<CardItemProps> = ({ card }) => {
         </button>
       </div>
 
-      {/* 以下、元のコードと同様 */}
+      {/* 券面 ＆ タイトル ＆ スペック */}
       <div className="flex gap-3.5 items-center mb-3">
+        {/* 券面（影と枠線を少し柔らかく） */}
         <div
-          className={`w-24 h-15 rounded-xl bg-linear-to-br ${card.brandColor} p-2 flex flex-col justify-between shadow-sm shrink-0 border border-white/20`}
+          className={`w-24 h-15 rounded-xl bg-linear-to-br ${card.brandColor} p-2 flex flex-col justify-between shadow-md shadow-slate-200 shrink-0 border border-white/20`}
         >
-          <div className="w-3 h-2 bg-yellow-400/80 rounded-sm" />
-          <span className="text-[9px] font-extrabold text-white tracking-wider truncate drop-shadow-sm">
+          <div className="w-3.5 h-2.5 bg-amber-300/90 rounded-sm shadow-2xs" />
+          <span className="text-[9px] font-bold text-white tracking-wider truncate drop-shadow-sm">
             {card.name}
           </span>
         </div>
 
         <div className="flex-1 min-w-0">
-          <h3 className="font-bold text-base text-gray-900 truncate mb-1">
+          <h3 className="font-bold text-sm text-slate-900 truncate mb-1.5 tracking-tight">
             {card.name}
           </h3>
-          <div className="grid grid-cols-2 gap-1.5 bg-slate-50 p-2 rounded-xl text-center border border-slate-100">
+          <div className="grid grid-cols-2 gap-1 bg-slate-50/80 p-2 rounded-xl text-center border border-slate-100">
             <div>
-              <p className="text-[9px] text-gray-400 font-medium">年会費</p>
-              <p className="text-xs font-bold text-gray-800 truncate">
+              <p className="text-[9px] text-slate-400 font-medium">年会費</p>
+              <p className="text-xs font-bold text-slate-700 truncate">
                 {card.annualFee}
               </p>
             </div>
             <div>
-              <p className="text-[9px] text-gray-400 font-medium">最大還元率</p>
+              <p className="text-[9px] text-slate-400 font-medium">
+                最大還元率
+              </p>
               <p className="text-xs font-extrabold text-red-500">
                 {card.maxReturnRate}
               </p>
@@ -100,23 +104,27 @@ export const CardItem: React.FC<CardItemProps> = ({ card }) => {
         </div>
       </div>
 
-      <ul className="text-xs text-gray-700 space-y-1.5 mb-3.5 bg-amber-50/60 p-3 rounded-2xl border border-amber-100/60">
+      {/* 特徴リスト */}
+      <ul className="text-xs text-slate-700 space-y-1.5 mb-3.5 bg-amber-50/50 p-3 rounded-2xl border border-amber-100/50">
         {card.features.map((feature, idx) => (
           <li key={idx} className="flex items-start gap-1.5 leading-tight">
             <Sparkles className="w-3.5 h-3.5 text-amber-500 shrink-0 mt-0.5" />
-            <span className="font-medium text-[11px]">{feature}</span>
+            <span className="font-medium text-[11px] text-slate-700">
+              {feature}
+            </span>
           </li>
         ))}
       </ul>
 
+      {/* 発行ボタン（グラデーションとシャドウを少し上品に） */}
       <a
         href={card.affiliateUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="w-full bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs py-3 px-4 rounded-2xl flex items-center justify-center gap-2 shadow-md shadow-blue-500/10 active:scale-[0.98] transition-all mb-2"
+        className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 shadow-sm active:scale-[0.99] transition-all mb-2"
       >
         <span>発行公式サイトを見る</span>
-        <ExternalLink className="w-3.5 h-3.5" />
+        <ExternalLink className="w-3.5 h-3.5 opacity-80" />
       </a>
 
       <button
