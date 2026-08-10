@@ -151,21 +151,24 @@ export default function Home() {
 
       {/* フッター（PR表記・免責事項） */}
       <footer className="mt-12 pb-12 px-4 text-center text-slate-400 text-[10px] leading-relaxed max-w-md mx-auto border-t border-slate-200/60 pt-6">
-        {/* ★ 審査用コラムへの導線 */}
-        <div className="mb-6">
+        {/* ★ コラム ＆ プライバシーポリシーの導線 */}
+        <div className="flex items-center justify-center gap-3 mb-6">
           <Link
             href="/articles"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 bg-white border border-slate-200 px-4 py-2 rounded-full shadow-2xs hover:bg-slate-50 transition-colors"
+            className="text-xs font-bold text-slate-600 bg-white border border-slate-200 px-3.5 py-1.5 rounded-full hover:bg-slate-50 transition-colors"
           >
-            <span>📖 クレカ知識・お役立ちコラム（全5記事）</span>
+            📖 コラム一覧
+          </Link>
+          <Link
+            href="/privacy"
+            className="text-xs font-bold text-slate-600 bg-white border border-slate-200 px-3.5 py-1.5 rounded-full hover:bg-slate-50 transition-colors"
+          >
+            🔒 プライバシーポリシー
           </Link>
         </div>
         <p className="font-bold text-slate-500 mb-2">【PR/広告開示】</p>
         <p className="mb-3">
           本サイトはアフィリエイトプログラムによる収益を得ています。掲載されている提携先のオファーによる報酬を受ける場合がありますが、比較・診断結果に影響を与えることはありません。
-        </p>
-        <p className="text-slate-400">
-          ※掲載情報の正確性には万全を期しておりますが、キャンペーン内容や還元率等は時期により変動します。最新の正確な情報は各クレジットカード公式サイトにてご確認ください。
         </p>
         <p className="mt-4 text-[9px] text-slate-300">
           &copy; 2026 スマートクレカ比較 All Rights Reserved.
