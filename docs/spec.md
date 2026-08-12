@@ -1,6 +1,5 @@
 以下が NotebookLM 用の仕様書・構成ドキュメントです。
 
-```markdown
 # スマートクレカ比較（smart-card-select）仕様書・構成ファイル
 
 > **プロジェクト概要**  
@@ -10,6 +9,7 @@
 ---
 
 ## 1. ディレクトリ・ファイル構成
+
 ```
 
 smart-card-select/
@@ -57,27 +57,27 @@ smart-card-select/
 ├── AGENTS.md / CLAUDE.md # Next.js 16 向けエージェント向けルール
 └── README.md # 開発サーバー起動手順
 
-````
+```
 
 ### 主要ディレクトリの役割
 
-| パス | 役割 |
-|------|------|
-| `src/app` | ルーティング・ページ・グローバルレイアウト・SEO metadata |
-| `src/components` | UI コンポーネント（カード表示・診断・比較） |
-| `src/data` | カード・記事の静的マスターデータと型定義 |
-| `src/store` | Zustand による比較選択状態のグローバル管理 |
-| `src/lib` | 共通ユーティリティ |
-| `public` | 画像・SVG 等の静的ファイル |
+| パス             | 役割                                                     |
+| ---------------- | -------------------------------------------------------- |
+| `src/app`        | ルーティング・ページ・グローバルレイアウト・SEO metadata |
+| `src/components` | UI コンポーネント（カード表示・診断・比較）              |
+| `src/data`       | カード・記事の静的マスターデータと型定義                 |
+| `src/store`      | Zustand による比較選択状態のグローバル管理               |
+| `src/lib`        | 共通ユーティリティ                                       |
+| `public`         | 画像・SVG 等の静的ファイル                               |
 
 ### ルーティング一覧
 
-| URL | ファイル | 種別 | 説明 |
-|-----|----------|------|------|
-| `/` | `src/app/page.tsx` | Client Component | カード比較メイン画面 |
-| `/articles` | `src/app/articles/page.tsx` | Server Component | コラム一覧 |
-| `/articles/[id]` | `src/app/articles/[id]/page.tsx` | Server Component | コラム詳細 |
-| `/privacy` | `src/app/privacy/page.tsx` | Server Component | プライバシーポリシー |
+| URL              | ファイル                         | 種別             | 説明                 |
+| ---------------- | -------------------------------- | ---------------- | -------------------- |
+| `/`              | `src/app/page.tsx`               | Client Component | カード比較メイン画面 |
+| `/articles`      | `src/app/articles/page.tsx`      | Server Component | コラム一覧           |
+| `/articles/[id]` | `src/app/articles/[id]/page.tsx` | Server Component | コラム詳細           |
+| `/privacy`       | `src/app/privacy/page.tsx`       | Server Component | プライバシーポリシー |
 
 ---
 
@@ -89,27 +89,27 @@ smart-card-select/
 
 ```typescript
 export interface CreditCard {
-  id: string;                    // 一意識別子（例: "smbc-nl", "jcb-w"）
-  name: string;                  // カード名（表示用）
-  brandColor: string;            // Tailwind グラデーションクラス（例: "from-emerald-600 to-teal-800"）
-  badge?: string;                // 任意。バッジテキスト（例: "👑 コンビニ高還元 No.1"）
-  annualFee: string;             // 年会費表示文字列（例: "永年無料"）
-  annualFeeValue: number;        // ソート用数値（0=無料、大きいほど高額）
-  baseReturnRate: string;        // 基本還元率表示（例: "0.5%"）
-  maxReturnRate: string;         // 最大還元率表示（例: "7.0%"）
-  maxReturnRateValue: number;    // ソート用数値（例: 7.0）
-  popularityRank: number;        // 人気順ソート用（小さいほど人気、未設定時は99扱い）
-  features: string[];            // 特徴リスト（3項目程度）
-  affiliateUrl: string;          // アフィリエイト/公式申込リンクURL
-  tags: string[];                // フィルター・診断マッチング用タグ
+  id: string; // 一意識別子（例: "smbc-nl", "jcb-w"）
+  name: string; // カード名（表示用）
+  brandColor: string; // Tailwind グラデーションクラス（例: "from-emerald-600 to-teal-800"）
+  badge?: string; // 任意。バッジテキスト（例: "👑 コンビニ高還元 No.1"）
+  annualFee: string; // 年会費表示文字列（例: "永年無料"）
+  annualFeeValue: number; // ソート用数値（0=無料、大きいほど高額）
+  baseReturnRate: string; // 基本還元率表示（例: "0.5%"）
+  maxReturnRate: string; // 最大還元率表示（例: "7.0%"）
+  maxReturnRateValue: number; // ソート用数値（例: 7.0）
+  popularityRank: number; // 人気順ソート用（小さいほど人気、未設定時は99扱い）
+  features: string[]; // 特徴リスト（3項目程度）
+  affiliateUrl: string; // アフィリエイト/公式申込リンクURL
+  tags: string[]; // フィルター・診断マッチング用タグ
   details: {
-    insurance: string;           // 付帯保険の説明
-    electronicMoney: string[];   // 対応電子マネー一覧
-    pros: string[];              // メリット（データ保持、UI未表示）
-    cons: string[];              // デメリット（データ保持、UI未表示）
+    insurance: string; // 付帯保険の説明
+    electronicMoney: string[]; // 対応電子マネー一覧
+    pros: string[]; // メリット（データ保持、UI未表示）
+    cons: string[]; // デメリット（データ保持、UI未表示）
   };
 }
-````
+```
 
 **登録カード一覧（5件）**
 
