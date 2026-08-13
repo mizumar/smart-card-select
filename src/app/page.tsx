@@ -6,7 +6,7 @@ import { cards } from "@/data/cards";
 import { CardItem } from "@/components/CardItem";
 import { CompareBottomSheet } from "@/components/CompareBottomSheet";
 import { DiagnosisModal } from "@/components/DiagnosisModal";
-import { Sparkles, ArrowUpDown } from "lucide-react";
+import { Sparkles, ArrowUpDown, BookOpen } from "lucide-react";
 
 const FILTER_TAGS = [
   "すべて",
@@ -149,27 +149,45 @@ export default function Home() {
         )}
       </div>
 
-      {/* フッター（PR表記・免責事項） */}
+      {/* コラム導線バナー */}
+      <div className="max-w-md mx-auto px-4 mb-4">
+        <Link
+          href="/articles"
+          className="w-full bg-linear-to-r from-blue-500 via-blue-600 to-indigo-600 hover:opacity-95 text-white font-bold p-3.5 rounded-2xl shadow-md flex items-center justify-between active:scale-[0.98] transition-all"
+        >
+          <div className="flex items-center gap-2">
+            <div className="bg-white/20 p-1.5 rounded-xl">
+              <BookOpen className="w-5 h-5 text-blue-100" strokeWidth={2} />
+            </div>
+            <div className="text-left">
+              <p className="text-xs font-bold text-blue-100">クレカ徹底解説</p>
+              <p className="text-sm font-extrabold leading-tight">
+                お役立ちコラム・知識集を見る
+              </p>
+            </div>
+          </div>
+          <span className="text-xs bg-white text-blue-600 px-3 py-1.5 rounded-xl font-bold shadow-sm">
+            見る
+          </span>
+        </Link>
+      </div>
+
+      {/* --- フッターエリア：プライバシーポリシーの控えめ化 --- */}
       <footer className="mt-12 pb-12 px-4 text-center text-slate-400 text-[10px] leading-relaxed max-w-md mx-auto border-t border-slate-200/60 pt-6">
-        {/* ★ コラム ＆ プライバシーポリシーの導線 */}
-        <div className="flex items-center justify-center gap-3 mb-6">
-          <Link
-            href="/articles"
-            className="text-xs font-bold text-slate-600 bg-white border border-slate-200 px-3.5 py-1.5 rounded-full hover:bg-slate-50 transition-colors"
-          >
-            📖 コラム一覧
-          </Link>
-          <Link
-            href="/privacy"
-            className="text-xs font-bold text-slate-600 bg-white border border-slate-200 px-3.5 py-1.5 rounded-full hover:bg-slate-50 transition-colors"
-          >
-            🔒 プライバシーポリシー
-          </Link>
-        </div>
         <p className="font-bold text-slate-500 mb-2">【PR/広告開示】</p>
-        <p className="mb-3">
+        <p className="mb-4">
           本サイトはアフィリエイトプログラムによる収益を得ています。掲載されている提携先のオファーによる報酬を受ける場合がありますが、比較・診断結果に影響を与えることはありません。
         </p>
+
+        {/* 控えめな極小テキストリンク化 */}
+        <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-center gap-4 text-[10px] text-slate-400">
+          <Link
+            href="/privacy"
+            className="hover:text-slate-600 underline transition-colors"
+          >
+            プライバシーポリシー・免責事項
+          </Link>
+        </div>
         <p className="mt-4 text-[9px] text-slate-300">
           &copy; 2026 スマートクレカ比較 All Rights Reserved.
         </p>

@@ -9,6 +9,14 @@ export const metadata = {
 };
 
 export default function ArticlesPage() {
+  // 日付の降順（最新順）にソート
+  const sortedArticles = [...ARTICLES].sort((a, b) => {
+    return (
+      new Date(b.date.replace(/\./g, "-")).getTime() -
+      new Date(a.date.replace(/\./g, "-")).getTime()
+    );
+  });
+
   return (
     <div className="min-h-screen bg-slate-50/80 pb-16">
       {/* ヘッダー */}
@@ -35,9 +43,9 @@ export default function ArticlesPage() {
           </h1>
         </div>
 
-        {/* 記事リスト */}
+        {/* ソート済みの記事リスト */}
         <div className="space-y-3.5">
-          {ARTICLES.map((article) => (
+          {sortedArticles.map((article) => (
             <Link
               key={article.id}
               href={`/articles/${article.id}`}
