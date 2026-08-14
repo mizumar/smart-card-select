@@ -27,7 +27,7 @@ smart-card-select/
 │ │ ├── privacy/
 │ │ │ └── page.tsx # プライバシーポリシー・免責事項・PR表記ページ
 │ │ └── articles/
-│ │ ├── page.tsx # コラム一覧ページ
+│ │ ├── page.tsx # コラム一覧ページ（公開日最新順ソート）
 │ │ └── [id]/
 │ │ └── page.tsx # コラム詳細ページ（動的ルート）
 │ │
@@ -72,12 +72,12 @@ smart-card-select/
 
 ### ルーティング一覧
 
-| URL              | ファイル                         | 種別             | 説明                 |
-| ---------------- | -------------------------------- | ---------------- | -------------------- |
-| `/`              | `src/app/page.tsx`               | Client Component | カード比較メイン画面 |
-| `/articles`      | `src/app/articles/page.tsx`      | Server Component | コラム一覧           |
-| `/articles/[id]` | `src/app/articles/[id]/page.tsx` | Server Component | コラム詳細           |
-| `/privacy`       | `src/app/privacy/page.tsx`       | Server Component | プライバシーポリシー |
+| URL              | ファイル                         | 種別             | 説明                       |
+| ---------------- | -------------------------------- | ---------------- | -------------------------- |
+| `/`              | `src/app/page.tsx`               | Client Component | カード比較メイン画面       |
+| `/articles`      | `src/app/articles/page.tsx`      | Server Component | コラム一覧（公開日最新順） |
+| `/articles/[id]` | `src/app/articles/[id]/page.tsx` | Server Component | コラム詳細                 |
+| `/privacy`       | `src/app/privacy/page.tsx`       | Server Component | プライバシーポリシー       |
 
 ---
 
@@ -154,6 +154,20 @@ export interface Article {
 ```
 
 記事は5件（`how-to-choose`, `point-return-rate`, `annual-fee-free`, `touch-payment-guide`, `first-card-recommend`）。
+
+**一覧表示時のソート:**
+
+- `ARTICLES` を `date` 降順（最新順）にソートして表示
+- `date` は `"YYYY.MM.DD"` 形式。表示前に `.` を `-` に置換して `Date` に変換し比較
+
+```typescript
+const sortedArticles = [...ARTICLES].sort((a, b) => {
+  return (
+    new Date(b.date.replace(/\./g, "-")).getTime() -
+    new Date(a.date.replace(/\./g, "-")).getTime()
+  );
+});
+```
 
 ---
 
@@ -325,6 +339,8 @@ const QUESTIONS = [
 9. 各 CardItem が card プロパティを受け取り、券面・スペック・CTA を描画
    ↓
 10. 並行して以下をマウント
+    - コラム導線バナー（カード一覧直下、`/articles` への Link）
+    - フッター（PR表記 + 控えめなプライバシーリンク）
     - <CompareBottomSheet cards={cards} />  … selectedIds が空なら null（非表示）
     - <DiagnosisModal isOpen={false} ... />  … isOpen=false なら null
 ```
@@ -499,10 +515,32 @@ const QUESTIONS = [
 
 ※ 現状はプレースホルダー URL。本番では各アフィリエイトプログラムのトラッキング URL に差し替える想定。
 
+---
+
+### ⑤ コラム一覧ページ（`/articles`）の描画フロー
+
+```
+1. ブラウザが `/articles` にアクセス
+   ↓
+2. `src/app/articles/page.tsx`（Server Component）がレンダリング
+   ↓
+3. `@/data/articles` から `ARTICLES` を import
+   ↓
+4. sortedArticles 計算
+   - ARTICLES のコピーを date 降順（最新順）にソート
+   - date 文字列 "YYYY.MM.DD" → "." を "-" に置換して Date 比較
+   ↓
+5. sortedArticles.map(article => <Link href={`/articles/${article.id}`} ...>)
+   - カテゴリバッジ・公開日・タイトル・要約を表示
+   ↓
+6. ヘッダー「診断アプリへ戻る」リンク → `/` へ遷移
+```
+
 **PR表記との関係:**
 
-- フッターに「【PR/広告開示】」文言
+- フッターに「【PR/広告開示】」文言（コラム導線はフッター上部のバナーに集約）
 - `/privacy` ページにアフィリエイトプログラム参加の詳細記載
+- プライバシーポリシーへのリンクはフッター下部の控えめなテキストリンク
 - 比較・診断結果は広告主の影響を受けない旨を明記
 
 ---
@@ -544,17 +582,18 @@ const QUESTIONS = [
 
 ### 5.3 レイアウト・UI デザイン方針
 
-| 項目         | 仕様                                                                         |
-| ------------ | ---------------------------------------------------------------------------- |
-| レイアウト幅 | モバイルファースト、`max-w-md`（約448px）中央寄せ                            |
-| 背景色       | `bg-gray-50` / `bg-slate-50/80`                                              |
-| ヘッダー     | `sticky top-0 z-20`、半透明白 + `backdrop-blur-md`                           |
-| カード UI    | 白背景、`rounded-[24px]`、ソフトシャドウ                                     |
-| 券面表現     | Tailwind グラデーション（`brandColor`）+ 疑似チップ                          |
-| CTA ボタン   | ダーク（`bg-slate-900`）/ ブルー（比較・診断結果）                           |
-| 診断バナー   | オレンジ〜レッドグラデーション（`from-amber-500 via-orange-500 to-red-500`） |
-| アイコン     | `lucide-react`                                                               |
-| z-index      | ヘッダー z-20、比較固定バー z-40、モーダル z-50                              |
+| 項目             | 仕様                                                                                                                                                                       |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| レイアウト幅     | モバイルファースト、`max-w-md`（約448px）中央寄せ                                                                                                                          |
+| 背景色           | `bg-gray-50` / `bg-slate-50/80`                                                                                                                                            |
+| ヘッダー         | `sticky top-0 z-20`、半透明白 + `backdrop-blur-md`                                                                                                                         |
+| カード UI        | 白背景、`rounded-[24px]`、ソフトシャドウ                                                                                                                                   |
+| 券面表現         | Tailwind グラデーション（`brandColor`）+ 疑似チップ                                                                                                                        |
+| CTA ボタン       | ダーク（`bg-slate-900`）/ ブルー（比較・診断結果）                                                                                                                         |
+| 診断バナー       | オレンジ〜レッドグラデーション（`from-amber-500 via-orange-500 to-red-500`）                                                                                               |
+| コラム導線バナー | 青〜インディゴグラデーション（`from-blue-500 via-blue-600 to-indigo-600`）。診断バナーと同レイアウト（`p-3.5`・白背景 CTA バッジ）。`BookOpen` アイコン（`text-blue-100`） |
+| アイコン         | `lucide-react`                                                                                                                                                             |
+| z-index          | ヘッダー z-20、比較固定バー z-40、モーダル z-50                                                                                                                            |
 
 ---
 
@@ -597,13 +636,26 @@ export const metadata: Metadata = {
 
 ---
 
-### 5.6 フッター PR 表記・免責
+### 5.6 トップページ：コラム導線バナー・フッター PR 表記
+
+**コラム導線バナー（`page.tsx`、カード一覧とフッターの間）:**
+
+| 要素         | 内容                                                           |
+| ------------ | -------------------------------------------------------------- |
+| 配置         | `max-w-md mx-auto px-4 mb-4`（カード一覧直下、フッター手前）   |
+| 背景         | 青グラデーション（`from-blue-500 via-blue-600 to-indigo-600`） |
+| アイコン     | `BookOpen`（lucide-react）、`bg-white/20` 角丸ボックス内       |
+| サブコピー   | 「クレカ徹底解説」（`text-blue-100`）                          |
+| メインコピー | 「お役立ちコラム・知識集を見る」                               |
+| CTA          | 白背景バッジ「見る」（`text-blue-600`）→ `/articles`           |
+| 挙動         | `active:scale-[0.98]`、`hover:opacity-95`                      |
 
 **トップページフッター（`page.tsx`）:**
 
-- 導線リンク: 「📖 コラム一覧」（`/articles`）、「🔒 プライバシーポリシー」（`/privacy`）
-- **【PR/広告開示】** 見出し
+- **【PR/広告開示】** 見出し（フッター上部）
 - 本文: 「本サイトはアフィリエイトプログラムによる収益を得ています。掲載されている提携先のオファーによる報酬を受ける場合がありますが、比較・診断結果に影響を与えることはありません。」
+- プライバシー導線: フッター下部の控えめなテキストリンク「プライバシーポリシー・免責事項」（`text-[10px]`、`underline`、`/privacy`）
+- コラム導線: フッター内の pill ボタンは廃止（上部バナーに集約）
 - コピーライト: `© 2026 スマートクレカ比較 All Rights Reserved.`
 
 **プライバシーページ（`/privacy`）追加記載:**
@@ -657,10 +709,13 @@ layout.tsx (Server)
     │   └── useCompareStore (selectedIds, toggleCard, clearAll)
     ├── DiagnosisModal                                      │
     │   └── 内部 state (currentStep, selectedTags, isFinished)
+    ├── コラム導線バナー（Link → /articles）                │
+    ├── フッター（PR表記 + プライバシーリンク）             │
     ├── フィルター state (selectedFilter)                   │
     └── ソート state (sortOption)                           │
                                                             │
 articles/page.tsx (Server) ← ARTICLES from @/data/articles  │
+    └── sortedArticles（date 降順ソート）                   │
 articles/[id]/page.tsx (Server) ← ARTICLES                  │
 privacy/page.tsx (Server)                                   │
 ```
@@ -676,6 +731,8 @@ privacy/page.tsx (Server)                                   │
 5. **affiliateUrl:** 現状すべて `https://example.com/*` のプレースホルダー。
 6. **デプロイ先:** Vercel（privacy ページに URL 記載: `https://smart-card-select.vercel.app/`）。
 7. **Client / Server 境界:** メイン機能は `"use client"`。articles / privacy は Server Component。
+8. **コラム一覧ソート:** `articles/page.tsx` で `ARTICLES` を `date` 降順にソート。データ追加順に依存しない。
+9. **コラム導線:** トップページのフッター pill ボタンは廃止。カード一覧直下の青グラデーションバナーに集約。
 
 ```
 
