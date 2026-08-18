@@ -86,15 +86,28 @@ export const CardItem: React.FC<CardItemProps> = ({
 
       {/* 券面 ＆ タイトル ＆ スペック */}
       <div className="flex gap-3.5 items-center mb-3">
-        {/* 券面（影と枠線を少し柔らかく） */}
-        <div
-          className={`w-24 h-15 rounded-xl bg-linear-to-br ${card.brandColor} p-2 flex flex-col justify-between shadow-md shadow-slate-200 shrink-0 border border-white/20`}
-        >
-          <div className="w-3.5 h-2.5 bg-amber-300/90 rounded-sm shadow-2xs" />
-          <span className="text-[9px] font-bold text-white tracking-wider truncate drop-shadow-sm">
-            {card.name}
-          </span>
-        </div>
+        {/* カード券面表示エリア（画像またはモック） */}
+        {card.imageUrl ? (
+          // 1. 実画像（ASPバナー素材）：枠組み・比率固定を全撤去し、横幅144px（w-36）でドカンと表示
+          <div className="w-36 sm:w-40 shrink-0 flex items-center justify-center">
+            <img
+              src={card.imageUrl}
+              alt={card.name}
+              className="w-full h-auto object-contain drop-shadow-sm"
+              loading="lazy"
+            />
+          </div>
+        ) : (
+          // 2. 実画像がない場合：従来のモックデザイン
+          <div
+            className={`w-24 h-15 rounded-xl bg-linear-to-br ${card.brandColor} p-2 flex flex-col justify-between shadow-md shadow-slate-200 shrink-0 border border-white/20`}
+          >
+            <div className="w-3.5 h-2.5 bg-amber-300/90 rounded-sm shadow-2xs" />
+            <span className="text-[9px] font-bold text-white tracking-wider truncate drop-shadow-sm">
+              {card.name}
+            </span>
+          </div>
+        )}
 
         <div className="flex-1 min-w-0">
           <h3 className="font-bold text-sm text-slate-900 truncate mb-1.5 tracking-tight">

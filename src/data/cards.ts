@@ -3,6 +3,7 @@ export interface CreditCard {
   name: string;
   brandColor: string;
   badge?: string; // ★ 施策1: 「人気No.1」「コンビニ還元率1位」などのバッジテキスト
+  imageUrl?: string; // ★ 追加: ASPまたは公式サイトのカード画像URL（未指定時はモック表示）
   annualFee: string;
   annualFeeValue: number; // ★ 施策2: ソート用 (0: 実質無料/永年無料, 数字が大きいほど高額)
   baseReturnRate: string;
@@ -79,6 +80,8 @@ export const cards: CreditCard[] = [
     name: "楽天カード",
     brandColor: "from-red-600 to-rose-800",
     badge: "定番人気",
+    imageUrl:
+      "https://www24.a8.net/svt/bgt?aid=260809248468&wid=002&eno=01&mid=s00000027665001003000&mc=1", // ★ テスト
     annualFee: "永年無料",
     annualFeeValue: 0,
     baseReturnRate: "1.0%",

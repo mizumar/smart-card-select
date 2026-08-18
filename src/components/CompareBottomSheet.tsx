@@ -100,7 +100,7 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
 
             <div className="space-y-4">
               {/* カード2枚の上部デザイン ＆ 単独申込ボタン */}
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-3 items-stretch">
                 {[cardA, cardB].map((card) => {
                   const isBest = card.id === betterCardId;
                   return (
@@ -115,25 +115,41 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
                           <span>おすすめ！</span>
                         </div>
                       )}
-
-                      {/* 簡易カード券面風デザイン */}
-                      <div className="w-full aspect-[1.58/1] rounded-xl bg-linear-to-br from-slate-800 via-slate-900 to-slate-950 text-white p-3 shadow-sm flex flex-col justify-between mb-2 relative overflow-hidden">
-                        <div className="w-6 h-4 bg-yellow-300/80 rounded-xs mt-1" />
-                        <div>
-                          <p className="text-[10px] font-bold text-slate-300 truncate">
-                            {card.name}
-                          </p>
-                          <p className="text-[9px] font-mono text-slate-400 tracking-widest">
-                            **** 1234
-                          </p>
+                      {/* カード券面表示エリア（画像またはモック） */}
+                      {card.imageUrl ? (
+                        // 実画像：モックと同じ aspect で“高さ”を固定（ここだけ変更）
+                        <div className="w-36 sm:w-40 shrink-0 aspect-[1.58/1] flex items-center justify-center">
+                          <img
+                            src={card.imageUrl}
+                            alt={card.name}
+                            className="w-full h-full object-contain drop-shadow-sm"
+                            loading="lazy"
+                          />
                         </div>
-                      </div>
-
+                      ) : (
+                        <div
+                          className={`w-full aspect-[1.58/1] rounded-xl bg-linear-to-br ${card.brandColor} p-2 flex flex-col justify-between shadow-md shadow-slate-200 shrink-0 border border-white/20relative overflow-hidden`}
+                        >
+                          <div className="w-6 h-4 bg-yellow-300/80 rounded-sm mt-1" />
+                          <div>
+                            <p className="text-[10px] font-bold text-white truncate">
+                              {card.name}
+                            </p>
+                            <p className="text-[9px] font-mono text-white tracking-widest">
+                              **** 1234
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                      {/* 両方に入れる“最低限の空白” */}
+                      <div className="h-2 w-full" aria-hidden />{" "}
+                      {/* ここが“短い側にだけ増える空白” */}
+                      <div className="flex-1 w-full" />
                       <a
                         href={card.affiliateUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`w-full py-2 px-2 rounded-xl text-[11px] font-bold text-center transition-all active:scale-95 flex items-center justify-center gap-1 shadow-xs ${
+                        className={`w-full py-2 px-2 rounded-xl text-[11px] font-bold text-center transition-all active:scale-95 flex items-end justify-center gap-1 shadow-xs ${
                           isBest
                             ? "bg-amber-600 hover:bg-amber-700 text-white"
                             : "bg-blue-600 hover:bg-blue-700 text-white"
