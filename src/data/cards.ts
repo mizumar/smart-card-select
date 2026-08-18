@@ -2,9 +2,9 @@ export interface CreditCard {
   id: string;
   name: string;
   brandColor: string;
-  badge?: string;          // ★ 施策1: 「人気No.1」「コンビニ還元率1位」などのバッジテキスト
+  badge?: string; // ★ 施策1: 「人気No.1」「コンビニ還元率1位」などのバッジテキスト
   annualFee: string;
-  annualFeeValue: number;  // ★ 施策2: ソート用 (0: 実質無料/永年無料, 数字が大きいほど高額)
+  annualFeeValue: number; // ★ 施策2: ソート用 (0: 実質無料/永年無料, 数字が大きいほど高額)
   baseReturnRate: string;
   maxReturnRate: string;
   maxReturnRateValue: number; // ★ 施策2: ソート用 (例: 7.0)
@@ -35,7 +35,7 @@ export const cards: CreditCard[] = [
     features: [
       "対象のコンビニ・飲食店で最大7%還元",
       "ナンバーレスでセキュリティも安心",
-      "最短10秒で即時発行"
+      "最短10秒で即時発行",
     ],
     affiliateUrl: "https://example.com/smbc",
     tags: ["年会費無料", "コンビニ高還元", "初心者"],
@@ -43,8 +43,8 @@ export const cards: CreditCard[] = [
       insurance: "最高2,000万円の海外旅行傷害保険",
       electronicMoney: ["Visaのタッチ決済", "Mastercard®タッチ決済", "iD"],
       pros: ["対象店舗でのポイント還元率が抜群", "年会費が完全無料"],
-      cons: ["基本還元率は0.5%と標準的"]
-    }
+      cons: ["基本還元率は0.5%と標準的"],
+    },
   },
   {
     id: "jcb-w",
@@ -60,16 +60,19 @@ export const cards: CreditCard[] = [
     features: [
       "いつでもポイント2倍（基本還元率1.0%）",
       "Amazonやスタバでさらに還元率UP",
-      "39歳以下の入会でWeb限定発行"
+      "39歳以下の入会でWeb限定発行",
     ],
     affiliateUrl: "https://example.com/jcb",
     tags: ["年会費無料", "初心者", "Amazon・スタバ"],
     details: {
       insurance: "最高2,000万円の海外旅行傷害保険",
       electronicMoney: ["QUICPay", "JCB Contactless"],
-      pros: ["基本還元率が1%と高くメインカードに最適", "Amazon利用時の還元率が高い"],
-      cons: ["40歳以上は新規申し込み不可"]
-    }
+      pros: [
+        "基本還元率が1%と高くメインカードに最適",
+        "Amazon利用時の還元率が高い",
+      ],
+      cons: ["40歳以上は新規申し込み不可"],
+    },
   },
   {
     id: "rakuten",
@@ -85,16 +88,16 @@ export const cards: CreditCard[] = [
     features: [
       "楽天市場でいつでもポイント3倍以上",
       "新規入会＆利用でポイントプレゼント",
-      "街の加盟店でもポイントがザクザク貯まる"
+      "街の加盟店でもポイントがザクザク貯まる",
     ],
-    affiliateUrl: "https://example.com/rakuten",
+    affiliateUrl: "https://www.rakuten.co.jp/",
     tags: ["年会費無料", "初心者", "ポイント還元"],
     details: {
       insurance: "最高2,000万円の海外旅行傷害保険（利用付帯）",
       electronicMoney: ["楽天Edy", "楽天ペイ", "Visaのタッチ決済"],
       pros: ["楽天経済圏での還元率が圧倒的", "ポイントの使い道が豊富"],
-      cons: ["期間限定ポイントは有効期限が短い"]
-    }
+      cons: ["期間限定ポイントは有効期限が短い"],
+    },
   },
   {
     id: "paypay",
@@ -109,16 +112,19 @@ export const cards: CreditCard[] = [
     features: [
       "PayPayステップで還元率アップ",
       "Yahoo!ショッピングで最大5%還元",
-      "縦型デザインでスタイリッシュ"
+      "縦型デザインでスタイリッシュ",
     ],
-    affiliateUrl: "https://example.com/paypay",
+    affiliateUrl: "https://paypay.ne.jp/",
     tags: ["年会費無料", "PayPayユーザー"],
     details: {
       insurance: "なし（プラチナデノミネーション等で対応）",
       electronicMoney: ["PayPay", "タッチ決済"],
-      pros: ["PayPayに直接チャージできる唯一のカード", "Yahoo!ショッピングで得"],
-      cons: ["旅行保険が付帯していない"]
-    }
+      pros: [
+        "PayPayに直接チャージできる唯一のカード",
+        "Yahoo!ショッピングで得",
+      ],
+      cons: ["旅行保険が付帯していない"],
+    },
   },
   {
     id: "epos",
@@ -134,15 +140,18 @@ export const cards: CreditCard[] = [
     features: [
       "マルイのセールで10%OFF",
       "全国10,000店舗以上の優待特典",
-      "海外旅行傷害保険が自動・利用付帯で手厚い"
+      "海外旅行傷害保険が自動・利用付帯で手厚い",
     ],
     affiliateUrl: "https://example.com/epos",
     tags: ["年会費無料", "優待特典", "海外旅行保険"],
     details: {
       insurance: "最高3,000万円の海外旅行傷害保険",
       electronicMoney: ["Visaのタッチ決済", "EPOS Pay", "Apple Pay"],
-      pros: ["飲食店やカラオケ等の割引優待が豊富", "インビテーションでゴールド永年無料"],
-      cons: ["基本還元率は0.5%"]
-    }
-  }
+      pros: [
+        "飲食店やカラオケ等の割引優待が豊富",
+        "インビテーションでゴールド永年無料",
+      ],
+      cons: ["基本還元率は0.5%"],
+    },
+  },
 ];
