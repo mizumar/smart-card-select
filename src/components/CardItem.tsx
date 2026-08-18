@@ -13,12 +13,19 @@ import {
   Sparkles,
   Award,
 } from "lucide-react";
+import { CompareTooltip } from "./CompareTooltip";
 
 interface CardItemProps {
   card: CreditCard;
+  showTooltip?: boolean;
+  onCompareClick?: () => void;
 }
 
-export const CardItem: React.FC<CardItemProps> = ({ card }) => {
+export const CardItem: React.FC<CardItemProps> = ({
+  card,
+  showTooltip = false,
+  onCompareClick,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const { selectedIds, toggleCard } = useCompareStore();
 
@@ -49,24 +56,32 @@ export const CardItem: React.FC<CardItemProps> = ({ card }) => {
           ))}
         </div>
 
-        <button
-          onClick={() => toggleCard(card.id)}
-          disabled={isMaxReached}
-          className={`flex items-center gap-1 text-[11px] px-3 py-1 rounded-full border transition-all shrink-0 ${
-            isCompared
-              ? "bg-blue-50 border-blue-500 text-blue-600 font-bold"
-              : isMaxReached
-                ? "border-slate-100 bg-slate-50 text-slate-300 cursor-not-allowed"
-                : "border-slate-200 text-slate-600 hover:bg-slate-50 font-medium"
-          }`}
-        >
-          {isCompared ? (
-            <Check className="w-3 h-3" />
-          ) : (
-            <Plus className="w-3 h-3" />
-          )}
-          {isCompared ? "比較中" : isMaxReached ? "上限(2枚)" : "比較"}
-        </button>
+        {/* 比較ボタン等のエリアの相対位置（relative）内に配置 */}
+        <div className="relative">
+          {/* ツールチップ呼び出し */}
+          <CompareTooltip isVisible={showTooltip} />
+          <button
+            onClick={() => {
+              toggleCard(card.id);
+              if (onCompareClick) onCompareClick(); // ← 比較ボタン押下時に明示的に呼び出して消去
+            }}
+            disabled={isMaxReached}
+            className={`flex items-center gap-1 text-[11px] px-3 py-1 rounded-full border transition-all shrink-0 ${
+              isCompared
+                ? "bg-blue-50 border-blue-500 text-blue-600 font-bold"
+                : isMaxReached
+                  ? "border-slate-100 bg-slate-50 text-slate-300 cursor-not-allowed"
+                  : "border-slate-200 text-slate-600 hover:bg-slate-50 font-medium"
+            }`}
+          >
+            {isCompared ? (
+              <Check className="w-3 h-3" />
+            ) : (
+              <Plus className="w-3 h-3" />
+            )}
+            {isCompared ? "比較中" : isMaxReached ? "上限(2枚)" : "比較"}
+          </button>
+        </div>
       </div>
 
       {/* 券面 ＆ タイトル ＆ スペック */}

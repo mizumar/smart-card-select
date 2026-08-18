@@ -34,6 +34,7 @@ smart-card-select/
 │ ├── components/ # React コンポーネント
 │ │ ├── CardItem.tsx # カード1枚の表示・比較トグル・詳細展開・CTA
 │ │ ├── CompareBottomSheet.tsx # 比較選択時の固定バー＋比較モーダル
+│ │ ├── CompareTooltip.tsx # 比較ボタン誘導ツールチップ
 │ │ ├── DiagnosisModal.tsx # 10秒診断モーダル（質問→おすすめカード表示）
 │ │ └── ui/
 │ │ └── button.tsx # shadcn/ui ベースの Button コンポーネント（現状メイン画面では未使用）
@@ -256,11 +257,14 @@ const QUESTIONS = [
 
 ### 3.2 ローカル状態（`src/app/page.tsx`）
 
-| 状態名            | 型           | 初期値      | 保持目的                               |
-| ----------------- | ------------ | ----------- | -------------------------------------- |
-| `selectedFilter`  | `string`     | `"すべて"`  | フィルターチップで選択中のタグ         |
-| `sortOption`      | `SortOption` | `"popular"` | ソート基準（人気順 / 還元率 / 年会費） |
-| `isDiagnosisOpen` | `boolean`    | `false`     | 10秒診断モーダルの開閉                 |
+| 状態名            | 型           | 初期値      | 保持目的                                       |
+| ----------------- | ------------ | ----------- | ---------------------------------------------- |
+| `selectedFilter`  | `string`     | `"すべて"`  | フィルターチップで選択中のタグ                 |
+| `sortOption`      | `SortOption` | `"popular"` | ソート基準（人気順 / 還元率 / 年会費）         |
+| `isDiagnosisOpen` | `boolean`    | `false`     | 10秒診断モーダルの開閉                         |
+| `showTooltip`     | `boolean`    | `false`     | 比較ボタン誘導ツールチップの表示・非表示フラグ |
+
+※ セッション状態 `sessionStorage.getItem("compare_tooltip_dismissed")` を参照し、初回訪問時かつ未非表示の場合のみ `true` に設定。
 
 ---
 
@@ -677,6 +681,20 @@ export const metadata: Metadata = {
 3. アクセス解析・Cookie — 匿名データ収集の可能性
 4. 運営者情報 — サイトURL: `https://smart-card-select.vercel.app/`
 5. 制定日: 2026年8月11日
+
+---
+
+### 5.7 比較ボタン誘導ツールチップ（CompareTooltip）
+
+- **コンポーネント:** `src/components/CompareTooltip.tsx`
+- **デザイン・レイアウト:**
+  - 一覧の最上部カード（1件目）の比較ボタン直前（左隣）に配置。
+  - 黒地（`bg-slate-900`）、白文字（10px）、角丸四角形（`rounded-md`）のタイトなピル型デザイン。
+  - 右側に比較ボタンを指す矢印アイコン/三角形を配置。
+  - ボタン視認性確保のため、アニメーション（bounce/fade等）は使用しない軽量静的表示。
+- **非表示・永続化トリガー:**
+  - ユーザーが比較ボタン（`CardItem` 内の比較アクション）をタップした際、または画面を一定距離（50px）スクロールしたタイミングで即座に非表示化。
+  - 非表示実行時に `sessionStorage` に `compare_tooltip_dismissed = "true"` を保存し、コラムページ等からの画面遷移復帰時にも再表示されないよう制御。
 
 ---
 

@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { cards } from "@/data/cards";
 import { CardItem } from "@/components/CardItem";
 import { CompareBottomSheet } from "@/components/CompareBottomSheet";
 import { DiagnosisModal } from "@/components/DiagnosisModal";
 import { Sparkles, ArrowUpDown, BookOpen } from "lucide-react";
+import { useCompareStore } from "@/store/useCompareStore";
 
 const FILTER_TAGS = [
   "すべて",
@@ -23,6 +24,10 @@ export default function Home() {
   const [selectedFilter, setSelectedFilter] = useState("すべて");
   const [sortOption, setSortOption] = useState<SortOption>("popular");
   const [isDiagnosisOpen, setIsDiagnosisOpen] = useState(false);
+
+  // ツールチップ関連
+  const { selectedIds } = useCompareStore();
+  const [showTooltip, setShowTooltip] = useState(false);
 
   // 1. フィルター処理
   const filteredCards = cards.filter((card) => {
@@ -43,6 +48,29 @@ export default function Home() {
     // 人気順 (昇順: a - b ※ 1位, 2位, 3位の順)
     return (a.popularityRank || 99) - (b.popularityRank || 99);
   });
+
+  // ツールチップを消去してストレージに保存する関数
+  const dismissTooltip = () => {
+    setShowTooltip(false);
+    sessionStorage.setItem("compare_tooltip_dismissed", "true");
+  };
+
+  useEffect(() => {
+    const isDismissed = sessionStorage.getItem("compare_tooltip_dismissed");
+    if (isDismissed || selectedIds.length > 0) return;
+
+    setShowTooltip(true);
+
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        dismissTooltip();
+        window.removeEventListener("scroll", handleScroll);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [selectedIds]);
 
   return (
     <main className="min-h-screen bg-gray-50 pb-28">
@@ -137,10 +165,18 @@ export default function Home() {
           </div>
         </div>
 
-        {/* カード一覧 */}
-        {sortedCards.map((card) => (
-          <CardItem key={card.id} card={card} />
-        ))}
+        {/* カード一覧の描画部分 */}
+        <div className="space-y-4">
+          {sortedCards.map((card, index) => (
+            <CardItem
+              key={card.id}
+              card={card}
+              // 1番目のカードだけにツールチップを表示制御を渡す
+              showTooltip={index === 0 && showTooltip}
+              onCompareClick={dismissTooltip}
+            />
+          ))}
+        </div>
 
         {sortedCards.length === 0 && (
           <p className="text-center text-xs text-gray-400 py-10">
