@@ -73,7 +73,7 @@ export default function Home() {
   }, [selectedIds]);
 
   return (
-    <main className="min-h-screen bg-gray-50 pb-28">
+    <main className="flex-1 min-h-screen bg-gray-50 pb-28">
       {/* 改善版ヘッダー（アイコン画像化） */}
       <header className="sticky top-0 z-20 bg-white/70 backdrop-blur-md border-b border-slate-100/80 px-4 py-2.5 transition-all">
         <div className="max-w-md mx-auto flex items-center justify-between">
@@ -101,7 +101,6 @@ export default function Home() {
           </div>
         </div>
       </header>
-
       <div className="max-w-md mx-auto p-4">
         {/* 10秒診断バナーボタン */}
         <div className="mb-4">
@@ -184,7 +183,6 @@ export default function Home() {
           </p>
         )}
       </div>
-
       {/* コラム導線バナー */}
       <div className="max-w-md mx-auto px-4 mb-4">
         <Link
@@ -207,31 +205,48 @@ export default function Home() {
           </span>
         </Link>
       </div>
+      <footer className="w-full max-w-4xl mx-auto px-4 py-8">
+        {/* 
+        2. 紺色ベースのカードデザイン
+        - bg-slate-900 (上品なダークネイビー)
+        - rounded-2xl (カードやコラムと揃えた角丸)
+        - border border-slate-800 / shadow-md (引き締まった見た目)
+      */}
+        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-md text-center text-xs text-slate-400 space-y-4">
+          {/* PR表記バッジ */}
+          <div>
+            <span className="inline-block bg-slate-800 text-slate-300 font-medium px-3 py-1 rounded-full text-[11px] border border-slate-700/60">
+              【PR /
+              広告】当サイトはアフィリエイトプログラムにより収益を得ています
+            </span>
+          </div>
 
-      {/* --- フッターエリア：プライバシーポリシーの控えめ化 --- */}
-      <footer className="mt-12 pb-12 px-4 text-center text-slate-400 text-[10px] leading-relaxed max-w-md mx-auto border-t border-slate-200/60 pt-6">
-        <p className="font-bold text-slate-500 mb-2">【PR/広告開示】</p>
-        <p className="mb-4">
-          本サイトはアフィリエイトプログラムによる収益を得ています。掲載されている提携先のオファーによる報酬を受ける場合がありますが、比較・診断結果に影響を与えることはありません。
-        </p>
+          {/* 免責事項 */}
+          <p className="leading-relaxed max-w-2xl mx-auto text-slate-400">
+            掲載情報には細心の注意を払っておりますが、金利・手数料・キャンペーン情報等は変更される場合があります。
+            最新の正確な情報は各クレジットカード会社の公式サイトにてご確認ください。
+          </p>
 
-        {/* 控えめな極小テキストリンク化 */}
-        <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-center gap-4 text-[10px] text-slate-400">
-          <Link
-            href="/privacy"
-            className="hover:text-slate-600 underline transition-colors"
-          >
-            プライバシーポリシー・免責事項
-          </Link>
+          {/* ポリシー・問い合わせリンク */}
+          <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-center gap-4 text-[10px] text-slate-400">
+            <Link
+              href="/privacy"
+              className="hover:text-slate-600 underline transition-colors"
+            >
+              プライバシーポリシー・免責事項・問い合わせ
+            </Link>
+          </div>
+
+          {/* コピーライト */}
+          <p className="text-slate-500 pt-1 text-[11px]">
+            &copy; {new Date().getFullYear()} Smart Card Select. All rights
+            reserved.
+          </p>
         </div>
-        <p className="mt-4 text-[9px] text-slate-300">
-          &copy; 2026 スマートクレカ比較 All Rights Reserved.
-        </p>
       </footer>
 
       {/* 2枚比較ボトムシート */}
       <CompareBottomSheet cards={cards} />
-
       {/* 簡易診断モーダル */}
       <DiagnosisModal
         cards={cards}
