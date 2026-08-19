@@ -260,6 +260,9 @@ export const cards: CreditCard[] = [
     },
   },
   {
+    //
+    //楽天カード_内容確認済み
+    //
     id: "rakuten-premium-card",
     name: "楽天プレミアムカード",
 
