@@ -642,8 +642,8 @@ export const metadata: Metadata = {
   description:
     "ライフスタイルに合わせて最適なクレジットカードを瞬時に診断・比較。",
   robots: {
-    index: false, // 検索エンジンにインデックスさせない（noindex）
-    follow: false, // リンクをたどらせない（nofollow）
+    index: true, // 検索エンジンにインデックスさせる
+    follow: true, // リンクをたどらせる
   },
 };
 ```

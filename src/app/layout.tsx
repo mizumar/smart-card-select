@@ -14,8 +14,8 @@ export const metadata: Metadata = {
   description:
     "ライフスタイルに合わせて最適なクレジットカードを瞬時に診断・比較。",
   robots: {
-    index: false,
-    follow: false,
+    index: true,
+    follow: true,
   },
 };
 
