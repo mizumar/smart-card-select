@@ -89,33 +89,6 @@ export const cards: CreditCard[] = [
     },
   },
   {
-    id: "rakuten",
-    name: "楽天カード",
-    brandColor: "from-red-600 to-rose-800",
-
-    affiliateUrl: "https://www.rakuten.co.jp/",
-
-    badge: "定番人気",
-    annualFee: "永年無料",
-    annualFeeValue: 0,
-    baseReturnRate: "1.0%",
-    maxReturnRate: "3.0%",
-    maxReturnRateValue: 3.0,
-    popularityRank: 3,
-    features: [
-      "楽天市場でいつでもポイント3倍以上",
-      "新規入会＆利用でポイントプレゼント",
-      "街の加盟店でもポイントがザクザク貯まる",
-    ],
-    tags: ["年会費無料", "初心者", "ポイント還元"],
-    details: {
-      insurance: "最高2,000万円の海外旅行傷害保険（利用付帯）",
-      electronicMoney: ["楽天Edy", "楽天ペイ", "Visaのタッチ決済"],
-      pros: ["楽天経済圏での還元率が圧倒的", "ポイントの使い道が豊富"],
-      cons: ["期間限定ポイントは有効期限が短い"],
-    },
-  },
-  {
     id: "paypay",
     name: "PayPayカード",
     brandColor: "from-red-500 to-amber-600",
@@ -144,36 +117,6 @@ export const cards: CreditCard[] = [
       cons: ["旅行保険が付帯していない"],
     },
   },
-  {
-    id: "epos",
-    name: "エポスカード",
-    brandColor: "from-rose-700 to-pink-900",
-
-    affiliateUrl: "https://example.com/epos",
-
-    badge: "優待店舗 1万店以上",
-    annualFee: "永年無料",
-    annualFeeValue: 0,
-    baseReturnRate: "0.5%",
-    maxReturnRate: "2.5%",
-    maxReturnRateValue: 2.5,
-    popularityRank: 5,
-    features: [
-      "マルイのセールで10%OFF",
-      "全国10,000店舗以上の優待特典",
-      "海外旅行傷害保険が自動・利用付帯で手厚い",
-    ],
-    tags: ["年会費無料", "優待特典", "海外旅行保険"],
-    details: {
-      insurance: "最高3,000万円の海外旅行傷害保険",
-      electronicMoney: ["Visaのタッチ決済", "EPOS Pay", "Apple Pay"],
-      pros: [
-        "飲食店やカラオケ等の割引優待が豊富",
-        "インビテーションでゴールド永年無料",
-      ],
-      cons: ["基本還元率は0.5%"],
-    },
-  },
   // NOTE:
   // - annualFeeValue / maxReturnRateValue / popularityRank はソート用の数値です。
   //   popularityRank は暫定値（掲載順=1,2,3,4）です。実際の人気順データに差し替えてください。
@@ -181,9 +124,12 @@ export const cards: CreditCard[] = [
   // - キャンペーン特典（入会特典・還元率アップ条件等）は変動するため、定期的に一次情報で確認してください。
 
   {
+    //
+    //コスモザカードオーパス_内容確認済み
+    //
     id: "cosmo-the-card-opus",
-    name: "コスモ・ザ・カード・オーパス",
-    brandColor: "#E3001B", // 仮: コスモ石油コーポレートカラー系。要デザイン確認
+    name: "コスモザカードオーパス",
+    brandColor: "from-[#01ABB4] to-[#019CCC]", // 仮: コスモ石油コーポレートカラー系。要デザイン確認
 
     affiliateUrl: "https://px.a8.net/svt/ejp?a8mat=4BA1PC+7QMWNU+5XGQ+5YZ75",
     imageUrl:
@@ -201,19 +147,21 @@ export const cards: CreditCard[] = [
     maxReturnRateValue: 5.0,
     popularityRank: 4,
     features: [
+      "年会費永年無料でコストをかけずにお得なカードライフをスタートできる",
+      "イオングループでのお買い物でポイントが2倍",
+      "全国のイオン・ダイエー・マックスバリューなど多数店舗で利用可能",
       "コスモ石油の給油が会員価格でお得",
-      "入会後最大400Lまでガソリン10円/Lキャッシュバック",
       "ETC利用でWAON POINTが3倍（還元率1.5%）",
-      "イオングループの対象店舗でポイント2倍・お客さま感謝デーで5%OFF",
     ],
     tags: ["年会費無料", "ガソリン", "イオン系"],
     details: {
       insurance: "海外旅行傷害保険なし",
       electronicMoney: ["WAON POINT"],
       pros: [
-        "コスモ石油をよく使う人・ドライバーにとってお得",
-        "イオングループの買い物でも還元率アップ",
-        "年会費永年無料",
+        "イオングループでの日常の買い物でポイントが貯まりやすい",
+        "年会費永年無料でコストがかからない",
+        "全国のイオン系列店舗で使えて生活圏に合わせて活用しやすい",
+        "20〜50代の主婦・ファミリー層に向く実用的なカード",
       ],
       cons: [
         "海外旅行保険が付帯しない",
@@ -222,35 +170,43 @@ export const cards: CreditCard[] = [
     },
   },
   {
+    //
+    //エポスカード_内容確認済み
+    //
     id: "epos-card",
     name: "エポスカード",
     brandColor: "from-rose-700 to-pink-900", // 仮: エポスカードのレッド系
 
-    affiliateUrl: "https://www.eposcard.co.jp/aflt/index2.html",
-    imageUrl: undefined,
-    aspName: "a8",
-    isPromoting: true,
+    affiliateUrl:
+      "//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3778032&pid=892681911",
+    imageUrl:
+      "//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3778032&pid=892681911",
+    // trackingImageUrl: ,
+    aspName: "valuecommerce",
+    isPromoting: false,
 
     badge: "即時発行・年会費永年無料",
     annualFee: "無料（永年）",
     annualFeeValue: 0,
-    baseReturnRate: "0.5%",
-    maxReturnRate: "実質10%相当（マルコとマルオの10%オフ時）",
+    baseReturnRate: `0.5%
+通常200円（税込）につき1ポイント`,
+    maxReturnRate: "マルコとマルオ期間中は10%OFF",
     maxReturnRateValue: 10.0,
     popularityRank: 2,
     features: [
-      "海外旅行傷害保険が最高3000万円付帯（利用付帯）",
+      "海外旅行傷害保険 最高3,000万円（利用付帯）",
       "マルイの「マルコとマルオの10%オフ」でお得に買い物",
-      "マルイ店舗受取なら即日発行も可能",
-      "全国10,000以上の提携店舗で優待・割引",
+      "最短即日発行・マルイ店頭受取に対応",
+      "全国約10,000店舗で優待・割引",
     ],
     tags: ["年会費無料", "海外旅行保険", "マルイ"],
     details: {
       insurance: "海外旅行傷害保険 最高3,000万円（利用付帯）",
-      electronicMoney: [],
+      electronicMoney: ["Visaのタッチ決済", "EPOS Pay", "Apple Pay"],
       pros: [
-        "年会費・家族カード・ETCカードすべて永年無料",
-        "海外旅行保険が無料カードとしては手厚い",
+        "本カードの年会費が永年無料",
+        "ETCカードの年会費も永年無料",
+        "年会費無料で海外旅行傷害保険が付帯",
         "即日発行に対応（店舗受取時）",
       ],
       cons: [
@@ -260,20 +216,27 @@ export const cards: CreditCard[] = [
     },
   },
   {
+    //
+    //楽天カード_内容確認済み
+    //
     id: "rakuten-card",
     name: "楽天カード",
     brandColor: "from-red-600 to-rose-800",
 
-    affiliateUrl: "https://affiliate.rakuten.co.jp/group/card/",
-    imageUrl: undefined,
+    affiliateUrl:
+      "https://hb.afl.rakuten.co.jp/hsc/56ad66b1.f8222ddb.55796d43.4d50cb62/?link_type=pict&ut=eyJwYWdlIjoic2hvcCIsInR5cGUiOiJwaWN0IiwiY29sIjoxLCJjYXQiOiIxIiwiYmFuIjozNzM0MjcsImFtcCI6ZmFsc2V9",
+    imageUrl:
+      "https://hbb.afl.rakuten.co.jp/hsb/56ad66b1.f8222ddb.55796d43.4d50cb62/?me_id=2101008&me_adv_id=373427&t=pict",
     aspName: "rakuten",
     isPromoting: true,
 
-    badge: "発行枚数3,100万枚突破",
+    badge: "発行枚数3,300万枚突破",
     annualFee: "無料（永年）",
     annualFeeValue: 0,
     baseReturnRate: "1.0%",
-    maxReturnRate: "3.0%以上（楽天市場利用時）",
+    maxReturnRate: `3.0%以上
+(楽天市場
+利用時)`,
     maxReturnRateValue: 3.0,
     popularityRank: 1,
     features: [
@@ -285,7 +248,7 @@ export const cards: CreditCard[] = [
     tags: ["年会費無料", "高還元", "楽天経済圏"],
     details: {
       insurance: "海外旅行傷害保険 死亡後遺障害 最高2,000万円",
-      electronicMoney: ["楽天Edy（発行手数料330円）"],
+      electronicMoney: ["楽天Edy", "楽天ペイ", "Visaのタッチ決済"],
       pros: [
         "年会費無料で還元率1.0%と使いやすい",
         "楽天市場・楽天経済圏との相性が良い",
@@ -298,6 +261,9 @@ export const cards: CreditCard[] = [
     },
   },
   {
+    //
+    //Nudge(ナッジ)カード_内容確認済み
+    //
     id: "nudge-card",
     name: "Nudge(ナッジ)",
     brandColor: "from-[#0F1D4C] to-[#404D7B]",
@@ -320,15 +286,17 @@ export const cards: CreditCard[] = [
     maxReturnRateValue: 0,
     popularityRank: 3,
     features: [
-      "スマホアプリだけで申込〜利用管理が完結（2021年9月リリース）",
-      "「学生部」は18〜25歳限定・54種類以上のデザインから選択可能",
-      "支払い日を選べる機能付き（利用翌日〜最大2ヶ月手数料無料で返済）",
+      `スマホアプリだけで申込〜利用管理が完結
+（2021年9月リリース）`,
+      "学生部は18〜25歳限定・54種類以上のデザインから選択可能",
+      `支払い日を選べる機能付き
+（利用翌日〜最大2ヶ月手数料無料で返済）`,
       "利用上限金額を自分で調整でき、使いすぎ防止に対応",
       "18歳以上なら高校生でも発行可能",
       // // ★ ASP成果対象クラブ限定の注意
       // "※本アフィリエイト案件の成果対象は「学生部」「nudge」「デザイン部」クラブでの発行のみ",
     ],
-    tags: ["学生向け", "年会費無料", "アプリ完結", "18歳から"],
+    tags: ["学生向け", "年会費無料", "アプリ完結"],
     details: {
       insurance: "要確認（公式サイトに記載なし）",
       electronicMoney: [],
@@ -342,7 +310,7 @@ export const cards: CreditCard[] = [
         "固定の還元率（ポイント制度）ではないため、他カードと単純比較しづらい",
         "海外旅行保険など基本スペックの公開情報が少ない",
         // ★ コンプライアンス上の留意点（データではなく制作時の注意）
-        "「審査が通りやすい」等の表現は法令上NGのため、LPコピーでは使用不可",
+        //"「審査が通りやすい」等の表現は法令上NGのため、LPコピーでは使用不可",
       ],
     },
   },
