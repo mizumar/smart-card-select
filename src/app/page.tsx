@@ -205,7 +205,8 @@ export default function Home() {
           </span>
         </Link>
       </div>
-      <footer className="w-full max-w-4xl mx-auto px-4 py-8">
+
+      <footer className="w-full max-w-md mx-auto px-4 py-8">
         {/* 
         2. 紺色ベースのカードデザイン
         - bg-slate-900 (上品なダークネイビー)
@@ -217,7 +218,7 @@ export default function Home() {
           <div>
             <span className="inline-block bg-slate-800 text-slate-300 font-medium px-3 py-1 rounded-full text-[11px] border border-slate-700/60">
               【PR /
-              広告】当サイトはアフィリエイトプログラムにより収益を得ています
+              広告】当サイトはアフィリエイトプログラムにより収益を得ています。
             </span>
           </div>
 
