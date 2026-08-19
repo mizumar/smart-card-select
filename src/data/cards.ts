@@ -235,8 +235,7 @@ export const cards: CreditCard[] = [
     annualFeeValue: 0,
     baseReturnRate: "1.0%",
     maxReturnRate: `3.0%以上
-(楽天市場
-利用時)`,
+楽天市場利用時`,
     maxReturnRateValue: 3.0,
     popularityRank: 1,
     features: [
@@ -257,6 +256,56 @@ export const cards: CreditCard[] = [
       cons: [
         "楽天経済圏をあまり使わない人はメリットが薄れる",
         "ETCカード年会費は会員ランクにより有料（550円）",
+      ],
+    },
+  },
+  {
+    id: "rakuten-premium-card",
+    name: "楽天プレミアムカード",
+
+    brandColor: "from-red-600 to-red-800",
+    affiliateUrl:
+      "https://hb.afl.rakuten.co.jp/hsc/56ae8763.96e7a036.55796d43.4d50cb62/?link_type=pict&ut=eyJwYWdlIjoic2hvcCIsInR5cGUiOiJwaWN0IiwiY29sIjoxLCJjYXQiOiIxIiwiYmFuIjo0NTExMzQsImFtcCI6ZmFsc2V9",
+    imageUrl:
+      "https://hbb.afl.rakuten.co.jp/hsb/56ae8763.96e7a036.55796d43.4d50cb62/?me_id=2101014&me_adv_id=451134&t=pict",
+    aspName: "rakuten",
+    isPromoting: true,
+
+    badge: "楽天市場・旅行に強いプレミアムカード",
+    annualFee: "11,000円（税込）",
+    annualFeeValue: 11000,
+    baseReturnRate: "1.0%",
+    maxReturnRate: `最大4倍
+楽天市場利用時`,
+    maxReturnRateValue: 4.0,
+    popularityRank: 10,
+    features: [
+      "通常還元率1％（100円につき1ポイント）",
+      "楽天市場で毎週火・木曜日はポイント最大4倍",
+      "国内主要空港ラウンジを無料で利用可能",
+      "プライオリティ・パスに無料で申し込み可能",
+      "海外旅行傷害保険が最高5,000万円",
+      "国内旅行傷害保険が最高5,000万円",
+      "動産総合保険が年間最高300万円",
+      "楽天ETCカードの年会費が無料",
+      "楽天証券の投信積立でポイント還元率1.0%",
+    ],
+    tags: ["楽天市場", "空港ラウンジ", "プライオリティ・パス"],
+    details: {
+      insurance:
+        "海外旅行傷害保険 死亡後遺障害 最高5,000万円・国内旅行傷害保険 最高5,000万円・動産総合保険 年間最高300万円",
+      electronicMoney: ["楽天Edy", "楽天ペイ", "Visaのタッチ決済"],
+      pros: [
+        "楽天市場をよく利用する人に向いている",
+        "国内主要空港ラウンジを無料で利用できる",
+        "プライオリティ・パスに無料で申し込める",
+        "海外・国内旅行傷害保険が付帯",
+        "楽天ETCカードの年会費が無料",
+      ],
+      cons: [
+        "本カードの年会費が11,000円（税込）かかる",
+        "楽天市場などの楽天サービスをあまり利用しない場合はメリットを活かしにくい",
+        "プライオリティ・パスは年間5回まで無料",
       ],
     },
   },
