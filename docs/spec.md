@@ -93,8 +93,14 @@ export interface CreditCard {
   id: string; // 一意識別子（例: "smbc-nl", "jcb-w"）
   name: string; // カード名（表示用）
   brandColor: string; // Tailwind グラデーションクラス（例: "from-emerald-600 to-teal-800"）
-  badge?: string; // 任意。バッジテキスト（例: "👑 コンビニ高還元 No.1"）
+
+  affiliateUrl: string; // アフィリエイト/公式申込リンクURL
   imageUrl?: string; //  (追加): ASP等から提供される画像・バナーのURLまたはローカルパス。未指定時は `brandColor` を用いた従来通りのCSSモック表示へ自動フォールバック。
+  trackingImageUrl?: //string (追加): ASP発行の1x1ピクセルインプレッション計測用ビーコン画像URL。
+  aspName?: string //(追加): 管理用ASP名（例: "A8.net", "afb" 等）。
+  isPromoting?: boolean //(追加): 掲載状態フラグ。`false` の場合はボタンを非活性化（「現在受付停止中」表記）。
+
+  badge?: string; // 任意。バッジテキスト（例: "👑 コンビニ高還元 No.1"）
   annualFee: string; // 年会費表示文字列（例: "永年無料"）
   annualFeeValue: number; // ソート用数値（0=無料、大きいほど高額）
   baseReturnRate: string; // 基本還元率表示（例: "0.5%"）
@@ -102,7 +108,6 @@ export interface CreditCard {
   maxReturnRateValue: number; // ソート用数値（例: 7.0）
   popularityRank: number; // 人気順ソート用（小さいほど人気、未設定時は99扱い）
   features: string[]; // 特徴リスト（3項目程度）
-  affiliateUrl: string; // アフィリエイト/公式申込リンクURL
   tags: string[]; // フィルター・診断マッチング用タグ
   details: {
     insurance: string; // 付帯保険の説明
@@ -567,6 +572,11 @@ const QUESTIONS = [
 - `/privacy` ページにアフィリエイトプログラム参加の詳細記載
 - プライバシーポリシーへのリンクはフッター下部の控えめなテキストリンク
 - 比較・診断結果は広告主の影響を受けない旨を明記
+
+### アフィリエイトリンク・計測仕様
+
+- **1x1ビーコン画像のレンダリング:** `trackingImageUrl` が設定されている場合、レイアウトに影響を与えない隠し要素（`w-px h-px opacity-0 absolute`）としてバナーと同一領域内にレンダリングし、正確なインプレッション（PV）を計測する。
+- **SEO・Googleガイドライン準拠:** すべてのアフィリエイト外部リンクの `<a>` タグには `rel="noopener noreferrer sponsored"` 属性を付与し、有料/アフィリエイトリンクであることを明示する。
 
 ---
 

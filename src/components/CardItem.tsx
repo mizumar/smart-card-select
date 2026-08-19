@@ -96,6 +96,17 @@ export const CardItem: React.FC<CardItemProps> = ({
               className="w-full h-auto object-contain drop-shadow-sm"
               loading="lazy"
             />
+            {/* IMP計測用1x1透明ビーコン */}
+            {card.trackingImageUrl && (
+              <img
+                src={card.trackingImageUrl}
+                width={1}
+                height={1}
+                alt=""
+                className="absolute opacity-0 pointer-events-none w-px h-px"
+                aria-hidden="true"
+              />
+            )}
           </div>
         ) : (
           // 2. 実画像がない場合：従来のモックデザイン
@@ -124,7 +135,7 @@ export const CardItem: React.FC<CardItemProps> = ({
               <p className="text-[9px] text-slate-400 font-medium">
                 最大還元率
               </p>
-              <p className="text-xs font-extrabold text-red-500">
+              <p className="text-xs font-extrabold text-red-500 whitespace-pre-wrap">
                 {card.maxReturnRate}
               </p>
             </div>
@@ -145,15 +156,24 @@ export const CardItem: React.FC<CardItemProps> = ({
       </ul>
 
       {/* 発行ボタン（グラデーションとシャドウを少し上品に） */}
-      <a
-        href={card.affiliateUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 shadow-sm active:scale-[0.99] transition-all mb-2"
-      >
-        <span>発行公式サイトを見る</span>
-        <ExternalLink className="w-3.5 h-3.5 opacity-80" />
-      </a>
+      {card.isPromoting === false ? (
+        <button
+          disabled
+          className="w-full bg-slate-200 text-slate-500 font-bold text-xs py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 shadow-sm active:scale-[0.99] transition-all mb-2"
+        >
+          <span>現在受付停止中</span>
+        </button>
+      ) : (
+        <a
+          href={card.affiliateUrl}
+          target="_blank"
+          rel="noopener noreferrer sponsored"
+          className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 shadow-sm active:scale-[0.99] transition-all mb-2"
+        >
+          <span>発行公式サイトを見る</span>
+          <ExternalLink className="w-3.5 h-3.5 opacity-80" />
+        </a>
+      )}
 
       <button
         onClick={() => setIsOpen(!isOpen)}
@@ -169,7 +189,7 @@ export const CardItem: React.FC<CardItemProps> = ({
 
       {isOpen && (
         <div className="mt-2 pt-3 border-t border-gray-100 text-[11px] space-y-2 text-gray-600 bg-gray-50/50 -mx-4 -mb-4 p-4 rounded-b-3xl">
-          <div className="flex items-start gap-1">
+          <div className="flex items-start gap-1 whitespace-pre-wrap">
             <span className="font-bold text-gray-700 shrink-0">
               基本還元率:
             </span>

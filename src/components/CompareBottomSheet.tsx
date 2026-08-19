@@ -148,7 +148,7 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
                       <a
                         href={card.affiliateUrl}
                         target="_blank"
-                        rel="noopener noreferrer"
+                        rel="noopener noreferrer sponsored"
                         className={`w-full py-2 px-2 rounded-xl text-[11px] font-bold text-center transition-all active:scale-95 flex items-end justify-center gap-1 shadow-xs ${
                           isBest
                             ? "bg-amber-600 hover:bg-amber-700 text-white"
@@ -187,13 +187,13 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
                       最大還元率
                     </span>
                   </div>
-                  <div className="p-2.5 text-center font-bold text-red-500 flex items-center justify-center gap-1 border-l border-transparent">
+                  <div className="p-2.5 text-center font-bold text-red-500 flex items-center justify-center gap-1 border-l border-transparent whitespace-pre-wrap">
                     <span>{cardA.maxReturnRate}</span>
                     {cardA.id === betterCardId && (
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                     )}
                   </div>
-                  <div className="p-2.5 text-center font-bold text-red-500 flex items-center justify-center gap-1 border-l border-slate-100">
+                  <div className="p-2.5 text-center font-bold text-red-500 flex items-center justify-center gap-1 border-l border-slate-100 whitespace-pre-wrap">
                     <span>{cardB.maxReturnRate}</span>
                     {cardB.id === betterCardId && (
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
@@ -208,10 +208,10 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
                       基本還元率
                     </span>
                   </div>
-                  <div className="p-2.5 text-center text-slate-700 border-l border-transparent">
+                  <div className="p-2.5 text-center text-slate-700 border-l border-transparent whitespace-pre-wrap">
                     {cardA.baseReturnRate}
                   </div>
-                  <div className="p-2.5 text-center text-slate-700 border-l border-slate-100">
+                  <div className="p-2.5 text-center text-slate-700 border-l border-slate-100 whitespace-pre-wrap">
                     {cardB.baseReturnRate}
                   </div>
                 </div>
