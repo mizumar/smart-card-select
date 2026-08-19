@@ -118,7 +118,7 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
                       {/* カード券面表示エリア（画像またはモック） */}
                       {card.imageUrl ? (
                         // 実画像：モックと同じ aspect で“高さ”を固定（ここだけ変更）
-                        <div className="w-36 sm:w-40 shrink-0 aspect-[1.58/1] flex items-center justify-center">
+                        <div className="w-full aspect-[1.58/1] flex items-center justify-center shrink-0">
                           <img
                             src={card.imageUrl}
                             alt={card.name}
