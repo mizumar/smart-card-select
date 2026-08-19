@@ -144,7 +144,7 @@ export const CardItem: React.FC<CardItemProps> = ({
       </div>
 
       {/* 特徴リスト */}
-      <ul className="text-xs text-slate-700 space-y-1.5 mb-3.5 bg-amber-50/50 p-3 rounded-2xl border border-amber-100/50">
+      <ul className="text-xs text-slate-700 space-y-1.5 mb-3.5 bg-amber-50/50 p-3 rounded-2xl border border-amber-100/50 whitespace-pre-wrap">
         {card.features.map((feature, idx) => (
           <li key={idx} className="flex items-start gap-1.5 leading-tight">
             <Sparkles className="w-3.5 h-3.5 text-amber-500 shrink-0 mt-0.5" />
