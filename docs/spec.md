@@ -831,3 +831,57 @@ src/
 ```
 
 ```
+
+## データ構造仕様 (Data Structure)\_2026-08-21
+
+### クレジットカードデータの分割管理構造
+
+従来 `creditCards.json` 1ファイルに集約していたデータ構造を、保守性および Table Editor 等での視認性向上のため役割別に **3つの JSON ファイル** へ分割管理する構成に変更。
+
+TypeScript 側 (`src/data/creditCards.ts`) で `id` をキーとして結合し、従来通りの `CreditCard` 型配列としてエクスポートするため、呼び出し側のコンポーネント影響は一切なし。
+
+#### 1. データ構成ファイル (`src/data/`)
+
+- **`cards-basic.json`**
+  - **役割**: カード識別・表示用の基本データ（表形式エディタでの一覧編集用）
+  - **主な保持フィールド**: `id`, `name`, `popularityRank`, `tags`, `badge`, `brandColor`
+- **`cards-affiliate.json`**
+  - **役割**: ASP・アフィリエイト・計測用データ
+  - **主な保持フィールド**: `id`, `affiliateUrl`, `imageUrl`, `trackingImageUrl`, `aspName`, `isPromoting`
+- **`cards-spec.json`**
+  - **役割**: カードの詳細スペック・特徴・長文テキストデータ
+  - **主な保持フィールド**: `id`, `annualFee`, `baseReturnRate`, `maxReturnRate`, `features`, `details` (insurance, pros/cons 等)
+
+#### 2. データ結合仕様 (`src/data/creditCards.ts`)
+
+`cards-basic.json` をベースとし、`id` に紐づくアフィリエイト情報およびスペック情報をマージして最終オブジェクトを生成。
+
+```typescript
+import basicData from "./cards-basic.json";
+import affiliateData from "./cards-affiliate.json";
+import specData from "./cards-spec.json";
+import { CreditCard } from "@/types/creditCard";
+
+export const creditCards: CreditCard[] = basicData.map((basic) => {
+  const affiliate = affiliateData.find((a) => a.id === basic.id);
+  const spec = specData.find((s) => s.id === basic.id);
+
+  return {
+    ...basic,
+    ...affiliate,
+    ...spec,
+  } as CreditCard;
+});
+```
+
+#### 3. データ整合性の担保
+
+データ追加・編集時の ID ミスマッチ（タイポ・紐付け漏れ）を防ぐため、`src/data/__tests__/creditCards.test.ts` にて以下の自動テストを実施・保証する。
+
+- 全 JSON ファイルの要素数が一致すること
+- 全 JSON ファイルで定義されている `id` の集合が完全に一致すること
+- 結合後の `creditCards` に必須プロパティが存在すること
+
+```
+
+```
