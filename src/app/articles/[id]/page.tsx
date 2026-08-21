@@ -81,6 +81,19 @@ export default async function ArticleDetailPage({ params }: Props) {
           <div className="prose prose-slate max-w-none text-sm leading-relaxed text-slate-700 space-y-4">
             <ReactMarkdown>{article.content}</ReactMarkdown>
           </div>
+
+          {/* 下部リンク導線 */}
+          <div className="mt-8 pt-4 border-t border-slate-100 text-center">
+            <p className="text-[11px] text-slate-500 font-medium mb-3">
+              あなたにぴったりの1枚を10秒で診断してみませんか？
+            </p>
+            <Link
+              href="/"
+              className="inline-block w-full bg-slate-900 text-white text-xs font-bold py-3 rounded-xl shadow-sm hover:bg-slate-800 transition-colors"
+            >
+              10秒診断ツールを使ってみる
+            </Link>
+          </div>
         </article>
       </main>
     </div>
