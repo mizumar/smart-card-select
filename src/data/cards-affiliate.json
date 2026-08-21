@@ -1,0 +1,52 @@
+[
+  {
+    "id": "smbc-nl",
+    "affiliateUrl": "https://example.com/smbc",
+    "isPromoting": false
+  },
+  {
+    "id": "jcb-w",
+    "affiliateUrl": "https://example.com/jcb"
+  },
+  {
+    "id": "paypay",
+    "affiliateUrl": "https://paypay.ne.jp/"
+  },
+  {
+    "id": "cosmo-the-card-opus",
+    "affiliateUrl": "https://px.a8.net/svt/ejp?a8mat=4BA1PC+7QMWNU+5XGQ+5YZ75",
+    "imageUrl": "https://www24.a8.net/svt/bgt?aid=260809248468&wid=002&eno=01&mid=s00000027665001003000&mc=1",
+    "trackingImageUrl": "https://www13.a8.net/0.gif?a8mat=4BA1PC+7QMWNU+5XGQ+5YZ75",
+    "aspName": "a8",
+    "isPromoting": true
+  },
+  {
+    "id": "epos-card",
+    "affiliateUrl": "//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3778032&pid=892681911",
+    "imageUrl": "//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3778032&pid=892681911",
+    "aspName": "valuecommerce",
+    "isPromoting": false
+  },
+  {
+    "id": "rakuten-card",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hsc/56ad66b1.f8222ddb.55796d43.4d50cb62/?link_type=pict&ut=eyJwYWdlIjoic2hvcCIsInR5cGUiOiJwaWN0IiwiY29sIjoxLCJjYXQiOiIxIiwiYmFuIjozNzM0MjcsImFtcCI6ZmFsc2V9",
+    "imageUrl": "https://hbb.afl.rakuten.co.jp/hsb/56ad66b1.f8222ddb.55796d43.4d50cb62/?me_id=2101008&me_adv_id=373427&t=pict",
+    "aspName": "rakuten",
+    "isPromoting": true
+  },
+  {
+    "id": "rakuten-premium-card",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hsc/56ae8763.96e7a036.55796d43.4d50cb62/?link_type=pict&ut=eyJwYWdlIjoic2hvcCIsInR5cGUiOiJwaWN0IiwiY29sIjoxLCJjYXQiOiIxIiwiYmFuIjo0NTExMzQsImFtcCI6ZmFsc2V9",
+    "imageUrl": "https://hbb.afl.rakuten.co.jp/hsb/56ae8763.96e7a036.55796d43.4d50cb62/?me_id=2101014&me_adv_id=451134&t=pict",
+    "aspName": "rakuten",
+    "isPromoting": true
+  },
+  {
+    "id": "nudge-card",
+    "affiliateUrl": "http://www.rentracks.jp/adx/r.html?idx=0.19855.385674.9932.14150&dna=163846",
+    "imageUrl": "http://www.image-rentracks.com/14150/01_300_250.png",
+    "trackingImageUrl": "http://www.rentracks.jp/adx/p.gifx?idx=0.19855.385674.9932.14150&dna=163846",
+    "aspName": "rentracks",
+    "isPromoting": true
+  }
+]

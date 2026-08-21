@@ -1,0 +1,65 @@
+[
+  {
+    "id": "smbc-nl",
+    "name": "三井住友カード（NL）",
+    "popularityRank": 9,
+    "tags": ["年会費無料", "コンビニ高還元", "初心者"],
+    "badge": "👑 コンビニ高還元 No.1",
+    "brandColor": "from-emerald-600 to-teal-800"
+  },
+  {
+    "id": "jcb-w",
+    "name": "JCB CARD W",
+    "popularityRank": 2,
+    "tags": ["年会費無料", "初心者", "Amazon・スタバ"],
+    "badge": "🔥 基本還元率 2倍",
+    "brandColor": "from-blue-700 to-indigo-900"
+  },
+  {
+    "id": "paypay",
+    "name": "PayPayカード",
+    "popularityRank": 4,
+    "tags": ["年会費無料", "PayPayユーザー"],
+    "brandColor": "from-red-500 to-amber-600"
+  },
+  {
+    "id": "cosmo-the-card-opus",
+    "name": "コスモザカードオーパス",
+    "popularityRank": 4,
+    "tags": ["年会費無料", "ガソリン", "イオン系"],
+    "badge": "イオングループでお得",
+    "brandColor": "from-[#01ABB4] to-[#019CCC]"
+  },
+  {
+    "id": "epos-card",
+    "name": "エポスカード",
+    "popularityRank": 2,
+    "tags": ["年会費無料", "海外旅行保険", "マルイ"],
+    "badge": "即時発行・年会費永年無料",
+    "brandColor": "from-rose-700 to-pink-900"
+  },
+  {
+    "id": "rakuten-card",
+    "name": "楽天カード",
+    "popularityRank": 1,
+    "tags": ["年会費無料", "高還元", "楽天経済圏"],
+    "badge": "発行枚数3,300万枚突破",
+    "brandColor": "from-red-600 to-rose-800"
+  },
+  {
+    "id": "rakuten-premium-card",
+    "name": "楽天プレミアムカード",
+    "popularityRank": 10,
+    "tags": ["楽天市場", "空港ラウンジ", "プライオリティ・パス"],
+    "badge": "楽天市場・旅行に強いプレミアムカード",
+    "brandColor": "from-red-600 to-red-800"
+  },
+  {
+    "id": "nudge-card",
+    "name": "Nudge(ナッジ)",
+    "popularityRank": 3,
+    "tags": ["学生向け", "年会費無料", "アプリ完結"],
+    "badge": "18歳から作れるVisaカード",
+    "brandColor": "from-[#0F1D4C] to-[#404D7B]"
+  }
+]
