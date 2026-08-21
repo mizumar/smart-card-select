@@ -797,6 +797,37 @@ privacy/page.tsx (Server)                                   │
 8. **コラム一覧ソート:** `articles/page.tsx` で `ARTICLES` を `date` 降順にソート。データ追加順に依存しない。
 9. **コラム導線:** トップページのフッター pill ボタンは廃止。カード一覧直下の青グラデーションバナーに集約。
 
+---
+
+## 改修仕様: コラム記事の Markdown 管理化および表示・テスト機能\_2026-08-21
+
+### 1. 概要
+
+記事データの管理構造を TypeScript 配列の直書き方式から `src/content/articles/*.md` による Markdown ファイル分離方式へ移行。
+データ取得ロジックの共通化（`src/lib/articles.ts`）、`react-markdown`・`@tailwindcss/typography`（`@plugin` 記法）による描画、および Jest / Playwright による自動テスト環境を構築。
+
+### 2. ディレクトリ・データ構造
+
+```text
+src/
+├── app/articles/
+│   ├── page.tsx          # 一覧ページ (動的取得・日付降順表示)
+│   └── [id]/page.tsx      # 詳細ページ (ReactMarkdown描画・404制御)
+├── content/articles/     # Markdown記事格納ディレクトリ
+└── lib/articles.ts       # getAllArticles() / getArticleById()
+
+```
+
+### 3. テスト仕様マトリクス
+
+| ID             | 種別            | 対象               | 内容 / 期待値                                                 |
+| -------------- | --------------- | ------------------ | ------------------------------------------------------------- |
+| **UT-01〜03**  | Unit (Jest)     | `getAllArticles()` | 全件取得、日付降順ソート、空フォルダ時の空配列返却            |
+| **UT-04〜05**  | Unit (Jest)     | `getArticleById()` | ID指定取得、存在しないID時の `null` 返却                      |
+| **IT-01〜04**  | UI (Playwright) | `/articles`        | 一覧カード描画、メタ情報表示、日付降順表示、詳細への遷移      |
+| **IT-05〜07**  | UI (Playwright) | `/articles/[id]`   | `prose` スタイル描画、404ページ表示、Markdown要素装飾         |
+| **NFT-01〜03** | 非機能          | ビルド・SEO        | 型チェック通過、`npm run build` 成功、`<head>` メタデータ生成 |
+
 ```
 
 ```

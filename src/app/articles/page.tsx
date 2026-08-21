@@ -1,69 +1,69 @@
 import Link from "next/link";
-import { ARTICLES } from "@/data/articles";
-import { ChevronLeft, BookOpen } from "lucide-react";
-
-export const metadata = {
-  title: "クレカ活用コラム・知恵袋 | スマートクレカ比較",
-  description:
-    "クレジットカードの選び方やポイント還元率、タッチ決済の活用法などのお役立ち情報を発信中。",
-};
+import { getAllArticles } from "@/lib/articles";
+import { ArrowLeft, Clock, Calendar, Tag } from "lucide-react";
 
 export default function ArticlesPage() {
-  // 日付の降順（最新順）にソート
-  const sortedArticles = [...ARTICLES].sort((a, b) => {
-    return (
-      new Date(b.date.replace(/\./g, "-")).getTime() -
-      new Date(a.date.replace(/\./g, "-")).getTime()
-    );
-  });
+  // getAllArticles() で Markdown から取得（自動で日付降順ソート済み）
+  const articles = getAllArticles();
 
   return (
-    <div className="min-h-screen bg-slate-50/80 pb-16">
+    <div className="min-h-screen bg-slate-50 pb-12">
       {/* ヘッダー */}
-      <header className="sticky top-0 z-20 bg-white/70 backdrop-blur-md border-b border-slate-100 px-4 py-3">
+      <header className="sticky top-0 z-20 bg-white/80 backdrop-blur-md border-b border-slate-100 px-4 py-3">
         <div className="max-w-md mx-auto flex items-center justify-between">
           <Link
             href="/"
-            className="flex items-center gap-1 text-xs font-bold text-slate-600 hover:text-slate-900 transition-colors"
+            className="flex items-center text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
           >
-            <ChevronLeft className="w-4 h-4" />
-            <span>診断アプリへ戻る</span>
+            <ArrowLeft className="w-4 h-4 mr-1" />
+            トップへ戻る
           </Link>
-          <span className="text-xs font-extrabold text-slate-800">
+          <span className="text-xs font-bold px-2 py-0.5 bg-blue-50 text-blue-600 rounded-full">
             コラム一覧
           </span>
         </div>
       </header>
 
-      <main className="max-w-md mx-auto px-4 pt-6">
-        <div className="flex items-center gap-2 mb-4">
-          <BookOpen className="w-5 h-5 text-blue-600" />
-          <h1 className="text-base font-bold text-slate-900">
-            クレジットカード知識・活用ガイド
+      {/* メインコンテンツ */}
+      <main className="max-w-md mx-auto px-4 pt-6 space-y-4">
+        <div className="mb-4">
+          <h1 className="text-xl font-bold text-slate-900">
+            クレカお役立ちコラム
           </h1>
+          <p className="text-xs text-slate-500 mt-1">
+            知っておきたいポイント還元や選び方のコツを解説
+          </p>
         </div>
 
-        {/* ソート済みの記事リスト */}
-        <div className="space-y-3.5">
-          {sortedArticles.map((article) => (
+        {/* 記事一覧 */}
+        <div className="space-y-3">
+          {articles.map((article) => (
             <Link
               key={article.id}
               href={`/articles/${article.id}`}
-              className="block bg-white rounded-2xl p-4 border border-slate-100 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-md transition-all active:scale-[0.99]"
+              className="block bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:border-slate-200 transition-all active:scale-[0.99]"
             >
-              <div className="flex items-center gap-2 mb-1.5">
-                <span className="text-[10px] font-bold px-2 py-0.5 bg-blue-50 text-blue-600 rounded-md">
+              <div className="flex items-center gap-2 text-[11px] text-slate-400 mb-2">
+                <span className="inline-flex items-center font-medium px-2 py-0.5 rounded-md bg-slate-100 text-slate-600">
+                  <Tag className="w-3 h-3 mr-1" />
                   {article.category}
                 </span>
-                <span className="text-[10px] text-slate-400">
+                <span className="flex items-center ml-auto">
+                  <Calendar className="w-3 h-3 mr-1" />
                   {article.date}
                 </span>
+                <span className="flex items-center">
+                  <Clock className="w-3 h-3 mr-1" />
+                  {article.readTime}
+                </span>
               </div>
-              <h2 className="text-xs font-bold text-slate-800 mb-1.5 leading-snug">
+
+              <h2 className="text-base font-bold text-slate-900 leading-snug mb-2 line-clamp-2">
                 {article.title}
               </h2>
-              <p className="text-[11px] text-slate-500 line-clamp-2 leading-relaxed">
-                {article.summary}
+
+              <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+                {article.excerpt}
               </p>
             </Link>
           ))}
