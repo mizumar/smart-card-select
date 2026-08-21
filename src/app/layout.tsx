@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 // ★ Google Fonts から Noto Sans JP を取得
 const notoSansJP = Noto_Sans_JP({
@@ -32,6 +33,8 @@ export default function RootLayout({
       {/* antialiased でiPhoneの文字表示を美しく滑らかにする */}
       <body className="font-sans antialiased text-slate-800 bg-slate-50/80 tracking-tight">
         {children}
+        {/* GA4 測定IDをセット */}
+        <GoogleAnalytics gaId="G-CR9PXZQX05" />
       </body>
     </html>
   );
