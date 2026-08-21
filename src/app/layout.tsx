@@ -13,6 +13,9 @@ export const metadata: Metadata = {
   title: "スマートクレカ比較 | 10秒で自分に最適な1枚が見つかる",
   description:
     "ライフスタイルに合わせて最適なクレジットカードを瞬時に診断・比較。",
+  verification: {
+    google: "QQJrM_I1qi56PxSNtcKGWFlKJ826jD9XYfKAvW9aWa0",
+  },
   robots: {
     index: true,
     follow: true,
