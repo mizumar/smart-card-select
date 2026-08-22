@@ -62,13 +62,19 @@ export default function PrivacyPage() {
             </p>
           </section>
 
-          {/* 3. 個人情報の利用目的・アクセス解析 */}
+          {/* 3. アクセス解析・Cookieについて */}
           <section className="space-y-1.5">
             <h2 className="font-bold text-slate-900 text-[13px]">
               3. アクセス解析・Cookieについて
             </h2>
             <p className="text-[11px] text-slate-600 leading-relaxed">
-              当サイトでは、サービスの改善や利用状況の把握を目的として、Cookie（クッキー）を利用したアクセス解析ツールを導入する場合があります。Cookieは匿名でデータを収集するものであり、個人を特定する情報は含まれません。
+              当サイトでは、サービスの改善や利用状況の把握を目的として、Cookie（クッキー）を利用したアクセス解析ツールを導入しています。アクセス解析には、Google
+              LLCが提供する「Google
+              Analytics」を利用しています。また、検索結果における当サイトの掲載状況や検索パフォーマンスを確認するため、「Google
+              Search Console」を利用しています。
+            </p>
+            <p className="text-[11px] text-slate-600 leading-relaxed">
+              これらのツールでは、Cookie等を利用してサイトへのアクセス状況や利用状況に関する情報を収集・分析する場合があります。収集された情報は、サイトの改善やコンテンツの充実を目的として利用し、個人を直接特定する目的では使用しません。
             </p>
           </section>
 
