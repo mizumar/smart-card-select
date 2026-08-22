@@ -14,9 +14,13 @@ import {
 } from "lucide-react";
 import { cards } from "@/data/cards"; // ★ 直接インポート
 
-interface CompareBottomSheetProps {}
+interface CompareBottomSheetProps {
+  cards: CreditCard[];
+}
 
-export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = () => {
+export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
+  cards,
+}) => {
   const { selectedIds, clearAll, toggleCard } = useCompareStore();
   const [isOpen, setIsOpen] = useState(false);
 
