@@ -61,5 +61,13 @@
     "tags": ["学生向け", "年会費無料", "アプリ完結"],
     "badge": "18歳から作れるVisaカード",
     "brandColor": "from-[#0F1D4C] to-[#404D7B]"
+  },
+  {
+    "id": "nexus-card",
+    "name": "Nexus Card",
+    "popularityRank": 8,
+    "tags": ["デポジット型", "審査が不安な人向け", "Mastercard"],
+    "badge": "デポジット型",
+    "brandColor": "from-red-500 to-amber-600"
   }
 ]
