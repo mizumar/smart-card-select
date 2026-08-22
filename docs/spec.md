@@ -882,6 +882,113 @@ export const creditCards: CreditCard[] = basicData.map((basic) => {
 - 全 JSON ファイルで定義されている `id` の集合が完全に一致すること
 - 結合後の `creditCards` に必須プロパティが存在すること
 
-```
+## 比較ボトムバー・バッジ表示改修仕様\_2026-08-22
 
+### 1. 概要
+
+選択中カードのバッジ表示レイアウトを修正し、固定ボトムバーの「内側」ではなく「上部（外側）」に縦方向にスタック（積み上げ）表示する。
+あわせて、レイアウト崩れ防止処理および背景要素への操作を阻害しないタップ透過制御を行う。
+
+---
+
+### 2. UI・レイアウト仕様
+
+#### 2.1 コンテナ構造
+
+- **最外枠（固定コンテナ）**: `fixed bottom-4 left-1/2 -translate-x-1/2 w-[92%] max-w-md z-40 flex flex-col items-start gap-1.5 pointer-events-none`
+  - 画面下部に中央寄せ固定。
+  - `flex-col` により、バッジエリア（上）とボトムバー（下）を縦並びに分離。
+  - `pointer-events-none` により、UI非描画領域（隙間など）の背景タップを透過。
+
+#### 2.2 バッジエリア（選択中カード）
+
+- **バッジコンテナ**: `flex flex-col gap-1.5 pointer-events-auto`
+  - 選択中カード（最大2枚）を縦方向に積み上げて表示。
+  - `pointer-events-auto` により、バッジ内の個別解除ボタンの操作を有効化。
+- **カード名要素**: `text-xs font-bold truncate max-w-[140px]`
+  - 長いカード名（20文字以上等）が表示された場合でも横伸びを防ぐため、最大幅制限（140px）と三項リーダー省略（`truncate`）を適用。
+
+#### 2.3 メインボトムバー
+
+- **バー本体**: `w-full bg-gray-900/95 backdrop-blur-md text-white p-3 rounded-2xl shadow-xl flex items-center justify-between border border-gray-700/50 pointer-events-auto`
+  - `pointer-events-auto` により、「比較する」「すべてクリア」ボタンの操作を有効化。
+
+---
+
+### 3. コンポーネント実装仕様 (`CompareBottomSheet.tsx`)
+
+```tsx
+import React from "react";
+import { X, Layers, ArrowRight } from "lucide-react";
+import { cards } from "@/data/cards";
+import { useCompareStore } from "@/store/useCompareStore";
+
+export const CompareBottomSheet: React.FC = () => {
+  const { selectedIds, toggleCard, clearAll, setIsOpen } = useCompareStore();
+
+  const selectedCards = cards.filter((card) => selectedIds.includes(card.id));
+
+  if (selectedCards.length === 0) return null;
+
+  return (
+    <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[92%] max-w-md z-40 flex flex-col items-start gap-1.5 pointer-events-none">
+      {/* 選択中カードバッジ（上部に積み上げ表示） */}
+      <div className="flex flex-col gap-1.5 pointer-events-auto">
+        {selectedCards.map((card) => (
+          <div
+            key={card.id}
+            className="flex items-center justify-between gap-3 px-3 py-1.5 bg-slate-900/95 text-white backdrop-blur-md rounded-xl shadow-lg border border-slate-700/60"
+          >
+            <div className="flex items-center gap-2 min-w-0">
+              <span className="text-xs">💳</span>
+              <span className="text-xs font-bold truncate max-w-[140px]">
+                {card.name}
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={() => toggleCard(card.id)}
+              className="p-0.5 text-slate-400 hover:text-white rounded-md transition-colors"
+              aria-label={`${card.name}の選択を解除`}
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        ))}
+      </div>
+
+      {/* メインボトムバー */}
+      <div className="w-full bg-gray-900/95 backdrop-blur-md text-white p-3 rounded-2xl shadow-xl flex items-center justify-between border border-gray-700/50 pointer-events-auto">
+        <div className="flex items-center gap-2">
+          <Layers className="w-5 h-5 text-blue-400" />
+          <span className="text-xs font-bold">
+            {selectedCards.length}枚 選択中{" "}
+            {selectedCards.length === 1 && "(あと1枚)"}
+          </span>
+        </div>
+
+        <div className="flex items-center gap-2">
+          {selectedCards.length === 2 && (
+            <button
+              type="button"
+              onClick={() => setIsOpen(true)}
+              className="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs py-2 px-3.5 rounded-xl flex items-center gap-1 active:scale-95 transition-all shadow-md"
+            >
+              <span>比較する</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={clearAll}
+            className="p-1.5 text-gray-400 hover:text-white rounded-lg"
+            aria-label="すべてクリア"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
 ```

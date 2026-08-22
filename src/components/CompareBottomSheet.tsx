@@ -10,16 +10,14 @@ import {
   ExternalLink,
   Trophy,
   CheckCircle2,
+  CreditCard as CreditCardIcon,
 } from "lucide-react";
+import { cards } from "@/data/cards"; // ★ 直接インポート
 
-interface CompareBottomSheetProps {
-  cards: CreditCard[];
-}
+interface CompareBottomSheetProps {}
 
-export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
-  cards,
-}) => {
-  const { selectedIds, clearAll } = useCompareStore();
+export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = () => {
+  const { selectedIds, clearAll, toggleCard } = useCompareStore();
   const [isOpen, setIsOpen] = useState(false);
 
   const selectedCards = cards.filter((c) => selectedIds.includes(c.id));
@@ -46,33 +44,64 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
   const betterCardId = getBetterCardId();
 
   return (
-    <>
-      {/* ① 画面下に常駐する固定バー */}
-      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[92%] max-w-md bg-gray-900/90 backdrop-blur-md text-white p-3 rounded-2xl shadow-xl z-40 flex items-center justify-between border border-gray-700/50">
-        <div className="flex items-center gap-2">
-          <Layers className="w-5 h-5 text-blue-400" />
-          <span className="text-xs font-bold">
-            {selectedCards.length}枚 選択中{" "}
-            {selectedCards.length === 1 && "(あと1枚)"}
-          </span>
+    <div>
+      {/* ① 画面下に常駐する固定バー＋上部バッジの親コンテナ */}
+      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[92%] max-w-md z-40 flex flex-col items-start gap-1.5 pointer-events-none">
+        {/* 選択中カードのバッジ（固定バーの上の左側に縦に並ぶ） */}
+        <div className="flex flex-col gap-1.5 pointer-events-auto">
+          {selectedCards.map((card) => (
+            <div
+              key={card.id}
+              className="flex items-center justify-between gap-3 px-3 py-1.5 bg-slate-900/75 text-white backdrop-blur-md rounded-xl shadow-lg border border-slate-700/60 "
+            >
+              <div className="flex items-center gap-2 min-w-0">
+                <CreditCardIcon className="items-center w-4 h-4 text-blue-400" />
+                <span className="text-xs font-bold truncate max-w-[140px]">
+                  {card.name}
+                </span>
+              </div>
+
+              {/* 個別解除ボタン */}
+              <button
+                type="button"
+                onClick={() => toggleCard(card.id)}
+                className="p-0.5 text-slate-400 hover:text-white rounded-md transition-colors"
+                aria-label={`${card.name}の選択を解除`}
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          ))}
         </div>
 
-        <div className="flex items-center gap-2">
-          {selectedCards.length === 2 && (
+        {/* メインの比較ボトムバー */}
+        <div className="w-full bg-gray-900/75 backdrop-blur-md text-white p-3 rounded-2xl shadow-xl flex items-center justify-between border border-gray-700/50 pointer-events-auto">
+          <div className="flex items-center gap-2">
+            <Layers className="w-5 h-5 text-blue-400" />
+            <span className="text-xs font-bold">
+              {selectedCards.length}枚 選択中{" "}
+              {selectedCards.length === 1 && "(あと1枚)"}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            {selectedCards.length === 2 && (
+              <button
+                onClick={() => setIsOpen(true)}
+                className="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs py-2 px-3.5 rounded-xl flex items-center gap-1 active:scale-95 transition-all shadow-md"
+              >
+                <span>比較する</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            )}
             <button
-              onClick={() => setIsOpen(true)}
-              className="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs py-2 px-3.5 rounded-xl flex items-center gap-1 active:scale-95 transition-all shadow-md"
+              onClick={clearAll}
+              className="p-1.5 text-gray-400 hover:text-white rounded-lg"
+              aria-label="すべてクリア"
             >
-              <span>比較する</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <X className="w-4 h-4" />
             </button>
-          )}
-          <button
-            onClick={clearAll}
-            className="p-1.5 text-gray-400 hover:text-white rounded-lg"
-          >
-            <X className="w-4 h-4" />
-          </button>
+          </div>
         </div>
       </div>
 
@@ -238,6 +267,6 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
