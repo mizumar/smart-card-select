@@ -2,6 +2,7 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { CompareBottomSheet } from "../CompareBottomSheet";
 import { useCompareStore } from "@/store/useCompareStore";
+import { cards } from "@/data/cards";
 
 // テスト用のカードデータを共通モック化
 jest.mock("@/data/cards", () => ({
@@ -36,14 +37,14 @@ describe("CompareBottomSheet Component", () => {
   });
 
   test("TC-01: カード未選択時はコンポーネントが何も描画されないこと", () => {
-    const { container } = render(<CompareBottomSheet />);
+    const { container } = render(<CompareBottomSheet cards={cards} />);
     expect(container.firstChild).toBeNull();
   });
 
   test("TC-02: 1枚選択時にバッジと選択中カウントが表示され、比較ボタンは非表示であること", () => {
     useCompareStore.setState({ selectedIds: [CARD_ID_1] });
 
-    render(<CompareBottomSheet />);
+    render(<CompareBottomSheet cards={cards} />);
 
     expect(screen.getByText(/1枚\s*選択中/)).toBeInTheDocument();
     expect(screen.getByText(/\(あと1枚\)/)).toBeInTheDocument();
@@ -53,7 +54,7 @@ describe("CompareBottomSheet Component", () => {
   test("TC-03: 2枚選択時にバッジが2つ表示され、比較ボタンが表示されること", () => {
     useCompareStore.setState({ selectedIds: [CARD_ID_1, CARD_ID_2] });
 
-    render(<CompareBottomSheet />);
+    render(<CompareBottomSheet cards={cards} />);
 
     expect(screen.getByText(/2枚\s*選択中/)).toBeInTheDocument();
     expect(
@@ -64,7 +65,7 @@ describe("CompareBottomSheet Component", () => {
   test("TC-04: バッジ内の個別解除（✕）ボタンを押すと指定カードの選択が解除されること", () => {
     useCompareStore.setState({ selectedIds: [CARD_ID_1, CARD_ID_2] });
 
-    render(<CompareBottomSheet />);
+    render(<CompareBottomSheet cards={cards} />);
 
     const removeButtons = screen.getAllByRole("button", {
       name: /選択を解除/i,
@@ -78,7 +79,7 @@ describe("CompareBottomSheet Component", () => {
   test("TC-05: 一括クリアボタンを押すとすべての選択が解除されること", () => {
     useCompareStore.setState({ selectedIds: [CARD_ID_1, CARD_ID_2] });
 
-    render(<CompareBottomSheet />);
+    render(<CompareBottomSheet cards={cards} />);
 
     const clearButton = screen.getByRole("button", { name: /すべてクリア/i });
     fireEvent.click(clearButton);
@@ -89,7 +90,7 @@ describe("CompareBottomSheet Component", () => {
   test("TC-06: 「比較する」ボタンを押すと比較モーダルが開くこと", () => {
     useCompareStore.setState({ selectedIds: [CARD_ID_1, CARD_ID_2] });
 
-    render(<CompareBottomSheet />);
+    render(<CompareBottomSheet cards={cards} />);
 
     const compareButton = screen.getByRole("button", { name: /比較する/i });
     fireEvent.click(compareButton);
@@ -104,7 +105,7 @@ describe("CompareBottomSheet Component", () => {
 
     useCompareStore.setState({ selectedIds: [CARD_ID_1] });
 
-    render(<CompareBottomSheet />);
+    render(<CompareBottomSheet cards={cards} />);
 
     const cardNameElement = screen.getByText(LONG_CARD_NAME);
     expect(cardNameElement).toBeInTheDocument();
@@ -114,7 +115,7 @@ describe("CompareBottomSheet Component", () => {
   test("TC-08: 外枠コンテナに pointer-events-none、バッジおよびバー本体に pointer-events-auto が設定されていること", () => {
     useCompareStore.setState({ selectedIds: [CARD_ID_1, CARD_ID_2] });
 
-    render(<CompareBottomSheet />);
+    render(<CompareBottomSheet cards={cards} />);
 
     // 最外枠コンテナの取得（要素が存在することを確認）
     const outerContainer = screen.getByText(/2枚\s*選択中/).closest(".fixed");
