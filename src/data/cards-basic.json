@@ -2,7 +2,7 @@
   {
     "id": "smbc-nl",
     "name": "三井住友カード（NL）",
-    "popularityRank": 9,
+    "popularityRank": 2,
     "tags": ["年会費無料", "コンビニ高還元", "初心者"],
     "badge": "👑 コンビニ高還元 No.1",
     "brandColor": "from-emerald-600 to-teal-800"
@@ -10,7 +10,7 @@
   {
     "id": "jcb-w",
     "name": "JCB CARD W",
-    "popularityRank": 2,
+    "popularityRank": 11,
     "tags": ["年会費無料", "初心者", "Amazon・スタバ"],
     "badge": "🔥 基本還元率 2倍",
     "brandColor": "from-blue-700 to-indigo-900"
@@ -49,7 +49,7 @@
   {
     "id": "rakuten-premium-card",
     "name": "楽天プレミアムカード",
-    "popularityRank": 10,
+    "popularityRank": 4,
     "tags": ["楽天市場", "空港ラウンジ", "プライオリティ・パス"],
     "badge": "楽天市場・旅行に強いプレミアムカード",
     "brandColor": "from-red-600 to-red-800"

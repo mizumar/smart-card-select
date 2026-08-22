@@ -1,16 +1,15 @@
 [
   {
     "id": "smbc-nl",
-    "affiliateUrl": "https://example.com/smbc",
-    "isPromoting": false
+    "affiliateUrl": "https://www.smbc-card.com/camp/numberless/index.jsp"
   },
   {
     "id": "jcb-w",
-    "affiliateUrl": "https://example.com/jcb"
+    "affiliateUrl": "https://www.jcb.co.jp/ordercard/kojin_card/os_card_w2.html"
   },
   {
     "id": "paypay",
-    "affiliateUrl": "https://paypay.ne.jp/"
+    "affiliateUrl": "https://www.paypay-card.co.jp/"
   },
   {
     "id": "cosmo-the-card-opus",
