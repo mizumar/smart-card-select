@@ -78,8 +78,23 @@ export default async function ArticleDetailPage({ params }: Props) {
           </h1>
 
           {/* 本文 (Markdown レンダリングエリア) */}
-          <div className="prose prose-slate max-w-none text-sm leading-relaxed text-slate-700 space-y-4">
-            <ReactMarkdown>{article.content}</ReactMarkdown>
+          <div className="prose prose-slate max-w-none text-sm leading-relaxed text-slate-700">
+            <ReactMarkdown
+              components={{
+                h2: ({ children }) => (
+                  <h2 className="mt-8 mb-4 border-l-4 border-slate-900 pl-3 text-lg font-bold text-slate-900">
+                    {children}
+                  </h2>
+                ),
+                h3: ({ children }) => (
+                  <h3 className="mt-6 mb-3 border-b border-slate-200 pb-2 text-base font-bold text-slate-800">
+                    {children}
+                  </h3>
+                ),
+              }}
+            >
+              {article.content}
+            </ReactMarkdown>
           </div>
 
           {/* 下部リンク導線 */}
