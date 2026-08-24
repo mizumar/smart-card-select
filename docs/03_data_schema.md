@@ -31,6 +31,7 @@ export interface CreditCard {
   tagIds?: CardTagId[]; // 診断判定用システムタグID
   annualFeeValue: number; // ソート用数値[cite: 5]
   maxReturnRateValue: number; // ソート用数値[cite: 5]
+  baseReturnRateValue: number; // ソート用数値[cite: 5]
   popularityRank: number; // 人気順ソート用[cite: 5]
   // ...その他（features, details 等）
 }

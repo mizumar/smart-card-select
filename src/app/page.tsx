@@ -12,13 +12,13 @@ import { useCompareStore } from "@/store/useCompareStore";
 const FILTER_TAGS = [
   "すべて",
   "年会費無料",
-  "コンビニ高還元",
+  "イオン系",
+  "楽天経済圏",
   "初心者",
-  "Amazon・スタバ",
-  "PayPayユーザー",
+  "コンビニ高還元",
 ];
 
-type SortOption = "popular" | "rate" | "fee";
+type SortOption = "popular" | "rate" | "fee" | "base";
 
 export default function Home() {
   const [selectedFilter, setSelectedFilter] = useState("すべて");
@@ -44,6 +44,10 @@ export default function Home() {
     if (sortOption === "fee") {
       // 年会費が安い順 (昇順: a - b)
       return (a.annualFeeValue || 0) - (b.annualFeeValue || 0);
+    }
+    if (sortOption === "base") {
+      // 基本還元率が高い順 (降順: b - a)
+      return (b.baseReturnRateValue || 0) - (a.baseReturnRateValue || 0);
     }
     // 人気順 (昇順: a - b ※ 1位, 2位, 3位の順)
     return (a.popularityRank || 99) - (b.popularityRank || 99);
@@ -159,6 +163,7 @@ export default function Home() {
             >
               <option value="popular">人気順</option>
               <option value="rate">最大還元率が高い順</option>
+              <option value="base">基本還元率が高い順</option>
               <option value="fee">年会費が安い順</option>
             </select>
           </div>

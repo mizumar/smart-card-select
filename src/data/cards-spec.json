@@ -4,6 +4,7 @@
     "annualFee": "永年無料",
     "annualFeeValue": 0,
     "baseReturnRate": "0.5%",
+    "baseReturnRateValue": 0.5,
     "maxReturnRate": "7.0%",
     "maxReturnRateValue": 7,
     "features": [
@@ -23,6 +24,7 @@
     "annualFee": "永年無料",
     "annualFeeValue": 0,
     "baseReturnRate": "1.0%",
+    "baseReturnRateValue": 1.0,
     "maxReturnRate": "5.5%",
     "maxReturnRateValue": 5.5,
     "features": [
@@ -45,6 +47,7 @@
     "annualFee": "永年無料",
     "annualFeeValue": 0,
     "baseReturnRate": "1.0%",
+    "baseReturnRateValue": 1.0,
     "maxReturnRate": "5.0%",
     "maxReturnRateValue": 5,
     "features": [
@@ -67,6 +70,7 @@
     "annualFee": "無料（永年）",
     "annualFeeValue": 0,
     "baseReturnRate": "0.5%〜1.0%",
+    "baseReturnRateValue": 1.0,
     "maxReturnRate": "最大5.0%（5・15・25日リボ払い時）",
     "maxReturnRateValue": 5,
     "features": [
@@ -96,6 +100,7 @@
     "annualFee": "無料（永年）",
     "annualFeeValue": 0,
     "baseReturnRate": "0.5%\n通常200円（税込）につき1ポイント",
+    "baseReturnRateValue": 0.5,
     "maxReturnRate": "マルコとマルオ期間中は10%OFF",
     "maxReturnRateValue": 10,
     "features": [
@@ -124,6 +129,7 @@
     "annualFee": "無料（永年）",
     "annualFeeValue": 0,
     "baseReturnRate": "1.0%",
+    "baseReturnRateValue": 1.0,
     "maxReturnRate": "3.0%以上\n楽天市場利用時",
     "maxReturnRateValue": 3,
     "features": [
@@ -151,6 +157,7 @@
     "annualFee": "11,000円（税込）",
     "annualFeeValue": 11000,
     "baseReturnRate": "1.0%",
+    "baseReturnRateValue": 1.0,
     "maxReturnRate": "最大4倍\n楽天市場利用時",
     "maxReturnRateValue": 4,
     "features": [
@@ -186,6 +193,7 @@
     "annualFee": "無料（永年）",
     "annualFeeValue": 0,
     "baseReturnRate": "還元率制度なし\n（利用額に応じた抽選特典/ガチャ形式）",
+    "baseReturnRateValue": 0,
     "maxReturnRate": "対象外\n（テーマパークチケット・スタバチケット等が抽選で当たる）",
     "maxReturnRateValue": 0,
     "features": [
@@ -215,6 +223,7 @@
     "annualFee": "1,375円〜",
     "annualFeeValue": 1375,
     "baseReturnRate": "0.5%\n200円につき1ポイント",
+    "baseReturnRateValue": 0.5,
     "maxReturnRate": "0.5%\n200円につき1ポイント",
     "maxReturnRateValue": 0.5,
     "features": [

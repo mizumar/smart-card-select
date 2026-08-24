@@ -37,6 +37,7 @@ export interface CreditCard {
   annualFee: string;
   annualFeeValue: number;
   baseReturnRate: string;
+  baseReturnRateValue: number;
   maxReturnRate: string;
   maxReturnRateValue: number;
   features: string[];

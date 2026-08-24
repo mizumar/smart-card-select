@@ -57,7 +57,7 @@
     "name": "楽天プレミアムカード",
     "popularityRank": 4,
     "tagIds": ["fee-premium", "type-benefits", "use-ec", "type-high-base"],
-    "tags": ["楽天市場", "空港ラウンジ", "プライオリティ・パス"],
+    "tags": ["楽天経済圏", "空港ラウンジ", "プライオリティ・パス"],
     "badge": "楽天市場・旅行に強いプレミアムカード",
     "brandColor": "from-red-600 to-red-800"
   },
