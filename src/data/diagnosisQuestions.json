@@ -1,0 +1,60 @@
+[
+  {
+    "id": "priority",
+    "title": "カードを選ぶ際に最も重視するポイントは？",
+    "options": [
+      {
+        "id": "base-return",
+        "label": "普段の買い物での還元率（どこでもお得）",
+        "targetTags": { "type-high-base": 30, "use-daily": 10 }
+      },
+      {
+        "id": "special-return",
+        "label": "特定のお店やネット通販での高還元",
+        "targetTags": { "type-special-store": 30 }
+      },
+      {
+        "id": "benefits",
+        "label": "旅行保険や空港ラウンジなどの付帯特典",
+        "targetTags": { "type-benefits": 30, "fee-premium": 15 }
+      }
+    ]
+  },
+  {
+    "id": "annual-fee",
+    "title": "年会費についての考え方は？",
+    "options": [
+      {
+        "id": "free",
+        "label": "絶対無料がいい",
+        "targetTags": { "fee-free": 30 }
+      },
+      {
+        "id": "paid-ok",
+        "label": "特典が見合うなら有料でも良い",
+        "targetTags": { "fee-premium": 25 }
+      }
+    ]
+  },
+  {
+    "id": "scene",
+    "title": "主な利用シーンはどこですか？",
+    "options": [
+      {
+        "id": "daily",
+        "label": "スーパー・コンビニ・日常の買い物",
+        "targetTags": { "use-daily": 25 }
+      },
+      {
+        "id": "ec",
+        "label": "Amazonや楽天などのネットショッピング",
+        "targetTags": { "use-ec": 25 }
+      },
+      {
+        "id": "travel",
+        "label": "電車・新幹線・飛行機・旅行",
+        "targetTags": { "use-travel": 25 }
+      }
+    ]
+  }
+]

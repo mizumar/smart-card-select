@@ -3,36 +3,14 @@
 import React, { useState } from "react";
 import { CreditCard } from "@/data/cards";
 import { Sparkles, X, RotateCcw, ArrowRight, CheckCircle2 } from "lucide-react";
+import questions from "@/data/diagnosisQuestions.json";
+import { calculateDiagnosedCards } from "@/utils/diagnosis";
 
 interface DiagnosisModalProps {
   cards: CreditCard[];
   isOpen: boolean;
   onClose: () => void;
 }
-
-// 質問データの定義
-const QUESTIONS = [
-  {
-    id: "useCase",
-    title: "1. 主にどこで買い物や利用をしますか？",
-    options: [
-      { label: "コンビニ・飲食店", tag: "コンビニ高還元" },
-      { label: "Amazon・スタバ", tag: "Amazon・スタバ" },
-      { label: "PayPay・Yahoo!", tag: "PayPayユーザー" },
-      { label: "どこでも（ポイント還元重視）", tag: "ポイント還元" },
-    ],
-  },
-  {
-    id: "priority",
-    title: "2. クレジットカードに一番求めるものは？",
-    options: [
-      { label: "年会費がずっと無料", tag: "年会費無料" },
-      { label: "初めてでも安心・人気", tag: "初心者" },
-      { label: "お店やカラオケでの優待割引", tag: "優待特典" },
-      { label: "海外旅行保険の充実", tag: "海外旅行保険" },
-    ],
-  },
-];
 
 export const DiagnosisModal: React.FC<DiagnosisModalProps> = ({
   cards,
@@ -41,44 +19,49 @@ export const DiagnosisModal: React.FC<DiagnosisModalProps> = ({
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [isFinished, setIsFinished] = useState(false);
+  const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [resultCards, setResultCards] = useState<CreditCard[]>([]);
+  const [isCompleted, setIsCompleted] = useState(false);
 
   if (!isOpen) return null;
 
-  // 選択肢をタップした時の処理
-  const handleSelectOption = (tag: string) => {
-    const updatedTags = [...selectedTags, tag];
-    setSelectedTags(updatedTags);
+  // 現在の質問オブジェクト
+  const currentQuestion = questions[currentStep];
 
-    if (currentStep < QUESTIONS.length - 1) {
-      setCurrentStep(currentStep + 1);
+  // 選択肢をタップした時の処理
+  const handleSelectOption = (questionId: string, optionId: string) => {
+    // 回答を保存
+    const nextAnswers = { ...answers, [questionId]: optionId };
+    setAnswers(nextAnswers);
+
+    // 次の質問があるかチェック
+    if (currentStep < questions.length - 1) {
+      setCurrentStep((prev) => prev + 1);
     } else {
-      setIsFinished(true);
+      // ★ 最終質問まで終わったら診断を実行！
+      handleComplete(nextAnswers);
     }
   };
 
-  // リセット処理
-  const handleReset = () => {
+  // 3. 診断計算の実行と画面切替
+  const handleComplete = (finalAnswers: Record<string, string>) => {
+    // スコアリング計算を実行
+    const rankedCards = calculateDiagnosedCards(finalAnswers, cards);
+
+    // 上位2枚を結果として保持
+    setResultCards(rankedCards.slice(0, 2));
+
+    // 結果表示モードへ切り替え
+    setIsCompleted(true);
+  };
+
+  // リセット処理（モーダルをリセット）
+  const handleResetAndClose = () => {
     setCurrentStep(0);
-    setSelectedTags([]);
-    setIsFinished(false);
+    setAnswers({});
+    setResultCards([]);
+    setIsCompleted(false);
   };
-
-  // 診断結果の計算（選択されたタグとのマッチ度が高いカードを上位抽出）
-  const getRecommendedCards = () => {
-    return cards
-      .map((card) => {
-        const matchCount = card.tags.filter((tag) =>
-          selectedTags.includes(tag),
-        ).length;
-        return { card, matchCount };
-      })
-      .sort((a, b) => b.matchCount - a.matchCount)
-      .slice(0, 2)
-      .map((item) => item.card);
-  };
-
-  const recommendedCards = getRecommendedCards();
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
@@ -91,25 +74,25 @@ export const DiagnosisModal: React.FC<DiagnosisModalProps> = ({
           <X className="w-5 h-5" />
         </button>
 
-        {!isFinished ? (
+        {!isCompleted ? (
           /* --- 質問画面 --- */
           <div>
             <div className="flex items-center gap-1.5 text-blue-600 font-bold text-xs mb-2">
               <Sparkles className="w-4 h-4" />
               <span>
-                10秒かんたん診断 ({currentStep + 1}/{QUESTIONS.length})
+                10秒かんたん診断 ({currentStep + 1}/{questions.length})
               </span>
             </div>
 
             <h2 className="text-base font-bold text-gray-800 mb-4">
-              {QUESTIONS[currentStep].title}
+              {currentQuestion.title}
             </h2>
 
             <div className="space-y-2.5 mb-4">
-              {QUESTIONS[currentStep].options.map((opt) => (
+              {currentQuestion.options.map((opt) => (
                 <button
-                  key={opt.label}
-                  onClick={() => handleSelectOption(opt.tag)}
+                  key={opt.id}
+                  onClick={() => handleSelectOption(currentQuestion.id, opt.id)}
                   className="w-full text-left p-3.5 rounded-2xl border border-gray-200 hover:border-blue-500 hover:bg-blue-50/50 active:scale-[0.98] transition-all flex justify-between items-center text-xs font-semibold text-gray-700"
                 >
                   <span>{opt.label}</span>
@@ -134,7 +117,7 @@ export const DiagnosisModal: React.FC<DiagnosisModalProps> = ({
             </div>
 
             <div className="space-y-3 mb-4">
-              {recommendedCards.map((card) => (
+              {resultCards.map((card) => (
                 <div
                   key={card.id}
                   className="p-3 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-2"
@@ -147,7 +130,8 @@ export const DiagnosisModal: React.FC<DiagnosisModalProps> = ({
                       {card.name}
                     </h3>
                     <p className="text-[10px] text-gray-500">
-                      還元率: {card.maxReturnRate} / {card.annualFee}
+                      最大還元率: {card.maxReturnRate} / 年会費:
+                      {card.annualFee}
                     </p>
                   </div>
                   <a
@@ -163,7 +147,7 @@ export const DiagnosisModal: React.FC<DiagnosisModalProps> = ({
             </div>
 
             <button
-              onClick={handleReset}
+              onClick={handleResetAndClose}
               className="w-full text-xs text-gray-400 flex items-center justify-center gap-1 py-1 hover:text-gray-600"
             >
               <RotateCcw className="w-3 h-3" />
