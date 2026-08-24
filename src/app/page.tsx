@@ -97,7 +97,7 @@ export default function Home() {
 
           {/* 右側のワンポイント */}
           <div className="bg-slate-100/80 text-slate-600 text-[10px] font-bold px-2.5 py-1 rounded-full border border-slate-200/50">
-            2026年最新
+            {new Date().getFullYear()} 年最新
           </div>
         </div>
       </header>
@@ -205,46 +205,6 @@ export default function Home() {
           </span>
         </Link>
       </div>
-
-      <footer className="w-full max-w-md mx-auto px-4 py-8">
-        {/* 
-        2. 紺色ベースのカードデザイン
-        - bg-slate-900 (上品なダークネイビー)
-        - rounded-2xl (カードやコラムと揃えた角丸)
-        - border border-slate-800 / shadow-md (引き締まった見た目)
-      */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-md text-center text-xs text-slate-400 space-y-4">
-          {/* PR表記バッジ */}
-          <div>
-            <span className="inline-block bg-slate-800 text-slate-300 font-medium px-3 py-1 rounded-full text-[11px] border border-slate-700/60">
-              【PR /
-              広告】当サイトはアフィリエイトプログラムにより収益を得ています。
-            </span>
-          </div>
-
-          {/* 免責事項 */}
-          <p className="leading-relaxed max-w-2xl mx-auto text-slate-400">
-            掲載情報には細心の注意を払っておりますが、金利・手数料・キャンペーン情報等は変更される場合があります。
-            最新の正確な情報は各クレジットカード会社の公式サイトにてご確認ください。
-          </p>
-
-          {/* ポリシー・問い合わせリンク */}
-          <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-center gap-4 text-[10px] text-slate-400">
-            <Link
-              href="/privacy"
-              className="hover:text-slate-600 underline transition-colors"
-            >
-              プライバシーポリシー・免責事項・問い合わせ
-            </Link>
-          </div>
-
-          {/* コピーライト */}
-          <p className="text-slate-500 pt-1 text-[11px]">
-            &copy; {new Date().getFullYear()} Smart Card Select. All rights
-            reserved.
-          </p>
-        </div>
-      </footer>
 
       {/* 2枚比較ボトムシート */}
       <CompareBottomSheet cards={cards} />
