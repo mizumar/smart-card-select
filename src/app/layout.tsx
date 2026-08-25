@@ -13,14 +13,33 @@ const notoSansJP = Noto_Sans_JP({
 
 export const metadata: Metadata = {
   title: "スマートクレカ比較 | 10秒で自分に最適な1枚が見つかる",
+
   description:
-    "ライフスタイルに合わせて最適なクレジットカードを瞬時に診断・比較。",
+    "クレジットカードを年会費・還元率・ポイント・利用シーンから比較。10秒診断で、自分のライフスタイルに合ったクレジットカードを見つけられます。",
+
   verification: {
     google: "QQJrM_I1qi56PxSNtcKGWFlKJ826jD9XYfKAvW9aWa0",
   },
+
   robots: {
     index: true,
     follow: true,
+  },
+
+  openGraph: {
+    title: "スマートクレカ比較 | 10秒で自分に最適な1枚が見つかる",
+    description:
+      "クレジットカードを年会費・還元率・ポイント・利用シーンから比較。10秒診断で、自分に合った1枚を見つけられます。",
+    type: "website",
+    locale: "ja_JP",
+    siteName: "スマートクレカ比較",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "スマートクレカ比較 | 10秒で自分に最適な1枚が見つかる",
+    description:
+      "クレジットカードを比較・診断して、自分に合った1枚を見つけられます。",
   },
 };
 
