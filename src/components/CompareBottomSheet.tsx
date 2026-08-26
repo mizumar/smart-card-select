@@ -151,7 +151,7 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
                         </div>
                       )}
                       {/* 300*250（アスペクト比 6:5）の共通座布団 */}
-                      <div className="w-full aspect-6/5 bg-slate-100/60 rounded-2xl p-3 flex items-center justify-center border border-slate-200/50">
+                      <div className="w-full aspect-6/5 bg-slate-100/60 rounded-2xl p-1.4 flex items-center justify-center border border-slate-200/50">
                         {card.imageUrl ? (
                           /* 実画像の場合 */
                           <img
