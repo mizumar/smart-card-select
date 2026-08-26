@@ -25,6 +25,7 @@ export interface CreditCard {
   tags: string[];
   badge?: string;
   brandColor: string;
+  brands?: ("visa" | "mastercard" | "jcb" | "amex")[];
 
   // 2. ASP・アフィリエイト管理情報
   affiliateUrl: string; // 遷移先アフィリエイトURL
@@ -40,6 +41,7 @@ export interface CreditCard {
   baseReturnRateValue: number;
   maxReturnRate: string;
   maxReturnRateValue: number;
+  pointName?: string; // 例: "Vポイント"
   features: string[];
   details: {
     insurance: string;

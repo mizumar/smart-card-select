@@ -7,6 +7,7 @@
     "baseReturnRateValue": 0.5,
     "maxReturnRate": "7.0%",
     "maxReturnRateValue": 7,
+    "pointName": "Vポイント",
     "features": [
       "対象のコンビニ・飲食店で最大7%還元",
       "ナンバーレスでセキュリティも安心",
@@ -27,6 +28,7 @@
     "baseReturnRateValue": 1.0,
     "maxReturnRate": "5.5%",
     "maxReturnRateValue": 5.5,
+    "pointName": "J-POINT",
     "features": [
       "いつでもポイント2倍（基本還元率1.0%）",
       "Amazonやスタバでさらに還元率UP",
@@ -50,6 +52,7 @@
     "baseReturnRateValue": 1.0,
     "maxReturnRate": "5.0%",
     "maxReturnRateValue": 5,
+    "pointName": "PayPayポイント",
     "features": [
       "PayPayステップで還元率アップ",
       "Yahoo!ショッピングで最大5%還元",
@@ -73,6 +76,7 @@
     "baseReturnRateValue": 1.0,
     "maxReturnRate": "最大5.0%（5・15・25日リボ払い時）",
     "maxReturnRateValue": 5,
+    "pointName": "WAON POINT",
     "features": [
       "年会費永年無料でコストをかけずにお得なカードライフをスタートできる",
       "イオングループでのお買い物でポイントが2倍",
@@ -103,6 +107,7 @@
     "baseReturnRateValue": 0.5,
     "maxReturnRate": "マルコとマルオ期間中は10%OFF",
     "maxReturnRateValue": 10,
+    "pointName": "エポスポイント",
     "features": [
       "海外旅行傷害保険 最高3,000万円（利用付帯）",
       "マルイの「マルコとマルオの10%オフ」でお得に買い物",
@@ -132,6 +137,7 @@
     "baseReturnRateValue": 1.0,
     "maxReturnRate": "3.0%以上\n楽天市場利用時",
     "maxReturnRateValue": 3,
+    "pointName": "楽天ポイント",
     "features": [
       "通常還元率1.0%と年会費無料カードの中でも高還元",
       "楽天市場・楽天ブックス利用でポイント3倍以上",
@@ -160,6 +166,7 @@
     "baseReturnRateValue": 1.0,
     "maxReturnRate": "最大4倍\n楽天市場利用時",
     "maxReturnRateValue": 4,
+    "pointName": "楽天ポイント",
     "features": [
       "通常還元率1％（100円につき1ポイント）",
       "楽天市場で毎週火・木曜日はポイント最大4倍",
@@ -196,6 +203,7 @@
     "baseReturnRateValue": 0,
     "maxReturnRate": "対象外\n（テーマパークチケット・スタバチケット等が抽選で当たる）",
     "maxReturnRateValue": 0,
+    "pointName": "無し",
     "features": [
       "スマホアプリだけで申込〜利用管理が完結\n（2021年9月リリース）",
       "学生部は18〜25歳限定・54種類以上のデザインから選択可能",
@@ -226,6 +234,7 @@
     "baseReturnRateValue": 0.5,
     "maxReturnRate": "0.5%\n200円につき1ポイント",
     "maxReturnRateValue": 0.5,
+    "pointName": "Nexusポイント",
     "features": [
       "デポジット（保証金）型クレジットカード",
       "クレジットカードの審査に不安がある方も申込可能",

@@ -6,7 +6,8 @@
     "tagIds": ["fee-free", "use-daily", "type-high-base"],
     "tags": ["年会費無料", "コンビニ高還元", "初心者"],
     "badge": "👑 コンビニ高還元 No.1",
-    "brandColor": "from-emerald-600 to-teal-800"
+    "brandColor": "from-emerald-600 to-teal-800",
+    "brands": ["visa", "mastercard"]
   },
   {
     "id": "jcb-w",
@@ -15,7 +16,8 @@
     "tagIds": ["fee-free", "type-special-store", "type-high-base"],
     "tags": ["年会費無料", "初心者", "Amazon・スタバ"],
     "badge": "🔥 基本還元率 2倍",
-    "brandColor": "from-blue-700 to-indigo-900"
+    "brandColor": "from-blue-700 to-indigo-900",
+    "brands": ["jcb"]
   },
   {
     "id": "paypay",
@@ -23,7 +25,8 @@
     "popularityRank": 4,
     "tagIds": ["fee-free", "type-special-store", "use-ec"],
     "tags": ["年会費無料", "PayPayユーザー"],
-    "brandColor": "from-red-500 to-amber-600"
+    "brandColor": "from-red-500 to-amber-600",
+    "brands": ["visa", "mastercard", "jcb"]
   },
   {
     "id": "cosmo-the-card-opus",
@@ -32,7 +35,8 @@
     "tagIds": ["fee-free", "type-special-store", "use-travel", "use-daily"],
     "tags": ["年会費無料", "ガソリン", "イオン系"],
     "badge": "イオングループでお得",
-    "brandColor": "from-[#01ABB4] to-[#019CCC]"
+    "brandColor": "from-[#01ABB4] to-[#019CCC]",
+    "brands": ["visa", "mastercard", "jcb"]
   },
   {
     "id": "epos-card",
@@ -41,7 +45,8 @@
     "tagIds": ["fee-free", "type-special-store", "use-travel", "type-benefits"],
     "tags": ["年会費無料", "海外旅行保険", "マルイ"],
     "badge": "即時発行・年会費永年無料",
-    "brandColor": "from-rose-700 to-pink-900"
+    "brandColor": "from-rose-700 to-pink-900",
+    "brands": ["visa"]
   },
   {
     "id": "rakuten-card",
@@ -50,7 +55,8 @@
     "tagIds": ["fee-free", "type-benefits", "use-ec", "type-high-base"],
     "tags": ["年会費無料", "高還元", "楽天経済圏"],
     "badge": "発行枚数3,300万枚突破",
-    "brandColor": "from-red-600 to-rose-800"
+    "brandColor": "from-red-600 to-rose-800",
+    "brands": ["visa", "mastercard", "jcb", "amex"]
   },
   {
     "id": "rakuten-premium-card",
@@ -59,7 +65,8 @@
     "tagIds": ["fee-premium", "type-benefits", "use-ec", "type-high-base"],
     "tags": ["楽天経済圏", "空港ラウンジ", "プライオリティ・パス"],
     "badge": "楽天市場・旅行に強いプレミアムカード",
-    "brandColor": "from-red-600 to-red-800"
+    "brandColor": "from-red-600 to-red-800",
+    "brands": ["visa", "mastercard", "jcb", "amex"]
   },
   {
     "id": "nudge-card",
@@ -68,7 +75,8 @@
     "tagIds": ["fee-free", "use-daily"],
     "tags": ["学生向け", "年会費無料", "アプリ完結"],
     "badge": "18歳から作れるVisaカード",
-    "brandColor": "from-[#0F1D4C] to-[#404D7B]"
+    "brandColor": "from-[#0F1D4C] to-[#404D7B]",
+    "brands": ["visa", "jcb"]
   },
   {
     "id": "nexus-card",
@@ -77,6 +85,7 @@
     "tagIds": ["fee-premium", "use-daily"],
     "tags": ["デポジット型", "審査が不安な人向け", "Mastercard"],
     "badge": "デポジット型",
-    "brandColor": "from-red-500 to-amber-600"
+    "brandColor": "from-red-500 to-amber-600",
+    "brands": ["mastercard"]
   }
 ]
