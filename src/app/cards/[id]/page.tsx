@@ -7,6 +7,7 @@ import ReactMarkdown from "react-markdown";
 import { ArrowLeft, ExternalLink, Check, Minus } from "lucide-react";
 import type { Metadata } from "next";
 import { cards as cardsData } from "@/data/cards";
+import { DiagnosticBanner } from "@/components/DiagnosticBanner";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -306,6 +307,8 @@ export default async function CardDetailPage({ params }: Props) {
             <div className="prose prose-slate max-w-none text-xs leading-relaxed text-slate-600 space-y-3">
               <ReactMarkdown>{markdownContent}</ReactMarkdown>
             </div>
+            {/* 下部リンク導線 */}
+            <DiagnosticBanner />
           </section>
         )}
 
