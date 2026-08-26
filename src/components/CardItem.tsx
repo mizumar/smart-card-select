@@ -14,6 +14,7 @@ import {
   Award,
 } from "lucide-react";
 import { CompareTooltip } from "./CompareTooltip";
+import { CalloutNotice } from "@/components/CalloutNotice";
 
 interface CardItemProps {
   card: CreditCard;
@@ -215,6 +216,10 @@ export const CardItem: React.FC<CardItemProps> = ({
               ))}
             </div>
           </div>
+          <CalloutNotice
+            title="※ ご注意・注釈事項"
+            items={card.calloutNotices}
+          />
         </div>
       )}
     </div>
