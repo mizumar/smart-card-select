@@ -1,3 +1,5 @@
 {
-  "cSpell.words": ["rentracks"]
+  "cSpell.words": ["rentracks"],
+  "commentTranslate.hover.enabled": true,
+  "commentTranslate.targetLanguage": "ja"
 }
