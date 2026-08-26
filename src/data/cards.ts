@@ -49,6 +49,7 @@ export interface CreditCard {
     pros: string[];
     cons: string[];
   };
+  calloutNotices?: string[];
 }
 
 export const cards: CreditCard[] = basicData.map((basic) => {

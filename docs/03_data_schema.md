@@ -22,17 +22,38 @@ export type CardTagId =
   | "use-travel";
 
 export interface CreditCard {
-  id: string; // 一意識別子[cite: 5]
-  name: string; // カード名[cite: 5]
-  brandColor: string; // Tailwind グラデーションクラス[cite: 5]
-  affiliateUrl: string; // アフィリエイトリンク[cite: 5]
-  imageUrl?: string; // ASP提供バナー画像[cite: 5]
-  tags: string[]; // UI表示用ラベル[cite: 5]
-  tagIds?: CardTagId[]; // 診断判定用システムタグID
-  annualFeeValue: number; // ソート用数値[cite: 5]
-  maxReturnRateValue: number; // ソート用数値[cite: 5]
-  baseReturnRateValue: number; // ソート用数値[cite: 5]
-  popularityRank: number; // 人気順ソート用[cite: 5]
-  // ...その他（features, details 等）
+  // 1. 基本識別情報
+  id: string;
+  name: string;
+  popularityRank: number;
+  tagIds: CardTagId[]; // 診断判定用システムタグID
+  tags: string[];
+  badge?: string;
+  brandColor: string;
+  brands?: ("visa" | "mastercard" | "jcb" | "amex")[];
+
+  // 2. ASP・アフィリエイト管理情報
+  affiliateUrl: string; // 遷移先アフィリエイトURL
+  imageUrl?: string; // バナー画像URL
+  trackingImageUrl?: string; // 1x1ピクセルインプレッション計測用URL (例: 0.gif)
+  aspName?: string; // ASP名 (例: "A8.net")
+  isPromoting?: boolean; // 掲載状態フラグ (true: 掲載中 / false: 停止中)
+
+  // 3. カードスペック情報
+  annualFee: string;
+  annualFeeValue: number;
+  baseReturnRate: string;
+  baseReturnRateValue: number;
+  maxReturnRate: string;
+  maxReturnRateValue: number;
+  pointName?: string; // 例: "Vポイント"
+  features: string[];
+  details: {
+    insurance: string;
+    electronicMoney: string[];
+    pros: string[];
+    cons: string[];
+  };
+  calloutNotices?: string[];
 }
 ```

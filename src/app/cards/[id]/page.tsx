@@ -8,6 +8,7 @@ import { ArrowLeft, ExternalLink, Check, Minus } from "lucide-react";
 import type { Metadata } from "next";
 import { cards as cardsData } from "@/data/cards";
 import { DiagnosticBanner } from "@/components/DiagnosticBanner";
+import { CalloutNotice } from "@/components/CalloutNotice";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -302,7 +303,7 @@ export default async function CardDetailPage({ params }: Props) {
               </p>
             )}
             <h2 className="text-sm font-bold text-slate-900 tracking-wide">
-              徹底レビュー
+              徹底考察
             </h2>
             <div className="prose prose-slate max-w-none text-xs leading-relaxed text-slate-600 space-y-3">
               <ReactMarkdown>{markdownContent}</ReactMarkdown>
@@ -338,6 +339,10 @@ export default async function CardDetailPage({ params }: Props) {
                 ),
             )}
           </div>
+          <CalloutNotice
+            title="※ ご注意・注釈事項"
+            items={card.calloutNotices}
+          />
         </section>
       </main>
 
