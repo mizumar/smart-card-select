@@ -13,7 +13,7 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const article = getArticleById(id);
-  const pageUrl = `https://smart-card-select.vercel.app/article/${id}`; // ※実際のドメインに変更
+  const pageUrl = `https://smart-card-select.vercel.app/articles/${id}`; // ※実際のドメインに変更
 
   if (!article) return {};
 
