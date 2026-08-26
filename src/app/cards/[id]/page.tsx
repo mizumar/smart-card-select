@@ -139,17 +139,6 @@ export default async function CardDetailPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* 1. 上部ヘッダー */}
-      <div className="max-w-md mx-auto px-5 pt-6 pb-2">
-        <Link
-          href="/"
-          className="inline-flex items-center text-xs font-semibold text-slate-400 hover:text-slate-700 transition-colors"
-        >
-          <ArrowLeft className="w-3.5 h-3.5 mr-1" />
-          診断結果一覧へ戻る
-        </Link>
-      </div>
-
       <main className="max-w-md mx-auto px-5 space-y-9">
         {/* 2. ファーストビュー */}
         <section className="pt-2 text-center space-y-4">

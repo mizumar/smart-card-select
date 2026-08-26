@@ -8,22 +8,6 @@ export default function ArticlesPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 pb-12">
-      {/* ヘッダー */}
-      <header className="sticky top-0 z-20 bg-white/80 backdrop-blur-md border-b border-slate-100 px-4 py-3">
-        <div className="max-w-md mx-auto flex items-center justify-between">
-          <Link
-            href="/"
-            className="flex items-center text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4 mr-1" />
-            トップへ戻る
-          </Link>
-          <span className="text-xs font-bold px-2 py-0.5 bg-blue-50 text-blue-600 rounded-full">
-            コラム一覧
-          </span>
-        </div>
-      </header>
-
       {/* メインコンテンツ */}
       <main className="max-w-md mx-auto px-4 pt-6 space-y-4">
         <div className="mb-4">

@@ -97,19 +97,6 @@ export default async function ArticleDetailPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-slate-50 pb-16">
-      {/* ヘッダー */}
-      <header className="sticky top-0 z-20 bg-white/80 backdrop-blur-md border-b border-slate-100 px-4 py-3">
-        <div className="max-w-md mx-auto flex items-center justify-between">
-          <Link
-            href="/articles"
-            className="flex items-center text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4 mr-1" />
-            コラム一覧へ
-          </Link>
-        </div>
-      </header>
-
       {/* メイン文章エリア */}
       <main className="max-w-md mx-auto px-4 pt-6">
         <script

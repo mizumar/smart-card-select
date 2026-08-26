@@ -10,22 +10,6 @@ export const metadata = {
 export default function PrivacyPage() {
   return (
     <div className="min-h-screen bg-slate-50/80 pb-16">
-      {/* ヘッダー */}
-      <header className="sticky top-0 z-20 bg-white/70 backdrop-blur-md border-b border-slate-100 px-4 py-3">
-        <div className="max-w-md mx-auto flex items-center justify-between">
-          <Link
-            href="/"
-            className="flex items-center gap-1 text-xs font-bold text-slate-600 hover:text-slate-900 transition-colors"
-          >
-            <ChevronLeft className="w-4 h-4" />
-            <span>トップへ戻る</span>
-          </Link>
-          <span className="text-xs font-extrabold text-slate-800">
-            規約・ポリシー
-          </span>
-        </div>
-      </header>
-
       {/* 本文 */}
       <main className="max-w-md mx-auto px-4 pt-6 text-slate-700 text-xs leading-relaxed space-y-6">
         <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-xs space-y-5">

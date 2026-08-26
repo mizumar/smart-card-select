@@ -78,33 +78,6 @@ export default function Home() {
 
   return (
     <main className="flex-1 min-h-screen bg-gray-50 pb-28">
-      {/* 改善版ヘッダー（アイコン画像化） */}
-      <header className="sticky top-0 z-20 bg-white/70 backdrop-blur-md border-b border-slate-100/80 px-4 py-2.5 transition-all">
-        <div className="max-w-md mx-auto flex items-center justify-between">
-          {/* ロゴ・アプリ名 */}
-          <div className="flex items-center gap-2.5">
-            {/* ★ 絵文字から独自のPNG画像に差し替え */}
-            <img
-              src="/app-logo.png" // public/app-logo.png を参照
-              alt="スマートクレカ比較 ロゴ"
-              className="w-7 h-7 rounded-lg object-contain shrink-0 shadow-sm shadow-blue-500/10"
-            />
-            <div className="text-left">
-              <h1 className="font-extrabold text-sm text-slate-900 tracking-tight leading-none">
-                スマートクレカ比較
-              </h1>
-              <p className="text-[9px] font-semibold text-slate-400 mt-0.5 leading-none">
-                10秒で自分に最適な1枚が見つかる
-              </p>
-            </div>
-          </div>
-
-          {/* 右側のワンポイント */}
-          <div className="bg-slate-100/80 text-slate-600 text-[10px] font-bold px-2.5 py-1 rounded-full border border-slate-200/50">
-            {new Date().getFullYear()} 年最新
-          </div>
-        </div>
-      </header>
       <div className="max-w-md mx-auto p-4">
         {/* 10秒診断バナーボタン */}
         <div className="mb-4">
