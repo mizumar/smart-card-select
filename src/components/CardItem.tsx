@@ -12,9 +12,11 @@ import {
   ShieldCheck,
   Sparkles,
   Award,
+  ChevronRight,
 } from "lucide-react";
 import { CompareTooltip } from "./CompareTooltip";
 import { CalloutNotice } from "@/components/CalloutNotice";
+import Link from "next/link";
 
 interface CardItemProps {
   card: CreditCard;
@@ -125,6 +127,16 @@ export const CardItem: React.FC<CardItemProps> = ({
           <h3 className="font-bold text-sm text-slate-900 truncate mb-1.5 tracking-tight">
             {card.name}
           </h3>
+
+          {/* 「詳細を見る」リンク */}
+          <Link
+            href={`/cards/${card.id}`}
+            className="inline-flex items-center gap-0.5 text-[11px] font-semibold text-blue-600 hover:text-blue-700 transition-colors group mb-1.5"
+          >
+            <span>カードの詳細を見る</span>
+            <ChevronRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5" />
+          </Link>
+
           <div className="grid grid-cols-2 gap-1 bg-slate-50/80 p-2 rounded-xl text-center border border-slate-100">
             <div>
               <p className="text-[9px] text-slate-400 font-medium">年会費</p>
