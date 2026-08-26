@@ -11,7 +11,9 @@ import {
   Trophy,
   CheckCircle2,
   CreditCard as CreditCardIcon,
+  ChevronRight,
 } from "lucide-react";
+import Link from "next/link";
 import { cards } from "@/data/cards"; // ★ 直接インポート
 
 interface CompareBottomSheetProps {
@@ -60,7 +62,7 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
             >
               <div className="flex items-center gap-2 min-w-0">
                 <CreditCardIcon className="items-center w-4 h-4 text-blue-400" />
-                <span className="text-xs font-bold truncate max-w-[140px]">
+                <span className="text-xs font-bold truncate max-w-140px">
                   {card.name}
                 </span>
               </div>
@@ -148,36 +150,52 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
                           <span>おすすめ！</span>
                         </div>
                       )}
-                      {/* カード券面表示エリア（画像またはモック） */}
-                      {card.imageUrl ? (
-                        // 実画像：モックと同じ aspect で“高さ”を固定（ここだけ変更）
-                        <div className="w-full aspect-[1.58/1] flex items-center justify-center shrink-0">
+                      {/* 300*250（アスペクト比 6:5）の共通座布団 */}
+                      <div className="w-full aspect-6/5 bg-slate-100/60 rounded-2xl p-3 flex items-center justify-center border border-slate-200/50">
+                        {card.imageUrl ? (
+                          /* 実画像の場合 */
                           <img
                             src={card.imageUrl}
                             alt={card.name}
                             className="w-full h-full object-contain drop-shadow-sm"
                             loading="lazy"
                           />
-                        </div>
-                      ) : (
-                        <div
-                          className={`w-full aspect-[1.58/1] rounded-xl bg-linear-to-br ${card.brandColor} p-2 flex flex-col justify-between shadow-md shadow-slate-200 shrink-0 border border-white/20relative overflow-hidden`}
-                        >
-                          <div className="w-6 h-4 bg-yellow-300/80 rounded-sm mt-1" />
-                          <div>
-                            <p className="text-[10px] font-bold text-white truncate">
-                              {card.name}
-                            </p>
-                            <p className="text-[9px] font-mono text-white tracking-widest">
-                              **** 1234
-                            </p>
+                        ) : (
+                          /* モックの場合 */
+                          <div
+                            className={`w-full aspect-[1.58/1] rounded-xl bg-linear-to-br ${card.brandColor} p-2 flex flex-col justify-between shadow-md shadow-slate-200 shrink-0 border border-white/20 relative overflow-hidden`}
+                          >
+                            <div className="w-6 h-4 bg-yellow-300/80 rounded-sm mt-1" />
+                            <div>
+                              <p className="text-[10px] font-bold text-white truncate">
+                                {card.name}
+                              </p>
+                              <p className="text-[9px] font-mono text-white tracking-widest">
+                                **** 1234
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                      )}
+                        )}
+                      </div>
                       {/* 両方に入れる“最低限の空白” */}
                       <div className="h-2 w-full" aria-hidden />{" "}
                       {/* ここが“短い側にだけ増える空白” */}
                       <div className="flex-1 w-full" />
+                      {/* カード名・詳細リンクエリア */}
+                      <div className="w-full text-center min-w-0">
+                        <h3 className="font-bold text-sm text-slate-900 truncate mb-1 tracking-tight w-full">
+                          {card.name}
+                        </h3>
+
+                        {/* 「詳細を見る」リンク */}
+                        <Link
+                          href={`/cards/${card.id}`}
+                          className="inline-flex items-center justify-center gap-0.5 text-[11px] font-semibold text-blue-600 hover:text-blue-700 transition-colors group mb-1.5"
+                        >
+                          <span>カードの詳細を見る</span>
+                          <ChevronRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5" />
+                        </Link>
+                      </div>
                       <a
                         href={card.affiliateUrl}
                         target="_blank"
