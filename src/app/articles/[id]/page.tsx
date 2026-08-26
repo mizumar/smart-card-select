@@ -13,15 +13,43 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const article = getArticleById(id);
-  const pageUrl = `https://smart-card-select.vercel.app/articles/${id}`; // ※実際のドメインに変更
+  const baseUrl = "https://smart-card-select.vercel.app";
+  const pageUrl = `${baseUrl}/articles/${id}`;
 
   if (!article) return {};
 
+  const title = `${article.title} | スマートクレカ比較`;
+  const description = article.excerpt;
+  const defaultOgImage = `${baseUrl}/og-default.png`; // 固定のOGP画像
+
   return {
-    title: `${article.title} | スマートクレカ比較`,
-    description: article.excerpt,
+    title,
+    description,
     alternates: {
       canonical: pageUrl,
+    },
+    openGraph: {
+      title,
+      description,
+      url: pageUrl,
+      siteName: "スマートクレカ比較",
+      locale: "ja_JP",
+      type: "article",
+      publishedTime: article.date,
+      images: [
+        {
+          url: defaultOgImage,
+          width: 1200,
+          height: 630,
+          alt: article.title,
+        },
+      ],
+    } as Metadata["openGraph"],
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [defaultOgImage],
     },
   };
 }
@@ -42,6 +70,31 @@ export default async function ArticleDetailPage({ params }: Props) {
     notFound();
   }
 
+  const baseUrl = "https://smart-card-select.vercel.app";
+
+  // JSON-LD (構造化データ)
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: article.title,
+    description: article.excerpt,
+    datePublished: article.date,
+    url: `${baseUrl}/articles/${id}`,
+    author: {
+      "@type": "Organization",
+      name: "スマートクレカ比較",
+      url: baseUrl,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "スマートクレカ比較",
+      logo: {
+        "@type": "ImageObject",
+        url: `${baseUrl}/icon.png`,
+      },
+    },
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 pb-16">
       {/* ヘッダー */}
@@ -59,6 +112,11 @@ export default async function ArticleDetailPage({ params }: Props) {
 
       {/* メイン文章エリア */}
       <main className="max-w-md mx-auto px-4 pt-6">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+
         <article className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
           {/* メタ情報 */}
           <div className="flex items-center gap-2 text-xs text-slate-400 mb-3">
