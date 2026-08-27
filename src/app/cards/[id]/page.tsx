@@ -324,7 +324,7 @@ export default async function CardDetailPage({ params }: Props) {
               </ReactMarkdown>
             </div>
             {/* 下部リンク導線 */}
-            <DiagnosticBanner />
+            {/* <DiagnosticBanner /> */}
           </section>
         )}
 
