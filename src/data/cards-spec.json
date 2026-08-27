@@ -76,9 +76,9 @@
     "id": "cosmo-the-card-opus",
     "annualFee": "無料（永年）",
     "annualFeeValue": 0,
-    "baseReturnRate": "0.5%〜1.0%",
+    "baseReturnRate": "0.5%〜1.0%(※2)",
     "baseReturnRateValue": 1.0,
-    "maxReturnRate": "最大5.0%（5・15・25日リボ払い時）",
+    "maxReturnRate": "最大5.0%(※1)",
     "maxReturnRateValue": 5,
     "pointName": "WAON POINT",
     "features": [
@@ -101,15 +101,19 @@
         "海外旅行保険が付帯しない",
         "コスモ石油・イオン以外での還元率は標準的（0.5%）"
       ]
-    }
+    },
+    "calloutNotices": [
+      "(※1)毎月20日・30日の「お客さま感謝デー」は、全国のイオン系列の加盟店舗でカードを利用すると、買い物代金が5％OFFとなります。",
+      "(※2)基本200円（税込）につき1ポイント"
+    ]
   },
   {
     "id": "epos-card",
     "annualFee": "無料（永年）",
     "annualFeeValue": 0,
-    "baseReturnRate": "0.5%\n通常200円（税込）につき1ポイント",
+    "baseReturnRate": "0.5%(※1)",
     "baseReturnRateValue": 0.5,
-    "maxReturnRate": "マルコとマルオ期間中は10%OFF",
+    "maxReturnRate": "10%OFF(※2)",
     "maxReturnRateValue": 10,
     "pointName": "エポスポイント",
     "features": [
@@ -119,7 +123,7 @@
       "全国約10,000店舗で優待・割引"
     ],
     "details": {
-      "insurance": "海外旅行傷害保険 最高3,000万円（利用付帯）",
+      "insurance": "海外旅行傷害保険 最高3,000万円（利用付帯 ※3)",
       "electronicMoney": ["Visaのタッチ決済", "EPOS Pay", "Apple Pay"],
       "pros": [
         "本カードの年会費が永年無料",
@@ -131,7 +135,12 @@
         "通常還元率は0.5%と標準的",
         "マルイをあまり利用しない人にはメリットが薄い"
       ]
-    }
+    },
+    "calloutNotices": [
+      "(※1)通常200円（税込）につき1ポイント",
+      "(※2)年4回、会員限定「マルコとマルオの7日間」で期間中何度でも10％オフ。",
+      "(※3)保険適用には、事前に旅費などを当該カードでクレジット決済することが条件です。"
+    ]
   },
   {
     "id": "rakuten-card",

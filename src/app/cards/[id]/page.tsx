@@ -291,6 +291,10 @@ export default async function CardDetailPage({ params }: Props) {
                 </div>
               )}
             </div>
+            <CalloutNotice
+              title="※ ご注意・注釈事項"
+              items={card.calloutNotices}
+            />
           </section>
         )}
 
