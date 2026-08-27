@@ -306,7 +306,22 @@ export default async function CardDetailPage({ params }: Props) {
               徹底考察
             </h2>
             <div className="prose prose-slate max-w-none text-xs leading-relaxed text-slate-600 space-y-3">
-              <ReactMarkdown>{markdownContent}</ReactMarkdown>
+              <ReactMarkdown
+                components={{
+                  h2: ({ children }) => (
+                    <h2 className="mt-8 mb-4 border-l-4 border-slate-900 pl-3 text-lg font-bold text-slate-900">
+                      {children}
+                    </h2>
+                  ),
+                  h3: ({ children }) => (
+                    <h3 className="mt-6 mb-3 border-b border-slate-200 pb-2 text-base font-bold text-slate-800">
+                      {children}
+                    </h3>
+                  ),
+                }}
+              >
+                {markdownContent}
+              </ReactMarkdown>
             </div>
             {/* 下部リンク導線 */}
             <DiagnosticBanner />
