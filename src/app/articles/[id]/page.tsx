@@ -128,7 +128,7 @@ export default async function ArticleDetailPage({ params }: Props) {
           </h1>
 
           {/* 本文 (Markdown レンダリングエリア) */}
-          <div className="prose prose-slate max-w-none text-sm leading-relaxed text-slate-700">
+          <div className="prose prose-slate max-w-none text-sm leading-relaxed text-slate-900">
             <ReactMarkdown
               components={{
                 h2: ({ children }) => (
