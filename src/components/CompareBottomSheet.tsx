@@ -14,7 +14,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import Link from "next/link";
-import { cards } from "@/data/cards"; // ★ 直接インポート
+import NoteText from "@/components/NoteText";
 
 interface CompareBottomSheetProps {
   cards: CreditCard[];
@@ -224,10 +224,10 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
                     </span>
                   </div>
                   <div className="p-2.5 text-center font-bold text-slate-700 border-l border-transparent">
-                    {cardA.annualFee}
+                    <NoteText text={cardA.annualFee} />
                   </div>
                   <div className="p-2.5 text-center font-bold text-slate-700 border-l border-slate-100">
-                    {cardB.annualFee}
+                    <NoteText text={cardB.annualFee} />
                   </div>
                 </div>
 
@@ -239,13 +239,17 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
                     </span>
                   </div>
                   <div className="p-2.5 text-center font-bold text-red-500 flex items-center justify-center gap-1 border-l border-transparent whitespace-pre-wrap">
-                    <span>{cardA.maxReturnRate}</span>
+                    <span>
+                      <NoteText text={cardA.maxReturnRate} />
+                    </span>
                     {cardA.id === betterCardId && (
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                     )}
                   </div>
                   <div className="p-2.5 text-center font-bold text-red-500 flex items-center justify-center gap-1 border-l border-slate-100 whitespace-pre-wrap">
-                    <span>{cardB.maxReturnRate}</span>
+                    <span>
+                      <NoteText text={cardB.maxReturnRate} />
+                    </span>
                     {cardB.id === betterCardId && (
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                     )}
@@ -260,10 +264,10 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
                     </span>
                   </div>
                   <div className="p-2.5 text-center text-slate-700 border-l border-transparent whitespace-pre-wrap">
-                    {cardA.baseReturnRate}
+                    <NoteText text={cardA.baseReturnRate} />
                   </div>
                   <div className="p-2.5 text-center text-slate-700 border-l border-slate-100 whitespace-pre-wrap">
-                    {cardB.baseReturnRate}
+                    <NoteText text={cardB.baseReturnRate} />
                   </div>
                 </div>
               </div>

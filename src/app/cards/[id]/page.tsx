@@ -9,6 +9,7 @@ import type { Metadata } from "next";
 import { cards as cardsData } from "@/data/cards";
 import { DiagnosticBanner } from "@/components/DiagnosticBanner";
 import { CalloutNotice } from "@/components/CalloutNotice";
+import NoteText from "@/components/NoteText";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -187,7 +188,7 @@ export default async function CardDetailPage({ params }: Props) {
                 年会費
               </p>
               <p className="text-lg font-black text-slate-900 mt-0.5">
-                {card.annualFee}
+                <NoteText text={card.annualFee} />
               </p>
             </div>
             <div>
@@ -195,7 +196,7 @@ export default async function CardDetailPage({ params }: Props) {
                 最大還元率
               </p>
               <p className="text-lg font-black text-blue-600 mt-0.5">
-                {card.maxReturnRate}
+                <NoteText text={card.maxReturnRate} />
               </p>
             </div>
           </div>
@@ -344,13 +345,13 @@ export default async function CardDetailPage({ params }: Props) {
                 item.value && (
                   <div
                     key={i}
-                    className="py-3 flex justify-between items-center gap-4"
+                    className="py-3 flex justify-between items-center gap-4 whitespace-pre-wrap"
                   >
                     <span className="text-slate-400 font-medium shrink-0">
                       {item.label}
                     </span>
                     <span
-                      className={`text-slate-800 text-right ${item.isBold ? "font-bold text-slate-900" : ""}`}
+                      className={`text-slate-800 text-right ${item.isBold ? "font-bold text-slate-900 " : ""}`}
                     >
                       {item.value}
                     </span>

@@ -17,6 +17,7 @@ import {
 import { CompareTooltip } from "./CompareTooltip";
 import { CalloutNotice } from "@/components/CalloutNotice";
 import Link from "next/link";
+import NoteText from "@/components/NoteText";
 
 interface CardItemProps {
   card: CreditCard;
@@ -141,15 +142,15 @@ export const CardItem: React.FC<CardItemProps> = ({
             <div>
               <p className="text-[9px] text-slate-400 font-medium">年会費</p>
               <p className="text-xs font-bold text-slate-700 truncate">
-                {card.annualFee}
+                <NoteText text={card.annualFee} />
               </p>
             </div>
             <div>
               <p className="text-[9px] text-slate-400 font-medium">
                 最大還元率
               </p>
-              <p className="text-xs font-extrabold text-red-500 whitespace-pre-wrap">
-                {card.maxReturnRate}
+              <p className="text-xs font-extrabold text-red-500 ">
+                <NoteText text={card.maxReturnRate} />
               </p>
             </div>
           </div>
