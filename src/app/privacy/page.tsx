@@ -77,8 +77,20 @@ export default function PrivacyPage() {
                 https://smart-card-select.vercel.app/
               </p>
               <p>
+                <span className="font-bold text-slate-600">
+                  Threads公式アカウント:
+                </span>{" "}
+                1円を拾う人_@life_hack_db
+              </p>
+              <p>
+                <span className="font-bold text-slate-600">ThreadsURL:</span>{" "}
+                <a href="https://www.threads.com/@life_hack_db">
+                  https://www.threads.com/@life_hack_db
+                </a>
+              </p>
+              <p>
                 <span className="font-bold text-slate-600">お問い合わせ:</span>{" "}
-                サイトに関するお問い合わせ・修正依頼等はThreads公式アカウント（または指定のDM/メール）までご連絡ください。
+                サイトに関するお問い合わせ・修正依頼等はThreads公式アカウントまでご連絡ください。
               </p>
             </div>
           </section>

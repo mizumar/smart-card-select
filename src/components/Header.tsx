@@ -16,7 +16,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-20 w-full border-b bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-md items-center justify-between px-4">
-        {/* 左側：戻るボタン または サイトロゴ */}
+        {/* 左側：戻るボタン または サイトロゴ ＋ PR表記 */}
         <div className="flex items-center gap-2">
           {isArticleDetail ? (
             <Link
@@ -35,20 +35,33 @@ export function Header() {
               トップへ
             </Link>
           ) : (
-            <Link href="/" className="font-bold text-base tracking-tight">
-              スマートクレカ比較
-            </Link>
+            <div className="flex flex-col justify-center">
+              <Link
+                href="/"
+                className="font-bold text-base tracking-tight leading-none"
+              >
+                スマートクレカ比較
+              </Link>
+              <span className="text-[8px] text-muted-foreground/80 mt-0.5 font-normal leading-tight">
+                [PR] 当サイトにはプロモーションが含まれています
+              </span>
+            </div>
           )}
         </div>
 
-        {/* 右側：サブページ表示時のロゴアイコン等（必要に応じて配置） */}
+        {/* 右側：サブページ表示時のロゴアイコン等 */}
         {!isTop && (
-          <Link
-            href="/"
-            className="text-xs font-semibold text-muted-foreground hover:text-foreground"
-          >
-            スマートクレカ比較
-          </Link>
+          <div className="flex flex-col justify-center">
+            <Link
+              href="/"
+              className="text-s font-semibold text-muted-foreground hover:text-foreground"
+            >
+              スマートクレカ比較
+            </Link>
+            <span className="text-[8px] text-muted-foreground/80 mt-0.5 font-normal leading-tight">
+              [PR] 当サイトにはプロモーションが含まれています
+            </span>{" "}
+          </div>
         )}
       </div>
     </header>

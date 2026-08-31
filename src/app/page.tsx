@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { cards } from "@/data/cards";
 import { CardItem } from "@/components/CardItem";
+import { NavBanner } from "@/components/NavBanner";
 import { CompareBottomSheet } from "@/components/CompareBottomSheet";
 import { DiagnosisModal } from "@/components/DiagnosisModal";
 import { Sparkles, ArrowUpDown, BookOpen } from "lucide-react";
@@ -79,29 +80,26 @@ export default function Home() {
   return (
     <main className="flex-1 min-h-screen bg-gray-50 pb-28">
       <div className="max-w-md mx-auto p-4">
-        {/* 10秒診断バナーボタン */}
-        <div className="mb-4">
-          <button
-            onClick={() => setIsDiagnosisOpen(true)}
-            className="w-full bg-linear-to-r from-amber-500 via-orange-500 to-red-500 hover:opacity-95 text-white font-bold p-3.5 rounded-2xl shadow-md flex items-center justify-between active:scale-[0.98] transition-all"
-          >
-            <div className="flex items-center gap-2">
-              <div className="bg-white/20 p-1.5 rounded-xl">
-                <Sparkles className="w-5 h-5 text-yellow-200" />
-              </div>
-              <div className="text-left">
-                <p className="text-xs font-bold text-amber-100">
-                  どれを選ぶか迷ったら
-                </p>
-                <p className="text-sm font-extrabold leading-tight">
-                  10秒でぴったりカードを診断！
-                </p>
-              </div>
-            </div>
-            <span className="text-xs bg-white text-orange-600 px-3 py-1.5 rounded-xl font-bold shadow-sm">
-              試す
-            </span>
-          </button>
+        {/* バナー表示 */}
+        <div className="max-w-md mx-auto px-4 mb-4">
+          <div className="grid grid-cols-2 gap-2.5">
+            <NavBanner
+              onClick={() => setIsDiagnosisOpen(true)}
+              subTitle="10秒でわかる"
+              title="カード診断"
+              icon={<Sparkles className="w-4 h-4" />}
+              theme="orange"
+            />
+            <NavBanner
+              href="/articles"
+              subTitle="全8記事掲載"
+              title="クレカコラム"
+              icon={
+                <BookOpen className="w-4 h-4 text-indigo-200" strokeWidth={2} />
+              }
+              theme="indigo"
+            />
+          </div>
         </div>
 
         {/* フィルターチップ */}
@@ -160,28 +158,6 @@ export default function Home() {
             該当するカードが見つかりませんでした。
           </p>
         )}
-      </div>
-      {/* コラム導線バナー */}
-      <div className="max-w-md mx-auto px-4 mb-4">
-        <Link
-          href="/articles"
-          className="w-full bg-linear-to-r from-blue-500 via-blue-600 to-indigo-600 hover:opacity-95 text-white font-bold p-3.5 rounded-2xl shadow-md flex items-center justify-between active:scale-[0.98] transition-all"
-        >
-          <div className="flex items-center gap-2">
-            <div className="bg-white/20 p-1.5 rounded-xl">
-              <BookOpen className="w-5 h-5 text-blue-100" strokeWidth={2} />
-            </div>
-            <div className="text-left">
-              <p className="text-xs font-bold text-blue-100">クレカ徹底解説</p>
-              <p className="text-sm font-extrabold leading-tight">
-                お役立ちコラム・知識集を見る
-              </p>
-            </div>
-          </div>
-          <span className="text-xs bg-white text-blue-600 px-3 py-1.5 rounded-xl font-bold shadow-sm">
-            見る
-          </span>
-        </Link>
       </div>
 
       {/* 2枚比較ボトムシート */}
