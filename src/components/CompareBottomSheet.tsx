@@ -167,7 +167,7 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
       {/* ② 比較モーダル */}
       {isOpen && cardA && cardB && benefitA && benefitB && (
         <div className="fixed inset-0 bg-slate-950/40 backdrop-blur-md z-50 flex items-end justify-center p-0 md:p-4">
-          <div className="bg-slate-100 w-full max-w-md rounded-t-3xl md:rounded-3xl max-h-[85vh] overflow-y-auto p-5 animate-in slide-in-from-bottom duration-200 border border-slate-200/80 flex flex-col shadow-2xl">
+          <div className="bg-slate-100 w-full max-w-md rounded-t-3xl md:rounded-3xl max-h-[85vh] overflow-y-auto p-4 animate-in slide-in-from-bottom duration-200 border border-slate-200/80 flex flex-col shadow-2xl">
             {/* ヘッダー */}
             <div className="flex justify-between items-center mb-2 pb-0 top-0 bg-slate-100/90 backdrop-blur-md z-20">
               <h2 className="font-bold text-slate-900 text-sm tracking-tight">
@@ -184,7 +184,7 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
 
             <div className="space-y-5">
               {/* カードメインエリア（コラム対比） */}
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-2.5">
                 {[cardA, cardB].map((card) => (
                   <div
                     key={card.id}
@@ -224,12 +224,12 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
                     <div className="h-2 w-full" aria-hidden />{" "}
                     {/* ここが“短い側にだけ増える空白” */}
                     <div className="flex-1 w-full" />
-                    <h3 className="font-bold text-xs text-slate-900 truncate w-full text-center mb-0.5">
+                    <h3 className="font-bold text-xs text-slate-900 truncate w-full text-center mb-1">
                       {card.name}
                     </h3>
                     <Link
                       href={`/cards/${card.id}`}
-                      className="inline-flex items-center text-[10px] text-slate-400 hover:text-slate-600 mb-3"
+                      className="inline-flex items-center text-[11px] text-slate-400 hover:text-slate-600 mb-4"
                     >
                       <span>詳細</span>
                       <ChevronRight className="w-3 h-3" />
@@ -274,13 +274,13 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
                         >
                           <div>
                             <span
-                              className={`text-lg font-black tracking-tight ${
+                              className={`text-xl font-black tracking-tight ${
                                 isWinner ? "text-emerald-600" : "text-slate-700"
                               }`}
                             >
                               約{benefit.formattedBenefit}
                             </span>
-                            <span className="text-[10px] font-bold text-slate-400 ml-0.5">
+                            <span className="text-[10.5px] font-bold text-slate-400 ml-0.5">
                               円/年
                             </span>
                           </div>
