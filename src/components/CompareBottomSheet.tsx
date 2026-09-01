@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { CreditCard } from "@/data/cards";
 import { useCompareStore } from "@/store/useCompareStore";
 import {
@@ -22,11 +22,14 @@ interface CompareBottomSheetProps {
 export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
   cards,
 }) => {
-  const { selectedIds, clearAll, toggleCard } = useCompareStore();
-  const [isOpen, setIsOpen] = useState(false);
+  // ★ isOpen, setIsOpen をストアから取得
+  const { selectedIds, isOpen, setIsOpen, clearAll, toggleCard } =
+    useCompareStore();
 
-  const selectedCards = cards.filter((c) => selectedIds.includes(c.id));
+  // ★ selectedIds と cards.id を型を揃えて照合
+  const selectedCards = cards.filter((c) => selectedIds.includes(String(c.id)));
 
+  // 1枚も選択されていなければ何も表示しない（バーもモーダルも非表示）
   if (selectedCards.length === 0) return null;
 
   const cardA = selectedCards[0];
@@ -126,7 +129,7 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
               </div>
               <button
                 type="button"
-                onClick={() => toggleCard(card.id)}
+                onClick={() => toggleCard(String(card.id))}
                 className="p-0.5 text-slate-400 hover:text-white rounded-md transition-colors"
               >
                 <X className="w-3.5 h-3.5" />
@@ -147,7 +150,8 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
           <div className="flex items-center gap-1.5">
             {selectedCards.length === 2 && (
               <button
-                onClick={() => setIsOpen(true)}
+                type="button"
+                onClick={() => setIsOpen(true)} // ★ ストアの setIsOpen(true) を呼ぶ
                 className="bg-white hover:bg-slate-100 text-slate-900 font-bold text-xs py-2 px-3.5 rounded-xl flex items-center gap-1 active:scale-95 transition-all"
               >
                 <span>比較を見る</span>
@@ -155,6 +159,7 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
               </button>
             )}
             <button
+              type="button"
               onClick={clearAll}
               className="p-2 text-slate-500 hover:text-slate-300 transition-colors"
             >

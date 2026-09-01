@@ -2,9 +2,11 @@
 
 import React, { useState } from "react";
 import { CreditCard } from "@/data/cards";
-import { Sparkles, X, RotateCcw, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Sparkles, X, RotateCcw, ArrowRight, ArrowUpRight } from "lucide-react";
 import questions from "@/data/diagnosisQuestions.json";
 import { calculateDiagnosedCards } from "@/utils/diagnosis";
+import { useCompareStore } from "@/store/useCompareStore"; // 比較ストアの呼び出し
+import { MatchGauge } from "./MatchGauge"; // スピードメーター風UIコンポーネント
 
 interface DiagnosisModalProps {
   cards: CreditCard[];
@@ -18,10 +20,11 @@ export const DiagnosisModal: React.FC<DiagnosisModalProps> = ({
   onClose,
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [resultCards, setResultCards] = useState<CreditCard[]>([]);
   const [isCompleted, setIsCompleted] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(false); // ★ 計算中アニメーション用ステート
+  const { setSelectedIds } = useCompareStore();
 
   if (!isOpen) return null;
 
@@ -43,42 +46,71 @@ export const DiagnosisModal: React.FC<DiagnosisModalProps> = ({
     }
   };
 
-  // 3. 診断計算の実行と画面切替
+  // 診断完了処理（1秒のサクッとした計算中演出）
   const handleComplete = (finalAnswers: Record<string, string>) => {
-    // スコアリング計算を実行
+    setIsAnalyzing(true);
+
     const rankedCards = calculateDiagnosedCards(finalAnswers, cards);
+    const top2 = rankedCards.slice(0, 2);
 
-    // 上位2枚を結果として保持
-    setResultCards(rankedCards.slice(0, 2));
-
-    // 結果表示モードへ切り替え
-    setIsCompleted(true);
+    // 0.5秒の計算演出後に結果表示へ
+    setTimeout(() => {
+      setResultCards(top2);
+      setIsAnalyzing(false);
+      setIsCompleted(true);
+    }, 500);
   };
 
-  // リセット処理（モーダルをリセット）
-  const handleResetAndClose = () => {
+  // ★ 「この2枚の年間お得額をシミュレーション」ボタン押下時
+  const handleStartCompare = () => {
+    if (resultCards && resultCards.length >= 2) {
+      // IDを明示的に String 化して渡す
+      const top2Ids = resultCards.slice(0, 2).map((card) => String(card.id));
+
+      // Zustand ストアにセット
+      setSelectedIds(top2Ids);
+
+      // 診断モーダルを閉じる
+      onClose();
+    }
+  };
+
+  // リセット
+  const handleReset = () => {
     setCurrentStep(0);
     setAnswers({});
     setResultCards([]);
     setIsCompleted(false);
+    setIsAnalyzing(false);
   };
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-white w-full max-w-sm rounded-3xl p-5 shadow-2xl relative animate-in zoom-in-95 duration-200">
+      <div className="bg-white w-full max-w-sm rounded-3xl p-5 shadow-2xl relative animate-in zoom-in-95 duration-200 overflow-hidden">
         {/* 閉じるボタン */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-1 text-gray-400 hover:text-gray-600 rounded-full"
+          className="absolute top-4 right-4 p-1 text-gray-400 hover:text-gray-600 rounded-full z-10"
         >
           <X className="w-5 h-5" />
         </button>
 
-        {!isCompleted ? (
-          /* --- 質問画面 --- */
+        {/* --- 1. 計算中（ローディング）画面 --- */}
+        {isAnalyzing ? (
+          <div className="py-12 flex flex-col items-center justify-center text-center">
+            <div className="w-12 h-12 border-4 border-orange-200 border-t-orange-500 rounded-full animate-spin mb-4" />
+            <p className="text-sm font-bold text-slate-800">
+              あなたに最適なカードを計算中...
+            </p>
+            <p className="text-[11px] text-slate-400 mt-1">
+              条件からお得額・適合度を算出しています
+            </p>
+          </div>
+        ) : !isCompleted ? (
+          /* --- 2. 質問画面 --- */
           <div>
-            <div className="flex items-center gap-1.5 text-blue-600 font-bold text-xs mb-2">
-              <Sparkles className="w-4 h-4" />
+            <div className="flex items-center gap-1.5 text-orange-600 font-bold text-xs mb-2">
+              <Sparkles className="w-4 h-4 animate-pulse" />
               <span>
                 10秒かんたん診断 ({currentStep + 1}/{questions.length})
               </span>
@@ -93,7 +125,7 @@ export const DiagnosisModal: React.FC<DiagnosisModalProps> = ({
                 <button
                   key={opt.id}
                   onClick={() => handleSelectOption(currentQuestion.id, opt.id)}
-                  className="w-full text-left p-3.5 rounded-2xl border border-gray-200 hover:border-blue-500 hover:bg-blue-50/50 active:scale-[0.98] transition-all flex justify-between items-center text-xs font-semibold text-gray-700"
+                  className="w-full text-left p-3.5 rounded-2xl border border-gray-200 hover:border-orange-500 hover:bg-orange-50/50 active:scale-[0.98] transition-all flex justify-between items-center text-xs font-semibold text-gray-700"
                 >
                   <span>{opt.label}</span>
                   <ArrowRight className="w-4 h-4 text-gray-300" />
@@ -102,53 +134,60 @@ export const DiagnosisModal: React.FC<DiagnosisModalProps> = ({
             </div>
           </div>
         ) : (
-          /* --- 結果画面 --- */
+          /* --- 3. 結果画面 --- */
           <div>
-            <div className="text-center mb-4">
-              <div className="inline-flex p-2 bg-emerald-50 rounded-full text-emerald-600 mb-1">
-                <CheckCircle2 className="w-6 h-6" />
-              </div>
-              <h2 className="text-base font-bold text-gray-900">
-                あなたにおすすめのカードはこれ！
+            {/* バー風UI（MatchGauge） */}
+            <div className="text-center mb-3">
+              <MatchGauge score={94} />
+
+              <h2 className="text-sm font-bold text-slate-900 mt-1">
+                ベストな2枚が見つかりました！
               </h2>
-              <p className="text-[11px] text-gray-500">
-                回答に合わせたベストな選択肢です
+              <p className="text-[10px] text-slate-500 mt-0.5">
+                選択された条件に最もマッチ
               </p>
             </div>
 
-            <div className="space-y-3 mb-4">
-              {resultCards.map((card) => (
+            {/* 結果カードリスト */}
+            <div className="space-y-2 mb-4">
+              {resultCards.map((card, idx) => (
                 <div
                   key={card.id}
-                  className="p-3 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-2"
+                  className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-2"
                 >
-                  <div>
-                    <span className="text-[9px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-bold">
-                      イチオシ
+                  <div className="flex items-center gap-1.5 m-2 min-w-0">
+                    <span className="shrink-0 inline-flex items-center gap-1 text-[10px] bg-amber-50 text-amber-700 border border-amber-200/60 px-2 py-0.5 rounded-full font-bold">
+                      {idx === 0 ? "第1候補" : "第2候補"}
                     </span>
-                    <h3 className="font-bold text-xs text-gray-800 mt-1">
+                    <h3 className="font-bold text-xs text-slate-800 truncate">
                       {card.name}
                     </h3>
-                    <p className="text-[10px] text-gray-500">
-                      最大還元率: {card.maxReturnRate} / 年会費:
-                      {card.annualFee}
-                    </p>
                   </div>
                   <a
                     href={card.affiliateUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-blue-600 text-white font-bold text-[11px] px-3 py-2 rounded-xl shrink-0 hover:bg-blue-700 transition-colors"
+                    className="text-[10px] text-slate-500 hover:text-slate-800 flex items-center gap-0.5 shrink-0"
                   >
-                    公式へ
+                    公式 <ArrowUpRight className="w-3 h-3" />
                   </a>
                 </div>
               ))}
             </div>
 
+            {/* メインCTA：2枚比較機能へのバトンタッチ */}
             <button
-              onClick={handleResetAndClose}
-              className="w-full text-xs text-gray-400 flex items-center justify-center gap-1 py-1 hover:text-gray-600"
+              onClick={handleStartCompare}
+              className="w-full bg-linear-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-extrabold text-xs py-3 rounded-xl shadow-md active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 mb-2"
+            >
+              <span>この2枚の年間お得額をシミュレーション</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+
+            {/* やり直しボタン */}
+            <button
+              onClick={handleReset}
+              className="w-full text-[11px] text-slate-400 flex items-center justify-center gap-1 py-1 hover:text-slate-600"
             >
               <RotateCcw className="w-3 h-3" />
               <span>もう一度やり直す</span>
