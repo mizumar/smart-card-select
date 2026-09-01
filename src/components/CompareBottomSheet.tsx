@@ -29,15 +29,18 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
   // ★ selectedIds と cards.id を型を揃えて照合
   const selectedCards = cards.filter((c) => selectedIds.includes(String(c.id)));
 
+  // ★ 1. 月間利用額の状態を追加（初期値: 10万円 = 100,000）
+  const [monthlySpend, setMonthlySpend] = React.useState<number>(100000);
+
   // 1枚も選択されていなければ何も表示しない（バーもモーダルも非表示）
   if (selectedCards.length === 0) return null;
 
   const cardA = selectedCards[0];
   const cardB = selectedCards[1];
 
-  // 年間実質お得額の計算
-  const calculateAnnualBenefit = (card: CreditCard) => {
-    const annualSpend = 1200000; // 月10万円 × 12ヶ月
+  // ★ 2. 動的な年間実質お得額の計算関数（monthlySpend に依存）
+  const calculateAnnualBenefit = (card: CreditCard, spend: number) => {
+    const annualSpend = spend * 12; // 月額 × 12ヶ月
     const baseRate = card.baseReturnRateValue ?? 0;
     const annualFee = card.annualFeeValue ?? 0;
 
@@ -48,13 +51,14 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
       baseRate,
       annualFee,
       netBenefit,
+      // マイナス時は絶対値にしてハイフン表示などの制御もしやすくする
       formattedBenefit: Math.floor(netBenefit).toLocaleString(),
-      formattedFee: annualFee.toLocaleString(),
+      isProfit: netBenefit >= 0, // ★ 黒字か赤字かの判定
     };
   };
 
-  const benefitA = cardA ? calculateAnnualBenefit(cardA) : null;
-  const benefitB = cardB ? calculateAnnualBenefit(cardB) : null;
+  const benefitA = cardA ? calculateAnnualBenefit(cardA, monthlySpend) : null;
+  const benefitB = cardB ? calculateAnnualBenefit(cardB, monthlySpend) : null;
 
   // 画面上に登場する※マークに対応する calloutNotices だけを抽出する関数
   const getActiveCalloutNotices = (card: CreditCard) => {
@@ -255,11 +259,50 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
 
               {/* スペック比較 */}
               <div className="bg-white rounded-2xl p-4 border border-slate-200/60 shadow-xs space-y-4 text-xs">
-                {/* 年間お得額 */}
+                {/* ★★★ 3. 月間利用額コントロール（スライダー） ★★★ */}
+                <div className="bg-slate-50 p-3 rounded-xl border border-slate-200/60">
+                  <div className="flex justify-between items-center mb-1.5">
+                    <span className="text-[11px] font-bold text-slate-600">
+                      想定の月間カード利用額
+                    </span>
+                    <span className="text-sm font-black text-slate-900">
+                      {(monthlySpend / 10000).toLocaleString()}
+                      <span className="text-xs font-normal text-slate-500 ml-0.5">
+                        万円/月
+                      </span>
+                    </span>
+                  </div>
+                  <input
+                    type="range"
+                    min="0"
+                    max="1000000" // 50万円（500万円にする場合は 5000000）
+                    step="10000" // 1万円刻み（10万円刻みにする場合は 100000）
+                    value={monthlySpend}
+                    onChange={(e) => setMonthlySpend(Number(e.target.value))}
+                    className="w-full accent-emerald-500 cursor-pointer h-1.5 bg-slate-200 rounded-lg appearance-none"
+                  />
+                  <div className="relative mx-1 mt-1 h-4 text-[9px] text-slate-400 font-medium">
+                    <span className="absolute left-0">0円</span>
+                    <span className="absolute left-1/4 -translate-x-1/2">
+                      25万円
+                    </span>
+                    <span className="absolute left-1/2 -translate-x-1/2">
+                      50万円
+                    </span>
+                    <span className="absolute left-3/4 -translate-x-1/2">
+                      75万円
+                    </span>
+                    <span className="absolute right-0">100万円</span>
+                  </div>
+                </div>
+
+                <div className="h-px bg-slate-100" />
+
+                {/* 年間お得額表示エリア */}
                 <div>
-                  <div className="text-center mb-2.5">
+                  <div className="text-center mb-2">
                     <p className="text-[10px] font-bold text-slate-400 tracking-wider uppercase">
-                      年間お得額（月10万円利用時）
+                      年間実質お得額（シミュレーション）
                     </p>
                     <p className="text-[9px] text-slate-400 leading-tight mt-0.5">
                       ※基本還元率での試算。特定店舗や特典によりさらに上振れる場合があります
@@ -278,20 +321,27 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
                           className="px-1.5 flex flex-col items-center"
                         >
                           <div>
+                            {/* ★ 黒字・赤字・勝者に応じたカラー制御 */}
                             <span
                               className={`text-xl font-black tracking-tight ${
-                                isWinner ? "text-emerald-600" : "text-slate-700"
+                                !benefit.isProfit
+                                  ? "text-red-500" // 赤字（マイナス）
+                                  : isWinner
+                                    ? "text-emerald-600" // 勝者かつ黒字
+                                    : "text-slate-700" // 黒字
                               }`}
                             >
-                              約{benefit.formattedBenefit}
+                              {benefit.netBenefit > 0 && "約"}
+                              {benefit.formattedBenefit}
                             </span>
-                            <span className="text-[10.5px] font-bold text-slate-400 ml-0.5">
-                              円/年
+                            <span className="text-[10px] font-bold text-slate-400 ml-0.5">
+                              {benefit.netBenefit > 0 ? "円相当/年" : "円/年"}
                             </span>
                           </div>
 
                           <div className="mt-1.5 text-[9px] text-slate-400 font-mono bg-slate-50 px-2 py-0.5 rounded border border-slate-100/80 whitespace-nowrap">
-                            基本 {benefit.baseRate}% × 120万 - 年会費
+                            基本 {benefit.baseRate}% × 年間
+                            {(monthlySpend * 12) / 10000}万 - 年会費
                           </div>
                         </div>
                       );
