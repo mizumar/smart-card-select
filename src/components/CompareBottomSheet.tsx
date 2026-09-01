@@ -259,45 +259,6 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
 
               {/* スペック比較 */}
               <div className="bg-white rounded-2xl p-4 border border-slate-200/60 shadow-xs space-y-4 text-xs">
-                {/* ★★★ 3. 月間利用額コントロール（スライダー） ★★★ */}
-                <div className="bg-slate-50 p-3 rounded-xl border border-slate-200/60">
-                  <div className="flex justify-between items-center mb-1.5">
-                    <span className="text-[11px] font-bold text-slate-600">
-                      想定の月間カード利用額
-                    </span>
-                    <span className="text-sm font-black text-slate-900">
-                      {(monthlySpend / 10000).toLocaleString()}
-                      <span className="text-xs font-normal text-slate-500 ml-0.5">
-                        万円/月
-                      </span>
-                    </span>
-                  </div>
-                  <input
-                    type="range"
-                    min="0"
-                    max="1000000" // 50万円（500万円にする場合は 5000000）
-                    step="10000" // 1万円刻み（10万円刻みにする場合は 100000）
-                    value={monthlySpend}
-                    onChange={(e) => setMonthlySpend(Number(e.target.value))}
-                    className="w-full accent-emerald-500 cursor-pointer h-1.5 bg-slate-200 rounded-lg appearance-none"
-                  />
-                  <div className="relative mx-1 mt-1 h-4 text-[9px] text-slate-400 font-medium">
-                    <span className="absolute left-0">0円</span>
-                    <span className="absolute left-1/4 -translate-x-1/2">
-                      25万円
-                    </span>
-                    <span className="absolute left-1/2 -translate-x-1/2">
-                      50万円
-                    </span>
-                    <span className="absolute left-3/4 -translate-x-1/2">
-                      75万円
-                    </span>
-                    <span className="absolute right-0">100万円</span>
-                  </div>
-                </div>
-
-                <div className="h-px bg-slate-100" />
-
                 {/* 年間お得額表示エリア */}
                 <div>
                   <div className="text-center mb-2">
@@ -346,6 +307,43 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
                         </div>
                       );
                     })}
+                  </div>
+                </div>
+
+                {/* ★★★ 3. 月間利用額コントロール（スライダー） ★★★ */}
+                <div className="bg-slate-50 p-3 rounded-xl border border-slate-200/60">
+                  <div className="flex justify-between items-center mb-1.5">
+                    <span className="text-[11px] font-bold text-slate-600">
+                      想定の月間カード利用額
+                    </span>
+                    <span className="text-sm font-black text-slate-900">
+                      {(monthlySpend / 10000).toLocaleString()}
+                      <span className="text-xs font-normal text-slate-500 ml-0.5">
+                        万円/月
+                      </span>
+                    </span>
+                  </div>
+                  <input
+                    type="range"
+                    min="0"
+                    max="1000000" // 50万円（500万円にする場合は 5000000）
+                    step="10000" // 1万円刻み（10万円刻みにする場合は 100000）
+                    value={monthlySpend}
+                    onChange={(e) => setMonthlySpend(Number(e.target.value))}
+                    className="w-full accent-emerald-500 cursor-pointer h-1.5 bg-slate-200 rounded-lg appearance-none"
+                  />
+                  <div className="relative mx-1 mt-1 h-4 text-[9px] text-slate-400 font-medium">
+                    <span className="absolute left-0">0円</span>
+                    <span className="absolute left-1/4 -translate-x-1/2">
+                      25万円
+                    </span>
+                    <span className="absolute left-1/2 -translate-x-1/2">
+                      50万円
+                    </span>
+                    <span className="absolute left-3/4 -translate-x-1/2">
+                      75万円
+                    </span>
+                    <span className="absolute right-0">100万円</span>
                   </div>
                 </div>
 
