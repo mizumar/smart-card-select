@@ -141,7 +141,7 @@ export const CardItem: React.FC<CardItemProps> = ({
               </span>
               <span className="text-slate-300">|</span>
               <span>
-                還元率:{" "}
+                最大還元率:{" "}
                 <strong className="text-red-500 font-extrabold">
                   <NoteText text={card.maxReturnRate} />
                 </strong>
