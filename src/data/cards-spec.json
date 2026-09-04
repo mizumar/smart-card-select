@@ -15,7 +15,7 @@
     ],
     "details": {
       "insurance": "最高2,000万円の海外旅行傷害保険 ※2",
-      "electronicMoney": ["Visaのタッチ決済", "Mastercard®タッチ決済", "iD"],
+      "electronicMoney": ["Visaのタッチ決済", "Mastercardタッチ決済", "iD"],
       "pros": ["対象店舗でのポイント還元率が抜群", "年会費が完全無料"],
       "cons": ["基本還元率は0.5%と標準的"]
     },
@@ -52,29 +52,37 @@
     "id": "paypay",
     "annualFee": "永年無料",
     "annualFeeValue": 0,
-    "baseReturnRate": "1.0%",
+    "baseReturnRate": "1.0% ※1",
     "baseReturnRateValue": 1.0,
-    "maxReturnRate": "5.0%",
+    "maxReturnRate": "5.0% ※2",
     "maxReturnRateValue": 5,
     "pointName": "PayPayポイント",
     "features": [
       "PayPayステップで還元率アップ",
-      "Yahoo!ショッピングで最大5%還元",
-      "縦型デザインでスタイリッシュ"
+      "Yahoo!ショッピングで最大5%還元 ※2",
+      "チャージ不要でPayPay決済が可能"
     ],
     "details": {
       "insurance": "なし（プラチナデノミネーション等で対応）",
       "electronicMoney": ["PayPay", "タッチ決済"],
       "pros": [
-        "PayPayに直接チャージできる唯一のカード",
-        "Yahoo!ショッピングで得"
+        "PayPayとの相性が非常にいいカード",
+        "Yahoo!ショッピングでお得",
+        "家族カード（年会費無料）"
       ],
-      "cons": ["旅行保険が付帯していない"]
-    }
+      "cons": [
+        "旅行保険が付帯していない",
+        "ETCカードの年会費は1枚あたり税込550円"
+      ]
+    },
+    "calloutNotices": [
+      "※1 PayPayクレジット設定と本人確認が必要。ご利用金額税込200円ごとの付与。",
+      "※2 期間限定・用途限定ポイントが含ます。"
+    ]
   },
   {
     "id": "cosmo-the-card-opus",
-    "annualFee": "無料（永年）",
+    "annualFee": "永年無料",
     "annualFeeValue": 0,
     "baseReturnRate": "0.5%〜1.0% ※2",
     "baseReturnRateValue": 1.0,
@@ -109,7 +117,7 @@
   },
   {
     "id": "epos-card",
-    "annualFee": "無料（永年）",
+    "annualFee": "永年無料",
     "annualFeeValue": 0,
     "baseReturnRate": "0.5% ※1",
     "baseReturnRateValue": 0.5,
@@ -144,7 +152,7 @@
   },
   {
     "id": "rakuten-card",
-    "annualFee": "無料（永年）",
+    "annualFee": "永年無料",
     "annualFeeValue": 0,
     "baseReturnRate": "1.0% ※1",
     "baseReturnRateValue": 1.0,
@@ -221,7 +229,7 @@
   },
   {
     "id": "nudge-card",
-    "annualFee": "無料（永年）",
+    "annualFee": "永年無料",
     "annualFeeValue": 0,
     "baseReturnRate": "還元率制度なし ※1",
     "baseReturnRateValue": 0,
