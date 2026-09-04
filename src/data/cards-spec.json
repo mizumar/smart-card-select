@@ -28,25 +28,31 @@
     "id": "jcb-w",
     "annualFee": "永年無料",
     "annualFeeValue": 0,
-    "baseReturnRate": "1.0%",
+    "baseReturnRate": "1.0% ※1",
     "baseReturnRateValue": 1.0,
-    "maxReturnRate": "5.5%",
-    "maxReturnRateValue": 5.5,
+    "maxReturnRate": "10.5% ※4",
+    "maxReturnRateValue": 10.5,
     "pointName": "J-POINT",
     "features": [
       "いつでもポイント2倍（基本還元率1.0%）",
-      "Amazonやスタバでさらに還元率UP",
-      "39歳以下の入会でWeb限定発行"
+      "Amazon,スタバ,マック等でさらに還元率UP ※4",
+      "39歳以下の入会でWeb限定発行 ※2"
     ],
     "details": {
-      "insurance": "最高2,000万円の海外旅行傷害保険",
-      "electronicMoney": ["QUICPay", "JCB Contactless"],
+      "insurance": "最高2,000万円の海外旅行傷害保険 ※3",
+      "electronicMoney": ["QUICPay", "ApplePay", "GooglePay", "Samsung Wallet"],
       "pros": [
         "基本還元率が1%と高くメインカードに最適",
         "Amazon利用時の還元率が高い"
       ],
       "cons": ["40歳以上は新規申し込み不可"]
-    }
+    },
+    "calloutNotices": [
+      "※1 200円（税込）につき2ポイントの付与",
+      "※2 40歳以降も年会費無料のまま継続できます。",
+      "※3 保険の適用には条件があります。",
+      "※4 最大還元率が反映される条件や対象となるサービスは公式サイトにてご確認ください。"
+    ]
   },
   {
     "id": "paypay",
