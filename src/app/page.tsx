@@ -92,7 +92,7 @@ export default function Home() {
             />
             <NavBanner
               href="/articles"
-              subTitle="全8記事掲載"
+              subTitle="記事掲載"
               title="クレカコラム"
               icon={
                 <BookOpen className="w-4 h-4 text-indigo-200" strokeWidth={2} />
