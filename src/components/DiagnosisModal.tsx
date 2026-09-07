@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { CreditCard } from "@/data/cards";
 import { Sparkles, X, RotateCcw, ArrowRight, ArrowUpRight } from "lucide-react";
 import questions from "@/data/diagnosisQuestions.json";
-import { calculateDiagnosedCards } from "@/utils/diagnosis";
+import { calculateDiagnosedCards, ScoreBreakdown } from "@/utils/diagnosis";
 import { useCompareStore } from "@/store/useCompareStore"; // 比較ストアの呼び出し
 import { MatchGauge } from "./MatchGauge"; // スピードメーター風UIコンポーネント
 
@@ -25,6 +25,8 @@ export const DiagnosisModal: React.FC<DiagnosisModalProps> = ({
   const [isCompleted, setIsCompleted] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false); // ★ 計算中アニメーション用ステート
   const { setSelectedIds } = useCompareStore();
+
+  const [topMatchRate, setTopMatchRate] = useState<number>(90);
 
   if (!isOpen) return null;
 
@@ -56,6 +58,13 @@ export const DiagnosisModal: React.FC<DiagnosisModalProps> = ({
     // 0.5秒の計算演出後に結果表示へ
     setTimeout(() => {
       setResultCards(top2);
+
+      // 1位カードのマッチ度を取得
+      const firstCard = top2[0] as any;
+      if (firstCard?._matchRate) {
+        setTopMatchRate(firstCard._matchRate);
+      }
+
       setIsAnalyzing(false);
       setIsCompleted(true);
     }, 500);
@@ -138,7 +147,8 @@ export const DiagnosisModal: React.FC<DiagnosisModalProps> = ({
           <div>
             {/* バー風UI（MatchGauge） */}
             <div className="text-center mb-3">
-              <MatchGauge score={94} />
+              {/* 動的に計算されたマッチ率を表示 */}
+              <MatchGauge score={topMatchRate} />
 
               <h2 className="text-sm font-bold text-slate-900 mt-1">
                 ベストな2枚が見つかりました！
@@ -146,33 +156,67 @@ export const DiagnosisModal: React.FC<DiagnosisModalProps> = ({
               <p className="text-[10px] text-slate-500 mt-0.5">
                 選択された条件に最もマッチ
               </p>
-            </div>
 
-            {/* 結果カードリスト */}
-            <div className="space-y-2 mb-4">
-              {resultCards.map((card, idx) => (
-                <div
-                  key={card.id}
-                  className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-2"
-                >
-                  <div className="flex items-center gap-1.5 m-2 min-w-0">
-                    <span className="shrink-0 inline-flex items-center gap-1 text-[10px] bg-amber-50 text-amber-700 border border-amber-200/60 px-2 py-0.5 rounded-full font-bold">
-                      {idx === 0 ? "第1候補" : "第2候補"}
-                    </span>
-                    <h3 className="font-bold text-xs text-slate-800 truncate">
-                      {card.name}
-                    </h3>
-                  </div>
-                  <a
-                    href={card.affiliateUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[10px] text-slate-500 hover:text-slate-800 flex items-center gap-0.5 shrink-0"
-                  >
-                    公式 <ArrowUpRight className="w-3 h-3" />
-                  </a>
-                </div>
-              ))}
+              {/* 結果カードリスト */}
+              <div className="space-y-3">
+                {resultCards.map((card, index) => {
+                  const c = card as any;
+                  const breakdowns: ScoreBreakdown[] = c._breakdowns || [];
+                  return (
+                    <div
+                      key={card.id}
+                      className="p-3.5 bg-slate-50/80 rounded-2xl border border-slate-200/60 shadow-2xs space-y-2.5 transition-all"
+                    >
+                      {/* カード基本情報 & リンク */}
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="space-y-1 min-w-0">
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-[9px] font-extrabold text-orange-600 bg-orange-50 border border-orange-200/50 px-1.5 py-0.2 rounded">
+                              第{index + 1}候補
+                            </span>
+                            <span className="text-[10px] font-semibold text-slate-400">
+                              適合度 {c._matchRate}%
+                            </span>
+                          </div>
+                          <h3 className="text-xs font-bold text-slate-800 truncate">
+                            {card.name}
+                          </h3>
+                        </div>
+
+                        {/* 公式アフィリエイトリンク */}
+                        <a
+                          href={card.affiliateUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[10px] font-medium text-slate-500 hover:text-slate-800 bg-white px-2 py-1 rounded-lg border border-slate-200/80 flex items-center gap-0.5 shrink-0 transition-colors shadow-2xs"
+                        >
+                          公式{" "}
+                          <ArrowUpRight className="w-3 h-3 text-slate-400" />
+                        </a>
+                      </div>
+
+                      {/* 控えめな配点内訳（シックなピルバッジ） */}
+                      {breakdowns.length > 0 && (
+                        <div className="pt-2 border-t border-slate-200/50">
+                          <div className="flex flex-wrap gap-1">
+                            {breakdowns.map((item, idx) => (
+                              <span
+                                key={idx}
+                                className="inline-flex items-center text-[9.5px] bg-slate-200/60 text-slate-600 px-2 py-0.5 rounded-full font-medium"
+                              >
+                                <span className="font-semibold text-slate-800 mr-1">
+                                  +{item.earnedScore}pt
+                                </span>
+                                {item.label}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
 
             {/* メインCTA：2枚比較機能へのバトンタッチ */}
