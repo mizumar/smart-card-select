@@ -21,10 +21,9 @@
   },
   {
     "id": "epos-card",
-    "affiliateUrl": "//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3778032&pid=892681911",
-    "imageUrl": "//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3778032&pid=892681911",
+    "affiliateUrl": "https://www.eposcard.co.jp/index.html",
     "aspName": "valuecommerce",
-    "isPromoting": false
+    "isPromoting": true
   },
   {
     "id": "rakuten-card",
@@ -53,6 +52,12 @@
     "affiliateUrl": "https://px.a8.net/svt/ejp?a8mat=4BA9HD+AHGV2Y+4T5W+6TUB5",
     "imageUrl": "https://www28.a8.net/svt/bgt?aid=260819329634&wid=002&eno=01&mid=s00000022442001147000&mc=1",
     "trackingImageUrl": "https://www19.a8.net/0.gif?a8mat=4BA9HD+AHGV2Y+4T5W+6TUB5",
+    "aspName": "a8",
+    "isPromoting": true
+  },
+  {
+    "id": "muji-card",
+    "affiliateUrl": "https://www.saisoncard.co.jp/creditcard/lineup/048/#features",
     "aspName": "a8",
     "isPromoting": true
   }

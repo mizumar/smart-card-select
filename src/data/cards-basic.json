@@ -87,5 +87,15 @@
     "badge": "デポジット型",
     "brandColor": "from-red-500 to-amber-600",
     "brands": ["mastercard"]
+  },
+  {
+    "id": "muji-card",
+    "name": "MUJI Card",
+    "popularityRank": 11,
+    "tagIds": ["fee-free", "type-special-store", "type-benefits", "use-daily"],
+    "tags": ["年会費無料", "無印良品特化", "ポイント優遇"],
+    "badge": "無印良品",
+    "brandColor": "from-[#7B0018] to-[#7B0018]",
+    "brands": ["visa", "amex"]
   }
 ]
