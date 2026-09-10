@@ -115,23 +115,13 @@ export default async function CardDetailPage({ params }: Props) {
     { label: "電子マネー", value: card.details?.electronicMoney?.join("、") },
   ];
 
-  // 構造化データ（Productスキーマ / JSON-LD）
+  // 構造化データ（JSON-LD）
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
     name: card.name,
     image: card.imageUrl,
     description: frontmatter.description || `${card.name}のスペック詳細`,
-    offers: {
-      "@type": "Offer",
-      price:
-        card.annualFee === "無料" || card.annualFee === "永年無料"
-          ? "0"
-          : undefined,
-      priceCurrency: "JPY",
-      availability: "https://schema.org/InStock",
-      url: card.affiliateUrl,
-    },
   };
 
   return (
