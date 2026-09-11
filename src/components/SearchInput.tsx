@@ -29,7 +29,7 @@ export function SearchInput({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder="カード名・タグ..."
-          className="w-full h-full pl-8 pr-7 text-xs bg-white text-slate-800 placeholder:text-slate-400 border border-slate-200 rounded-full shadow-xs focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full h-full pl-8 pr-7 text-base sm:text-xs bg-white text-slate-800 placeholder:text-slate-400 border border-slate-200 rounded-full shadow-xs focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <button
           type="button"
