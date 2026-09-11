@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import NoteText from "@/components/NoteText";
+import { FavoriteButton } from "@/components/FavoriteButton";
 
 interface CompareBottomSheetProps {
   cards: CreditCard[];
@@ -236,13 +237,17 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
                     <h3 className="font-bold text-xs text-slate-900 truncate w-full text-center mb-1">
                       {card.name}
                     </h3>
-                    <Link
-                      href={`/cards/${card.id}`}
-                      className="inline-flex items-center text-[11px] text-slate-400 hover:text-slate-600 mb-4"
-                    >
-                      <span>詳細</span>
-                      <ChevronRight className="w-3 h-3" />
-                    </Link>
+                    <div className="flex items-center gap-3 mb-4">
+                      {/* ハート（お気に入り）ボタン */}
+                      <FavoriteButton cardId={card.id} />
+                      <Link
+                        href={`/cards/${card.id}`}
+                        className="inline-flex items-center text-[11px] text-slate-400 hover:text-slate-600"
+                      >
+                        <span>詳細</span>
+                        <ChevronRight className="w-3 h-3" />
+                      </Link>
+                    </div>
                     {/* 公式ボタン */}
                     <a
                       href={card.affiliateUrl}
