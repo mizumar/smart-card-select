@@ -115,13 +115,16 @@ export default async function CardDetailPage({ params }: Props) {
     { label: "電子マネー", value: card.details?.electronicMoney?.join("、") },
   ];
 
+  // ↓ URLを追加（generateMetadataと同じ形式）
+  const pageUrl = `https://smart-card-select.vercel.app/cards/${id}`;
+
   // 構造化データ（JSON-LD）
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Product",
+    "@type": "WebPage",
     name: card.name,
-    image: card.imageUrl,
     description: frontmatter.description || `${card.name}のスペック詳細`,
+    url: pageUrl,
   };
 
   return (
