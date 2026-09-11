@@ -18,6 +18,7 @@ import { CompareTooltip } from "./CompareTooltip";
 import { CalloutNotice } from "@/components/CalloutNotice";
 import Link from "next/link";
 import NoteText from "@/components/NoteText";
+import { FavoriteButton } from "@/components/FavoriteButton";
 
 interface CardItemProps {
   card: CreditCard;
@@ -43,7 +44,7 @@ export const CardItem: React.FC<CardItemProps> = ({
 
   return (
     <div className="w-full bg-white rounded-2xl border border-slate-100 shadow-[0_2px_10px_rgba(0,0,0,0.03)] hover:shadow-[0_4px_14px_rgba(0,0,0,0.06)] transition-all p-3 mb-2.5 relative overflow-hidden">
-      {/* 1. ヘッダー：バッジ / タグ / 比較ボタン（極力薄くコンパクトに） */}
+      {/* 1. ヘッダー：バッジ / タグ / お気に入り ＋ 比較ボタン */}
       <div className="flex items-center justify-between mb-2 gap-1.5">
         <div className="flex items-center gap-1.5 overflow-hidden truncate">
           {card.badge && (
@@ -62,30 +63,36 @@ export const CardItem: React.FC<CardItemProps> = ({
           ))}
         </div>
 
-        {/* 比較ボタン */}
-        <div className="relative shrink-0">
-          <CompareTooltip isVisible={showTooltip} />
-          <button
-            onClick={() => {
-              toggleCard(card.id);
-              if (onCompareClick) onCompareClick(); // ← 比較ボタン押下時に明示的に呼び出して消去
-            }}
-            disabled={isMaxReached}
-            className={`flex items-center gap-0.5 text-[10px] px-2 py-0.5 rounded-full border transition-all ${
-              isCompared
-                ? "bg-blue-50 border-blue-500 text-blue-600 font-bold"
-                : isMaxReached
-                  ? "border-slate-100 bg-slate-50 text-slate-300 cursor-not-allowed"
-                  : "border-slate-200 text-slate-500 hover:bg-slate-50 font-medium"
-            }`}
-          >
-            {isCompared ? (
-              <Check className="w-2.5 h-2.5" />
-            ) : (
-              <Plus className="w-2.5 h-2.5" />
-            )}
-            {isCompared ? "比較中" : isMaxReached ? "上限" : "比較"}
-          </button>
+        {/* 右側アクションエリア：ハートボタン + 比較ボタン */}
+        <div className="flex items-center gap-1.5 shrink-0">
+          {/* ハート（お気に入り）ボタン */}
+          <FavoriteButton cardId={card.id} />
+
+          {/* 比較ボタン */}
+          <div className="relative">
+            <CompareTooltip isVisible={showTooltip} />
+            <button
+              onClick={() => {
+                toggleCard(card.id);
+                if (onCompareClick) onCompareClick();
+              }}
+              disabled={isMaxReached}
+              className={`flex items-center gap-0.5 text-[10px] px-2 py-0.5 rounded-full border transition-all ${
+                isCompared
+                  ? "bg-blue-50 border-blue-500 text-blue-600 font-bold"
+                  : isMaxReached
+                    ? "border-slate-100 bg-slate-50 text-slate-300 cursor-not-allowed"
+                    : "border-slate-200 text-slate-500 hover:bg-slate-50 font-medium"
+              }`}
+            >
+              {isCompared ? (
+                <Check className="w-2.5 h-2.5" />
+              ) : (
+                <Plus className="w-2.5 h-2.5" />
+              )}
+              {isCompared ? "比較" : isMaxReached ? "上限" : "比較"}
+            </button>
+          </div>
         </div>
       </div>
 
