@@ -10,6 +10,7 @@ import { DiagnosisModal } from "@/components/DiagnosisModal";
 import { Sparkles, ArrowUpDown, BookOpen, Heart } from "lucide-react";
 import { useCompareStore } from "@/store/useCompareStore";
 import { useFavoritesStore } from "@/store/useFavoritesStore";
+import { SearchInput } from "@/components/SearchInput";
 
 const FILTER_TAGS = [
   "すべて",
@@ -31,11 +32,15 @@ export default function Home() {
   const { selectedIds } = useCompareStore();
   const [showTooltip, setShowTooltip] = useState(false);
 
+  // 検索
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
   // お気に入り関連
   const favoriteIds = useFavoritesStore((state) => state.favoriteIds);
   const [showOnlyFavorites, setShowOnlyFavorites] = useState(false);
 
-  // 1. フィルター処理（タグ絞り込み ＋ お気に入り絞り込み）
+  // 1. フィルター処理（タグ絞り込み ＋ お気に入り絞り込み ＋ キーワード検索）
   const filteredCards = useMemo(() => {
     return cards.filter((card) => {
       // タグフィルターの判定
@@ -47,9 +52,16 @@ export default function Home() {
         ? favoriteIds.includes(card.id)
         : true;
 
-      return matchesTag && matchesFavorite;
+      // 検索キーワードの判定（カード名 または タグに含まれているか）
+      const query = searchQuery.trim().toLowerCase();
+      const matchesSearch =
+        query === "" ||
+        card.name.toLowerCase().includes(query) ||
+        card.tags.some((tag) => tag.toLowerCase().includes(query));
+
+      return matchesTag && matchesFavorite && matchesSearch;
     });
-  }, [selectedFilter, showOnlyFavorites, favoriteIds]);
+  }, [cards, selectedFilter, showOnlyFavorites, favoriteIds, searchQuery]);
 
   // 2. ソート処理（絞り込まれた結果をソートする）
   const displayedCards = useMemo(() => {
@@ -114,37 +126,73 @@ export default function Home() {
         </div>
 
         {/* ─── 上部「お気に入り / すべて」切替エリア ─── */}
-        <div className="flex items-center justify-between bg-slate-100/80 p-1.5 rounded-xl mb-3">
-          <div className="flex items-center space-x-1.5 w-full">
+        <div
+          data-testid="filter-tabs"
+          className="flex items-center justify-between bg-slate-100/80 p-1.5 rounded-xl mb-3 gap-1.5 overflow-hidden h-10"
+        >
+          {/* 
+        左側：タブエリア
+      */}
+          <div
+            className={`flex items-center space-x-1.5 transition-all duration-200 overflow-hidden h-full ${
+              isSearchOpen ? "flex-none" : "flex-1"
+            }`}
+          >
+            {/* すべて表示 ボタン */}
             <button
               type="button"
               onClick={() => setShowOnlyFavorites(false)}
-              className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all text-center ${
+              className={`h-full text-xs font-bold rounded-lg transition-all duration-200 flex items-center justify-center whitespace-nowrap overflow-hidden ${
+                isSearchOpen ? "px-2.5" : "flex-1 px-3"
+              } ${
                 !showOnlyFavorites
                   ? "bg-white text-slate-800 shadow-xs"
                   : "text-slate-500 hover:text-slate-700"
               }`}
             >
-              すべて表示 ({cards.length})
+              {isSearchOpen ? (
+                "すべて"
+              ) : (
+                <span className="inline-block animate-in fade-in duration-200">
+                  すべて表示 ({cards.length})
+                </span>
+              )}
             </button>
 
+            {/* お気に入り ボタン */}
             <button
               type="button"
               onClick={() => setShowOnlyFavorites(true)}
-              className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+              className={`h-full text-xs font-bold rounded-lg transition-all duration-200 flex items-center justify-center gap-1 whitespace-nowrap overflow-hidden ${
+                isSearchOpen ? "px-2.5" : "flex-1 px-3"
+              } ${
                 showOnlyFavorites
                   ? "bg-red-500 text-white shadow-xs"
                   : "bg-white/60 text-slate-600 hover:bg-white hover:text-slate-800"
               }`}
             >
               <Heart
-                className={`w-3.5 h-3.5 ${
+                className={`w-3.5 h-3.5 shrink-0 ${
                   showOnlyFavorites ? "fill-white" : "text-red-500"
                 }`}
               />
-              <span>お気に入り ({favoriteIds.length})</span>
+              {isSearchOpen ? (
+                <span>{favoriteIds.length}</span>
+              ) : (
+                <span className="inline-block animate-in fade-in duration-200">
+                  お気に入り ({favoriteIds.length})
+                </span>
+              )}
             </button>
           </div>
+
+          {/* 右側：検索コンポーネント（h-full を継承） */}
+          <SearchInput
+            value={searchQuery}
+            onChange={setSearchQuery}
+            isOpen={isSearchOpen}
+            onToggle={setIsSearchOpen}
+          />
         </div>
 
         {/* フィルターチップ（カテゴリタグ） */}
@@ -191,11 +239,13 @@ export default function Home() {
           <div className="text-center py-12 bg-white rounded-2xl border border-dashed border-slate-200 p-4">
             <Heart className="w-8 h-8 text-slate-300 mx-auto mb-2" />
             <p className="text-xs font-bold text-slate-600">
-              {showOnlyFavorites
-                ? "お気に入りに追加されたカードはありません"
-                : "該当するカードが見つかりませんでした"}
+              {searchQuery
+                ? `「${searchQuery}」に一致するカードが見つかりませんでした`
+                : showOnlyFavorites
+                  ? "お気に入りに追加されたカードはありません"
+                  : "該当するカードが見つかりませんでした"}
             </p>
-            {showOnlyFavorites && (
+            {showOnlyFavorites && !searchQuery && (
               <p className="text-[10px] text-slate-400 mt-1">
                 カード内にあるハートボタンを押すとここに追加されます
               </p>
