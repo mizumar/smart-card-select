@@ -9,6 +9,7 @@ import type { Metadata } from "next";
 import { cards, cards as cardsData } from "@/data/cards";
 import { CardItem } from "@/components/CardItem";
 import { CompareBottomSheet } from "@/components/CompareBottomSheet";
+import { DiagnosticBanner } from "@/components/DiagnosticBanner";
 import { FeatureHeroIcon } from "@/components/FeatureHeroIcon";
 
 interface Props {
@@ -166,6 +167,8 @@ export default async function FeatureDetailPage({ params }: Props) {
             </div>
           </section>
         )}
+        {/* 下部リンク導線 */}
+        <DiagnosticBanner />
       </main>
       {/* 2枚比較ボトムシート */}
       <CompareBottomSheet cards={cards} />
