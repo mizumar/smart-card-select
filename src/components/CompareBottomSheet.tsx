@@ -11,6 +11,8 @@ import {
   CreditCard as CreditCardIcon,
   ChevronRight,
   Check,
+  ArrowLeft,
+  Zap,
 } from "lucide-react";
 import Link from "next/link";
 import NoteText from "@/components/NoteText";
@@ -33,11 +35,52 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
   // ★ 1. 月間利用額の状態を追加（初期値: 10万円 = 100,000）
   const [monthlySpend, setMonthlySpend] = React.useState<number>(100000);
 
-  // 1枚も選択されていなければ何も表示しない（バーもモーダルも非表示）
-  if (selectedCards.length === 0) return null;
-
   const cardA = selectedCards[0];
   const cardB = selectedCards[1];
+
+  // 損益分岐点・実質0円ラインの統合算出
+  const breakEvenInfo = React.useMemo(() => {
+    if (!cardA || !cardB) return null;
+
+    const feeA = Number(cardA.annualFeeValue) || 0;
+    const feeB = Number(cardB.annualFeeValue) || 0;
+    const rateA = Number(cardA.baseReturnRateValue) || 0;
+    const rateB = Number(cardB.baseReturnRateValue) || 0;
+
+    // 【1】無料 vs 無料 は完全に除外
+    if (feeA === 0 && feeB === 0) return null;
+
+    // 単体での実質0円ライン（年会費回収）
+    const getZeroSpend = (fee: number, rate: number) => {
+      if (fee <= 0 || rate <= 0) return null;
+      return Math.round(fee / (rate / 100) / 12);
+    };
+
+    const zeroSpendA = getZeroSpend(feeA, rateA);
+    const zeroSpendB = getZeroSpend(feeB, rateB);
+
+    // 【2】2枚の損益分岐点（高年会費側が、高還元率で逆転できる場合のみ計算）
+    let crossSpend: number | null = null;
+
+    // 年会費が高い方のカードと安い方のカードを判定
+    const expensive =
+      feeA >= feeB ? { fee: feeA, rate: rateA } : { fee: feeB, rate: rateB };
+    const cheaper =
+      feeA >= feeB ? { fee: feeB, rate: rateB } : { fee: feeA, rate: rateA };
+
+    const feeDiff = expensive.fee - cheaper.fee;
+    const rateDiff = expensive.rate - cheaper.rate;
+
+    // 有料カード側の還元率が安い側より「厳密に高い（rateDiff > 0）」時だけ逆転が存在する
+    if (feeDiff > 0 && rateDiff > 0) {
+      crossSpend = Math.round(feeDiff / (rateDiff / 100) / 12);
+    }
+
+    return { zeroSpendA, zeroSpendB, crossSpend };
+  }, [cardA, cardB]);
+
+  // 1枚も選択されていなければ何も表示しない（バーもモーダルも非表示）
+  if (selectedCards.length === 0) return null;
 
   // ★ 2. 動的な年間実質お得額の計算関数（monthlySpend に依存）
   const calculateAnnualBenefit = (card: CreditCard, spend: number) => {
@@ -315,41 +358,122 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
                   </div>
                 </div>
 
-                {/* ★★★ 3. 月間利用額コントロール（スライダー） ★★★ */}
-                <div className="bg-slate-50 p-3 rounded-xl border border-slate-200/60">
-                  <div className="flex justify-between items-center mb-1.5">
-                    <span className="text-[11px] font-bold text-slate-600">
+                {/* ★★★ 3. 月間利用額コントロール（スライダー & 分岐点ボタン） ★★★ */}
+                <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80 space-y-3">
+                  {/* メイン金額表示 */}
+                  <div className="flex justify-between items-baseline">
+                    <span className="text-xs font-bold text-slate-700">
                       想定の月間カード利用額
                     </span>
-                    <span className="text-sm font-black text-slate-900">
-                      {(monthlySpend / 10000).toLocaleString()}
-                      <span className="text-xs font-normal text-slate-500 ml-0.5">
-                        万円/月
+                    <span className="text-base font-black text-slate-900 tracking-tight">
+                      {monthlySpend >= 10000 ? (
+                        <>
+                          {(monthlySpend / 10000).toLocaleString(undefined, {
+                            maximumFractionDigits: 2,
+                          })}
+                          <span className="text-xs font-medium text-slate-500 ml-0.5">
+                            万円/月
+                          </span>
+                        </>
+                      ) : (
+                        <>
+                          {monthlySpend.toLocaleString()}
+                          <span className="text-xs font-medium text-slate-500 ml-0.5">
+                            円/月
+                          </span>
+                        </>
+                      )}
+                    </span>
+                  </div>
+
+                  {/* レンジスライダー */}
+                  <div>
+                    <input
+                      type="range"
+                      min="0"
+                      max="1000000"
+                      step="10000"
+                      value={monthlySpend}
+                      onChange={(e) => setMonthlySpend(Number(e.target.value))}
+                      className="w-full accent-emerald-500 cursor-pointer h-1.5 bg-slate-200 rounded-lg appearance-none block"
+                    />
+                    <div className="relative mx-1 mt-1.5 h-3 text-[9px] text-slate-400 font-medium">
+                      <span className="absolute left-0">0円</span>
+                      <span className="absolute left-1/4 -translate-x-1/2">
+                        25万円
                       </span>
-                    </span>
+                      <span className="absolute left-1/2 -translate-x-1/2">
+                        50万円
+                      </span>
+                      <span className="absolute left-3/4 -translate-x-1/2">
+                        75万円
+                      </span>
+                      <span className="absolute right-0">100万円</span>
+                    </div>
                   </div>
-                  <input
-                    type="range"
-                    min="0"
-                    max="1000000" // 50万円（500万円にする場合は 5000000）
-                    step="10000" // 1万円刻み（10万円刻みにする場合は 100000）
-                    value={monthlySpend}
-                    onChange={(e) => setMonthlySpend(Number(e.target.value))}
-                    className="w-full accent-emerald-500 cursor-pointer h-1.5 bg-slate-200 rounded-lg appearance-none"
-                  />
-                  <div className="relative mx-1 mt-1 h-4 text-[9px] text-slate-400 font-medium">
-                    <span className="absolute left-0">0円</span>
-                    <span className="absolute left-1/4 -translate-x-1/2">
-                      25万円
-                    </span>
-                    <span className="absolute left-1/2 -translate-x-1/2">
-                      50万円
-                    </span>
-                    <span className="absolute left-3/4 -translate-x-1/2">
-                      75万円
-                    </span>
-                    <span className="absolute right-0">100万円</span>
-                  </div>
+
+                  {/* ▼▼▼ 全パターン対応・洗練された分岐点チップ群 ▼▼▼ */}
+                  {breakEvenInfo && (
+                    <div className="pt-2 border-t border-slate-200/60 flex items-center gap-1.5 flex-wrap">
+                      <span className="text-[10px] font-medium text-slate-400 mr-0.5 shrink-0 select-none">
+                        自動セット
+                      </span>
+
+                      {/* 損益分岐点（有料vs有料、有料vs無料のどちらでも計算可能であれば表示） */}
+                      {breakEvenInfo.crossSpend && (
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setMonthlySpend(breakEvenInfo.crossSpend!)
+                          }
+                          className={`inline-flex items-center gap-1 text-[10px] font-semibold px-2.5 py-1 rounded-full border transition-all active:scale-95 cursor-pointer ${
+                            monthlySpend === breakEvenInfo.crossSpend
+                              ? "bg-emerald-600 text-white border-emerald-600 shadow-xs"
+                              : "bg-emerald-50/80 hover:bg-emerald-100 text-emerald-700 border-emerald-200/80"
+                          }`}
+                        >
+                          <Zap className="w-2.5 h-2.5 shrink-0" />
+                          <span>損益分岐点</span>
+                        </button>
+                      )}
+
+                      {/* 左カード：単体での実質0円ライン */}
+                      {breakEvenInfo.zeroSpendA && (
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setMonthlySpend(breakEvenInfo.zeroSpendA!)
+                          }
+                          className={`inline-flex items-center gap-1 text-[10px] font-medium px-2.5 py-1 rounded-full border transition-all active:scale-95 cursor-pointer ${
+                            monthlySpend === breakEvenInfo.zeroSpendA
+                              ? "bg-slate-800 text-white border-slate-800 shadow-xs"
+                              : "bg-white hover:bg-slate-100 text-slate-600 border-slate-200"
+                          }`}
+                        >
+                          <ArrowLeft className="w-2.5 h-2.5 shrink-0" />
+                          <span>実質0円</span>
+                        </button>
+                      )}
+
+                      {/* 右カード：単体での実質0円ライン */}
+                      {breakEvenInfo.zeroSpendB && (
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setMonthlySpend(breakEvenInfo.zeroSpendB!)
+                          }
+                          className={`inline-flex items-center gap-1 text-[10px] font-medium px-2.5 py-1 rounded-full border transition-all active:scale-95 cursor-pointer ${
+                            monthlySpend === breakEvenInfo.zeroSpendB
+                              ? "bg-slate-800 text-white border-slate-800 shadow-xs"
+                              : "bg-white hover:bg-slate-100 text-slate-600 border-slate-200"
+                          }`}
+                        >
+                          <span>実質0円</span>
+                          <ArrowRight className="w-2.5 h-2.5 shrink-0" />
+                        </button>
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 <div className="h-px bg-slate-100" />
