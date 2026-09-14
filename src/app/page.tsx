@@ -11,6 +11,8 @@ import { Sparkles, ArrowUpDown, BookOpen, Heart } from "lucide-react";
 import { useCompareStore } from "@/store/useCompareStore";
 import { useFavoritesStore } from "@/store/useFavoritesStore";
 import { SearchInput } from "@/components/SearchInput";
+import { getAllFeatureArticles } from "@/lib/feature-articles";
+import { FeatureSection } from "@/components/features";
 
 const FILTER_TAGS = [
   "すべて",
@@ -39,6 +41,8 @@ export default function Home() {
   // お気に入り関連
   const favoriteIds = useFavoritesStore((state) => state.favoriteIds);
   const [showOnlyFavorites, setShowOnlyFavorites] = useState(false);
+
+  const features = getAllFeatureArticles();
 
   // 1. フィルター処理（タグ絞り込み ＋ お気に入り絞り込み ＋ キーワード検索）
   const filteredCards = useMemo(() => {
@@ -264,6 +268,9 @@ export default function Home() {
             ))}
           </div>
         )}
+
+        {/* 特集セクションを追加 */}
+        <FeatureSection features={features} />
       </div>
 
       {/* 2枚比較ボトムシート */}
