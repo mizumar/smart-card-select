@@ -283,7 +283,7 @@ export default function Home() {
 
       {/* 簡易診断モーダル */}
       {/* useSearchParams を使うコンポーネントを Suspense で囲む */}
-      <Suspense fallback={<div>読み込み中...</div>}>
+      <Suspense fallback={<div>読み込み中....</div>}>
         <DiagnosisModal
           cards={cards}
           isOpen={isDiagnosisOpen}
