@@ -135,74 +135,74 @@ export default function Home() {
           />
         </div>
 
-        {/* ─── 上部「お気に入り / すべて」切替エリア ─── */}
-        <div
-          data-testid="filter-tabs"
-          className="flex items-center justify-between bg-slate-100/80 p-1.5 rounded-xl mb-3 gap-1.5 overflow-hidden h-10"
-        >
-          {/* 
-        左側：タブエリア
-      */}
+        {/* ─── スクロール追従（sticky）エリア ─── */}
+        <div className="sticky top-14 z-20 bg-gray-50 pt-0.8 pb-0.8 -mx-4 px-4 shadow-xs mb-3">
+          {/* 上部「お気に入り / すべて」切替エリア */}
           <div
-            className={`flex items-center space-x-1.5 transition-all duration-200 overflow-hidden h-full ${
-              isSearchOpen ? "flex-none" : "flex-1"
-            }`}
+            data-testid="filter-tabs"
+            className="flex items-center justify-between bg-slate-100/80 p-1.5 rounded-xl mb-2.5 gap-1.5 overflow-hidden h-10"
           >
-            {/* すべて表示 ボタン */}
-            <button
-              type="button"
-              onClick={() => setShowOnlyFavorites(false)}
-              className={`h-full text-xs font-bold rounded-lg transition-all duration-200 flex items-center justify-center whitespace-nowrap overflow-hidden ${
-                isSearchOpen ? "px-2.5" : "flex-1 px-3"
-              } ${
-                !showOnlyFavorites
-                  ? "bg-white text-slate-800 shadow-xs"
-                  : "text-slate-500 hover:text-slate-700"
+            <div
+              className={`flex items-center space-x-1.5 transition-all duration-200 overflow-hidden h-full ${
+                isSearchOpen ? "flex-none" : "flex-1"
               }`}
             >
-              {isSearchOpen ? (
-                "すべて"
-              ) : (
-                <span className="inline-block animate-in fade-in duration-200">
-                  すべて表示 ({cards.length})
-                </span>
-              )}
-            </button>
-
-            {/* お気に入り ボタン */}
-            <button
-              type="button"
-              onClick={() => setShowOnlyFavorites(true)}
-              className={`h-full text-xs font-bold rounded-lg transition-all duration-200 flex items-center justify-center gap-1 whitespace-nowrap overflow-hidden ${
-                isSearchOpen ? "px-2.5" : "flex-1 px-3"
-              } ${
-                showOnlyFavorites
-                  ? "bg-red-500 text-white shadow-xs"
-                  : "bg-white/60 text-slate-600 hover:bg-white hover:text-slate-800"
-              }`}
-            >
-              <Heart
-                className={`w-3.5 h-3.5 shrink-0 ${
-                  showOnlyFavorites ? "fill-white" : "text-red-500"
+              {/* すべて表示 ボタン */}
+              <button
+                type="button"
+                onClick={() => setShowOnlyFavorites(false)}
+                className={`h-full text-xs font-bold rounded-lg transition-all duration-200 flex items-center justify-center whitespace-nowrap overflow-hidden ${
+                  isSearchOpen ? "px-2.5" : "flex-1 px-3"
+                } ${
+                  !showOnlyFavorites
+                    ? "bg-white text-slate-800 shadow-xs"
+                    : "text-slate-500 hover:text-slate-700"
                 }`}
-              />
-              {isSearchOpen ? (
-                <span>{favoriteIds.length}</span>
-              ) : (
-                <span className="inline-block animate-in fade-in duration-200">
-                  お気に入り ({favoriteIds.length})
-                </span>
-              )}
-            </button>
-          </div>
+              >
+                {isSearchOpen ? (
+                  "すべて"
+                ) : (
+                  <span className="inline-block animate-in fade-in duration-200">
+                    すべて表示 ({cards.length})
+                  </span>
+                )}
+              </button>
 
-          {/* 右側：検索コンポーネント（h-full を継承） */}
-          <SearchInput
-            value={searchQuery}
-            onChange={setSearchQuery}
-            isOpen={isSearchOpen}
-            onToggle={setIsSearchOpen}
-          />
+              {/* お気に入り ボタン */}
+              <button
+                type="button"
+                onClick={() => setShowOnlyFavorites(true)}
+                className={`h-full text-xs font-bold rounded-lg transition-all duration-200 flex items-center justify-center gap-1 whitespace-nowrap overflow-hidden ${
+                  isSearchOpen ? "px-2.5" : "flex-1 px-3"
+                } ${
+                  showOnlyFavorites
+                    ? "bg-red-500 text-white shadow-xs"
+                    : "bg-white/60 text-slate-600 hover:bg-white hover:text-slate-800"
+                }`}
+              >
+                <Heart
+                  className={`w-3.5 h-3.5 shrink-0 ${
+                    showOnlyFavorites ? "fill-white" : "text-red-500"
+                  }`}
+                />
+                {isSearchOpen ? (
+                  <span>{favoriteIds.length}</span>
+                ) : (
+                  <span className="inline-block animate-in fade-in duration-200">
+                    お気に入り ({favoriteIds.length})
+                  </span>
+                )}
+              </button>
+            </div>
+
+            {/* 右側：検索コンポーネント */}
+            <SearchInput
+              value={searchQuery}
+              onChange={setSearchQuery}
+              isOpen={isSearchOpen}
+              onToggle={setIsSearchOpen}
+            />
+          </div>
         </div>
 
         {/* フィルターチップ（カテゴリタグ） */}
