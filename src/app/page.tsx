@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, Suspense } from "react";
 import { cards } from "@/data/cards";
 import { CardItem } from "@/components/CardItem";
 import { NavBanner } from "@/components/NavBanner";
@@ -13,6 +13,7 @@ import { useFavoritesStore } from "@/store/useFavoritesStore";
 import { SearchInput } from "@/components/SearchInput";
 import { getAllFeatureArticles } from "@/lib/feature-articles";
 import { FeatureSection } from "@/components/features";
+import { useSearchParams, useRouter } from "next/navigation";
 
 const FILTER_TAGS = [
   "すべて",
@@ -43,6 +44,10 @@ export default function Home() {
   const [showOnlyFavorites, setShowOnlyFavorites] = useState(false);
 
   const features = getAllFeatureArticles();
+
+  //パラメータ検索用
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
   // 1. フィルター処理（タグ絞り込み ＋ お気に入り絞り込み ＋ キーワード検索）
   const filteredCards = useMemo(() => {
@@ -106,26 +111,26 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [selectedIds]);
 
+  // 2. 新規追加：URLクエリによる診断モーダル開閉用 useEffect
+  useEffect(() => {
+    if (searchParams.get("openDiagnosis") === "true") {
+      setIsDiagnosisOpen(true);
+      // URLのクエリパラメータ (?openDiagnosis=true) を消去してURLを整える
+      router.replace("/", { scroll: false });
+    }
+  }, [searchParams, router]);
+
   return (
     <main className="flex-1 min-h-screen bg-gray-50 pb-28">
       <div className="max-w-md mx-auto p-4">
         {/* バナー表示 */}
-        <div className="grid grid-cols-2 gap-2.5 mb-4">
+        <div className="mb-2.5">
           <NavBanner
             onClick={() => setIsDiagnosisOpen(true)}
             subTitle="10秒でわかる"
             title="カード診断"
             icon={<Sparkles className="w-4 h-4" />}
             theme="orange"
-          />
-          <NavBanner
-            href="/articles"
-            subTitle="記事掲載"
-            title="クレカコラム"
-            icon={
-              <BookOpen className="w-4 h-4 text-indigo-200" strokeWidth={2} />
-            }
-            theme="indigo"
           />
         </div>
 
@@ -275,12 +280,16 @@ export default function Home() {
 
       {/* 2枚比較ボトムシート */}
       <CompareBottomSheet cards={cards} />
+
       {/* 簡易診断モーダル */}
-      <DiagnosisModal
-        cards={cards}
-        isOpen={isDiagnosisOpen}
-        onClose={() => setIsDiagnosisOpen(false)}
-      />
+      {/* useSearchParams を使うコンポーネントを Suspense で囲む */}
+      <Suspense fallback={<div>読み込み中...</div>}>
+        <DiagnosisModal
+          cards={cards}
+          isOpen={isDiagnosisOpen}
+          onClose={() => setIsDiagnosisOpen(false)}
+        />
+      </Suspense>
     </main>
   );
 }

@@ -1,11 +1,14 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Menu } from "lucide-react";
+import { HeaderDrawer } from "./HeaderDrawer";
 
 export function Header() {
   const pathname = usePathname();
+  const [isOpen, setIsOpen] = useState(false);
 
   // トップページかどうか
   const isTop = pathname === "/";
@@ -14,56 +17,73 @@ export function Header() {
     pathname.startsWith("/articles/") && pathname !== "/articles";
 
   return (
-    <header className="sticky top-0 z-20 w-full border-b bg-background/80 backdrop-blur-md">
-      <div className="mx-auto flex h-14 max-w-md items-center justify-between px-4">
-        {/* 左側：戻るボタン または サイトロゴ ＋ PR表記 */}
-        <div className="flex items-center gap-2">
-          {isArticleDetail ? (
-            <Link
-              href="/articles"
-              className="flex items-center text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <ChevronLeft className="h-4 w-4 mr-0.5" />
-              コラム一覧へ
-            </Link>
-          ) : !isTop ? (
-            <Link
-              href="/"
-              className="flex items-center text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <ChevronLeft className="h-4 w-4 mr-0.5" />
-              トップへ
-            </Link>
-          ) : (
-            <div className="flex flex-col justify-center">
+    <>
+      <header className="sticky top-0 z-30 w-full border-b bg-background/80 backdrop-blur-md">
+        <div className="mx-auto flex h-14 max-w-md items-center justify-between px-4">
+          {/* 左側：戻るボタン または サイトロゴ ＋ PR表記 */}
+          <div className="flex items-center gap-2">
+            {isArticleDetail ? (
+              <Link
+                href="/articles"
+                className="flex items-center text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <ChevronLeft className="h-4 w-4 mr-0.5" />
+                コラム一覧へ
+              </Link>
+            ) : !isTop ? (
               <Link
                 href="/"
-                className="font-bold text-base tracking-tight leading-none"
+                className="flex items-center text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
               >
-                スマートクレカ比較
+                <ChevronLeft className="h-4 w-4 mr-0.5" />
+                トップへ
               </Link>
-              <span className="text-[8px] text-muted-foreground/80 mt-0.5 font-normal leading-tight">
-                [PR] 当サイトにはプロモーションが含まれています
-              </span>
-            </div>
-          )}
-        </div>
-
-        {/* 右側：サブページ表示時のロゴアイコン等 */}
-        {!isTop && (
-          <div className="flex flex-col justify-center">
-            <Link
-              href="/"
-              className="text-s font-semibold text-muted-foreground hover:text-foreground"
-            >
-              スマートクレカ比較
-            </Link>
-            <span className="text-[8px] text-muted-foreground/80 mt-0.5 font-normal leading-tight">
-              [PR] 当サイトにはプロモーションが含まれています
-            </span>{" "}
+            ) : (
+              <div className="flex flex-col justify-center">
+                <Link
+                  href="/"
+                  className="font-bold text-base tracking-tight leading-none"
+                >
+                  スマートクレカ比較
+                </Link>
+                <span className="text-[8px] text-muted-foreground/80 mt-0.5 font-normal leading-tight">
+                  [PR] 当サイトにはプロモーションが含まれています
+                </span>
+              </div>
+            )}
           </div>
-        )}
-      </div>
-    </header>
+
+          {/* 右側：サブページ時のロゴ表示 & ハンバーガーボタン */}
+          <div className="flex items-center gap-3">
+            {!isTop && (
+              <div className="flex flex-col justify-center text-right">
+                <Link
+                  href="/"
+                  className="text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  スマートクレカ比較
+                </Link>
+                <span className="text-[8px] text-muted-foreground/80 font-normal leading-tight">
+                  [PR] プロモーションが含まれています
+                </span>
+              </div>
+            )}
+
+            {/* ハンバーガーボタン */}
+            <button
+              type="button"
+              onClick={() => setIsOpen(true)}
+              aria-label="メニューを開く"
+              className="p-1.5 text-muted-foreground hover:text-foreground rounded-md hover:bg-slate-100 transition-colors"
+            >
+              <Menu className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* ドロワーメニュー */}
+      <HeaderDrawer isOpen={isOpen} onClose={() => setIsOpen(false)} />
+    </>
   );
 }
