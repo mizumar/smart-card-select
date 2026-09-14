@@ -26,6 +26,20 @@ const FILTER_TAGS = [
 
 type SortOption = "popular" | "rate" | "fee" | "base";
 
+// 1. クエリ判定用の小コンポーネントを作成
+function DiagnosisUrlSync({ onOpen }: { onOpen: () => void }) {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (searchParams.get("openDiagnosis") === "true") {
+      onOpen();
+      router.replace("/", { scroll: false });
+    }
+  }, [searchParams, router, onOpen]);
+  return null;
+}
+
 export default function Home() {
   const [selectedFilter, setSelectedFilter] = useState("すべて");
   const [sortOption, setSortOption] = useState<SortOption>("popular");
@@ -44,10 +58,6 @@ export default function Home() {
   const [showOnlyFavorites, setShowOnlyFavorites] = useState(false);
 
   const features = getAllFeatureArticles();
-
-  //パラメータ検索用
-  const searchParams = useSearchParams();
-  const router = useRouter();
 
   // 1. フィルター処理（タグ絞り込み ＋ お気に入り絞り込み ＋ キーワード検索）
   const filteredCards = useMemo(() => {
@@ -110,15 +120,6 @@ export default function Home() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [selectedIds]);
-
-  // 2. 新規追加：URLクエリによる診断モーダル開閉用 useEffect
-  useEffect(() => {
-    if (searchParams.get("openDiagnosis") === "true") {
-      setIsDiagnosisOpen(true);
-      // URLのクエリパラメータ (?openDiagnosis=true) を消去してURLを整える
-      router.replace("/", { scroll: false });
-    }
-  }, [searchParams, router]);
 
   return (
     <main className="flex-1 min-h-screen bg-gray-50 pb-28">
@@ -282,13 +283,15 @@ export default function Home() {
       <CompareBottomSheet cards={cards} />
 
       {/* 簡易診断モーダル */}
-      {/* useSearchParams を使うコンポーネントを Suspense で囲む */}
-      <Suspense fallback={<div>読み込み中....</div>}>
-        <DiagnosisModal
-          cards={cards}
-          isOpen={isDiagnosisOpen}
-          onClose={() => setIsDiagnosisOpen(false)}
-        />
+      <DiagnosisModal
+        cards={cards}
+        isOpen={isDiagnosisOpen}
+        onClose={() => setIsDiagnosisOpen(false)}
+      />
+
+      {/* 2. Suspense の中で呼び出す */}
+      <Suspense fallback={null}>
+        <DiagnosisUrlSync onOpen={() => setIsDiagnosisOpen(true)} />
       </Suspense>
     </main>
   );
