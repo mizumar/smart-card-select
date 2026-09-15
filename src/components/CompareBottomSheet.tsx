@@ -13,6 +13,7 @@ import {
   Check,
   ArrowLeft,
   Zap,
+  Minus,
 } from "lucide-react";
 import Link from "next/link";
 import NoteText from "@/components/NoteText";
@@ -26,8 +27,14 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
   cards,
 }) => {
   // ★ isOpen, setIsOpen をストアから取得
-  const { selectedIds, isOpen, setIsOpen, clearAll, toggleCard } =
-    useCompareStore();
+  const {
+    selectedIds,
+    isOpen,
+    setIsOpen,
+    clearAll,
+    toggleCard,
+    removeAndClose,
+  } = useCompareStore();
 
   // ★ selectedIds と cards.id を型を揃えて照合
   const selectedCards = cards.filter((c) => selectedIds.includes(String(c.id)));
@@ -241,19 +248,32 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
                 {[cardA, cardB].map((card) => (
                   <div
                     key={card.id}
-                    className="flex flex-col items-center bg-white p-3.5 rounded-2xl shadow-xs border border-slate-200/60"
+                    className="relative flex flex-col items-center bg-white p-3.5 rounded-2xl shadow-xs border border-slate-200/60"
                   >
-                    {/* バッジ（1行固定・はみ出し防止） */}
-                    <div className="h-5 flex items-center justify-center mb-2 w-full px-1">
-                      {card.badge ? (
-                        <span className="text-[10px] font-medium px-2 py-0.5 bg-slate-100 text-slate-600 rounded-md whitespace-nowrap truncate max-w-full">
-                          {card.badge}
-                        </span>
-                      ) : (
-                        <span className="text-[10px] text-transparent select-none">
-                          -
-                        </span>
-                      )}
+                    {/* バッジ ＆ 比較解除（マイナス）ボタンの行 */}
+                    <div className="h-5 flex items-center justify-between mb-2 w-full px-1">
+                      {/* 左側：バッジ */}
+                      <div className="min-w-0 flex-1">
+                        {card.badge ? (
+                          <span className="text-[10px] font-medium px-2 py-0.5 bg-slate-100 text-slate-600 rounded-md whitespace-nowrap truncate inline-block max-w-full">
+                            {card.badge}
+                          </span>
+                        ) : (
+                          <span className="text-[10px] text-transparent select-none">
+                            -
+                          </span>
+                        )}
+                      </div>
+                      {/* 右側：比較解除（マイナス）ボタン */}
+                      <button
+                        type="button"
+                        onClick={() => removeAndClose(String(card.id))}
+                        title="比較から外す"
+                        aria-label={`${card.name}を比較から外す`}
+                        className="p-1 -mr-1 text-slate-400 hover:text-red-500 hover:bg-slate-100 rounded-md transition-colors shrink-0"
+                      >
+                        <Minus className="w-3.5 h-3.5" />
+                      </button>{" "}
                     </div>
                     {/* カード画像 */}
                     <div className="w-full aspect-[1.58/1] bg-slate-50 rounded-lg p-1 flex items-center justify-center border border-slate-100 mb-2">
@@ -309,52 +329,85 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
               <div className="bg-white rounded-2xl p-4 border border-slate-200/60 shadow-xs space-y-4 text-xs">
                 {/* 年間お得額表示エリア */}
                 <div>
-                  <div className="text-center mb-2">
-                    <p className="text-[10px] font-bold text-slate-400 tracking-wider uppercase">
-                      年間実質お得額（シミュレーション）
-                    </p>
-                    <p className="text-[9px] text-slate-400 leading-tight mt-0.5">
-                      ※基本還元率での試算。特定店舗や特典によりさらに上振れる場合があります
-                    </p>
-                  </div>
+                  {/* ① 年間お得額表示エリア */}
+                  <div>
+                    <div className="text-center mb-2">
+                      <p className="text-[10px] font-bold text-slate-400 tracking-wider uppercase">
+                        年間実質お得額（シミュレーション）
+                      </p>
+                      <p className="text-[9px] text-slate-400 leading-tight mt-0.5">
+                        ※基本還元率での試算。特定店舗や特典によりさらに上振れる場合があります
+                      </p>
+                    </div>
 
-                  <div className="grid grid-cols-2 divide-x divide-slate-100 text-center">
-                    {[
-                      { benefit: benefitA, other: benefitB },
-                      { benefit: benefitB, other: benefitA },
-                    ].map(({ benefit, other }, idx) => {
-                      const isWinner = benefit.netBenefit > other.netBenefit;
-                      return (
-                        <div
-                          key={idx}
-                          className="px-1.5 flex flex-col items-center"
-                        >
-                          <div>
-                            {/* ★ 黒字・赤字・勝者に応じたカラー制御 */}
-                            <span
-                              className={`text-xl font-black tracking-tight ${
-                                !benefit.isProfit
-                                  ? "text-red-500" // 赤字（マイナス）
-                                  : isWinner
-                                    ? "text-emerald-600" // 勝者かつ黒字
-                                    : "text-slate-700" // 黒字
-                              }`}
-                            >
-                              {benefit.netBenefit > 0 && "約"}
-                              {benefit.formattedBenefit}
-                            </span>
-                            <span className="text-[10px] font-bold text-slate-400 ml-0.5">
-                              {benefit.netBenefit > 0 ? "円相当/年" : "円/年"}
-                            </span>
-                          </div>
-
-                          <div className="mt-1.5 text-[9px] text-slate-400 font-mono bg-slate-50 px-2 py-0.5 rounded border border-slate-100/80 whitespace-nowrap">
-                            基本 {benefit.baseRate}% × 年間
-                            {(monthlySpend * 12) / 10000}万 - 年会費
-                          </div>
+                    {/* 同額（無料×無料など還元率が同じ）の場合は1つに統合 */}
+                    {benefitA.netBenefit === benefitB.netBenefit ? (
+                      <div className="text-center py-2 bg-slate-50 rounded-xl border border-slate-100">
+                        <p className="text-[10px] font-bold text-slate-500 mb-0.5">
+                          2枚とも同じお得額です
+                        </p>
+                        <div>
+                          <span
+                            className={`text-2xl font-black tracking-tight ${
+                              !benefitA.isProfit
+                                ? "text-red-500"
+                                : "text-emerald-600"
+                            }`}
+                          >
+                            {benefitA.netBenefit > 0 && "約"}
+                            {benefitA.formattedBenefit}
+                          </span>
+                          <span className="text-xs font-bold text-slate-400 ml-0.5">
+                            {benefitA.netBenefit > 0 ? "円相当/年" : "円/年"}
+                          </span>
                         </div>
-                      );
-                    })}
+                        <div className="mt-1 text-[9px] text-slate-400 font-mono">
+                          基本 {benefitA.baseRate}% × 年間
+                          {(monthlySpend * 12) / 10000}万 - 年会費
+                        </div>
+                      </div>
+                    ) : (
+                      /* 差額がある場合：チップなしでシンプルに2列並べる */
+                      <div className="grid grid-cols-2 divide-x divide-slate-100 text-center items-center">
+                        {[
+                          { benefit: benefitA, other: benefitB },
+                          { benefit: benefitB, other: benefitA },
+                        ].map(({ benefit, other }, idx) => {
+                          const isWinner =
+                            benefit.netBenefit > other.netBenefit;
+                          return (
+                            <div
+                              key={idx}
+                              className="px-1.5 flex flex-col items-center"
+                            >
+                              <div>
+                                <span
+                                  className={`text-xl font-black tracking-tight ${
+                                    !benefit.isProfit
+                                      ? "text-red-500"
+                                      : isWinner
+                                        ? "text-emerald-600"
+                                        : "text-slate-700"
+                                  }`}
+                                >
+                                  {benefit.netBenefit > 0 && "約"}
+                                  {benefit.formattedBenefit}
+                                </span>
+                                <span className="text-[10px] font-bold text-slate-400 ml-0.5">
+                                  {benefit.netBenefit > 0
+                                    ? "円相当/年"
+                                    : "円/年"}
+                                </span>
+                              </div>
+                              <div className="mt-1.5 text-[9px] text-slate-400 font-mono bg-slate-50 px-2 py-0.5 rounded border border-slate-100/80 whitespace-nowrap">
+                                基本 {benefit.baseRate}% × 年間
+                                {(monthlySpend * 12) / 10000}万 - 年会費
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -478,36 +531,70 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
 
                 <div className="h-px bg-slate-100" />
 
-                {/* 貯まるポイント */}
+                {/* ② 貯まるポイント */}
+                {/* ② 貯まるポイント */}
                 <div>
                   <p className="text-[10px] font-bold text-slate-400 text-center tracking-wider uppercase mb-1.5">
                     貯まるポイント
                   </p>
-                  <div className="grid grid-cols-2 divide-x divide-slate-100 text-center font-bold text-slate-800">
-                    <div>{cardA.pointName || "-"}</div>
-                    <div>{cardB.pointName || "-"}</div>
-                  </div>
+                  {cardA.pointName === cardB.pointName ? (
+                    /* バッジなし・シンプルな横長プレート */
+                    <div className="py-2 px-3 bg-slate-100/80 rounded-xl border border-slate-200/60 text-center">
+                      <span className="text-xs font-bold text-slate-800 break-keep text-wrap:balance">
+                        {cardA.pointName || "-"}
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-2 divide-x divide-slate-100 text-center font-bold text-slate-800 text-xs px-1">
+                      <div className="px-1 break-keep text-wrap:balance">
+                        {cardA.pointName || "-"}
+                      </div>
+                      <div className="px-1 break-keep text-wrap:balance">
+                        {cardB.pointName || "-"}
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 <div className="h-px bg-slate-100" />
 
-                {/* 最大還元率 / 年会費 */}
+                {/* ③ 最大還元率 / 年会費 */}
                 <div>
                   <p className="text-[10px] font-bold text-slate-400 text-center tracking-wider uppercase mb-1.5">
                     最大還元率 / 年会費
                   </p>
-                  <div className="grid grid-cols-2 divide-x divide-slate-100 text-center">
-                    {[cardA, cardB].map((card) => (
-                      <div key={card.id} className="space-y-0.5">
-                        <div className="font-bold text-slate-900">
-                          <NoteText text={card.maxReturnRate} />
-                        </div>
-                        <div className="text-[11px] text-slate-400">
-                          <NoteText text={card.annualFee} />
-                        </div>
-                      </div>
-                    ))}
+
+                  {/* 最大還元率 */}
+                  <div className="grid grid-cols-2 divide-x divide-slate-100 text-center mb-1.5">
+                    <div className="font-bold text-slate-900">
+                      <NoteText text={cardA.maxReturnRate} />
+                    </div>
+                    <div className="font-bold text-slate-900">
+                      <NoteText text={cardB.maxReturnRate} />
+                    </div>
                   </div>
+
+                  {/* 年会費：両方「0円かつ永年無料」の時 */}
+                  {cardA.annualFeeValue === 0 &&
+                  cardA.annualFee?.includes("永年無料") &&
+                  cardB.annualFeeValue === 0 &&
+                  cardB.annualFee?.includes("永年無料") ? (
+                    /* バッジなし・シンプルな緑系横長プレート */
+                    <div className="py-1.5 px-3 bg-emerald-50 rounded-xl border border-emerald-200/60 text-center">
+                      <span className="text-xs font-bold text-emerald-700">
+                        年会費：永年無料
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-2 divide-x divide-slate-100 text-center">
+                      <div className="text-[11px] text-slate-400">
+                        <NoteText text={cardA.annualFee} />
+                      </div>
+                      <div className="text-[11px] text-slate-400">
+                        <NoteText text={cardB.annualFee} />
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 <div className="h-px bg-slate-100" />

@@ -7,6 +7,7 @@ interface CompareState {
   clearAll: () => void;
   setSelectedIds: (ids: string[]) => void;
   setIsOpen: (isOpen: boolean) => void; // ★ 追加
+  removeAndClose: (id: string) => void;
 }
 
 export const useCompareStore = create<CompareState>((set) => ({
@@ -41,4 +42,11 @@ export const useCompareStore = create<CompareState>((set) => ({
     }),
 
   setIsOpen: (isOpen) => set({ isOpen }), // ★ 追加
+
+  // create 内に追加
+  removeAndClose: (id) =>
+    set((state) => ({
+      selectedIds: state.selectedIds.filter((item) => item !== id),
+      isOpen: false, // 解除と同時にモーダル（ボトムシート）を閉じる
+    })),
 }));
