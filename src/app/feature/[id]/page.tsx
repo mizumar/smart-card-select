@@ -4,8 +4,11 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import ReactMarkdown from "react-markdown";
-import { ArrowLeft } from "lucide-react";
+import remarkGfm from "remark-gfm"; // ★ テーブル構文対応
 import type { Metadata } from "next";
+import { ThreadsCard } from "@/components/ThreadsCard";
+import { ArticleImage } from "@/components/ArticleImage";
+
 import { cards, cards as cardsData } from "@/data/cards";
 import { CardItem } from "@/components/CardItem";
 import { CompareBottomSheet } from "@/components/CompareBottomSheet";
@@ -95,6 +98,25 @@ export default async function FeatureDetailPage({ params }: Props) {
     .map((cardId) => cardsData.find((c) => c.id === cardId))
     .filter((c): c is (typeof cardsData)[number] => c !== undefined);
 
+  function getNodeText(node: any): string {
+    if (!node) {
+      return "";
+    }
+
+    if (typeof node.value === "string") {
+      return node.value;
+    }
+
+    if (node.type === "break") {
+      return "\n";
+    }
+
+    if (Array.isArray(node.children)) {
+      return node.children.map(getNodeText).join("");
+    }
+
+    return "";
+  }
   return (
     <div className="min-h-screen bg-white text-slate-800 pb-20">
       <main className="max-w-md mx-auto px-5 space-y-6 pt-6">
@@ -121,6 +143,7 @@ export default async function FeatureDetailPage({ params }: Props) {
         {/* Markdown 本文エリア */}
         <section className="prose prose-slate max-w-none text-xs leading-relaxed text-slate-600">
           <ReactMarkdown
+            remarkPlugins={[remarkGfm]} // ★ GFMテーブル構文を有効化
             components={{
               h2: ({ children }) => (
                 <h2 className="mt-8 mb-3 border-l-4 border-slate-900 pl-3 text-base font-bold text-slate-900">
@@ -132,12 +155,71 @@ export default async function FeatureDetailPage({ params }: Props) {
                   {children}
                 </h3>
               ),
-              // 本文中における :::card{id="xxx"} の埋め込み構文パース
-              p: ({ children }) => {
-                const childText = String(children);
-                const match = childText.match(/^:::card\{id="(.+)"\}/);
-                if (match) {
-                  const targetCard = cardsData.find((c) => c.id === match[1]);
+              // -------------------------------------------------------------
+              // 表（テーブル）のスタイリッシュデザイン（縦線なし）
+              // -------------------------------------------------------------
+              table: ({ children }) => (
+                <div className="my-0 w-full overflow-x-auto bg-white">
+                  <table className="w-full min-w-max border-collapse text-sm text-left">
+                    {children}
+                  </table>
+                </div>
+              ),
+
+              thead: ({ children }) => (
+                <thead className="border-b border-slate-200 bg-slate-50 text-slate-700">
+                  {children}
+                </thead>
+              ),
+
+              th: ({ children }) => (
+                <th className="whitespace-normal break-word px-4 py-3 text-left font-semibold">
+                  {children}
+                </th>
+              ),
+
+              tr: ({ children }) => (
+                <tr className="border-b border-slate-100 last:border-b-0">
+                  {children}
+                </tr>
+              ),
+
+              td: ({ children }) => (
+                <td className="whitespace-normal break-word px-4 py-3 align-top leading-relaxed text-slate-600">
+                  {children}
+                </td>
+              ),
+              // -------------------------------------------------------------
+              // カード埋め込み ＆ Threads埋め込みの構文パース
+              // -------------------------------------------------------------
+              // ReactMarkdown 内の components
+              p: ({ children, node }: any) => {
+                // 1. :::threads{...} のパース
+                const rawText = getNodeText(node).trim();
+                const threadsMatch = rawText.match(
+                  /^:::threads\{url="([^"]+)"\s+author="([^"]+)"\s+text="([\s\S]+?)"\}$/,
+                );
+
+                if (threadsMatch) {
+                  const [, url, author, text] = threadsMatch;
+                  return <ThreadsCard url={url} author={author} text={text} />;
+                }
+
+                // 2. :::image{src="..." alt="..." caption="..."} のパース
+                const imageMatch = rawText.match(
+                  /:::image\{src="([^"]+)"\s+alt="([^"]*)"(?:\s+caption="([^"]*)")?\}/,
+                );
+
+                if (imageMatch) {
+                  const [, src, alt, caption] = imageMatch;
+                  return <ArticleImage src={src} alt={alt} caption={caption} />;
+                }
+
+                // 3. :::card{...} のパース
+                const cardMatch = rawText.match(/:::card\{id="([^"]+)"\}/);
+                if (cardMatch) {
+                  const cardId = cardMatch[1];
+                  const targetCard = cardsData.find((c) => c.id === cardId);
                   if (targetCard) {
                     return (
                       <div className="my-6">
@@ -146,6 +228,7 @@ export default async function FeatureDetailPage({ params }: Props) {
                     );
                   }
                 }
+                // 通常のテキストパラグラフ
                 return <p className="mb-3 leading-relaxed">{children}</p>;
               },
             }}
