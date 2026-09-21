@@ -81,6 +81,23 @@ export function HeaderDrawer({
                 Pick Up
               </span>
               <Link
+                href="/feature/credit-card-money-date-300"
+                onClick={onClose}
+                className="group block relative overflow-hidden rounded-xl bg-linear-to-br from-blue-600 to-indigo-700 p-3.5 text-white shadow-sm hover:shadow-md transition-all active:scale-[0.98]"
+              >
+                <div className="flex items-center gap-1.5 text-[10px] font-semibold text-blue-200 mb-1">
+                  <Sparkles className="h-3 w-3" />
+                  <span>threads投稿に300件以上の返信から考えたこと</span>
+                </div>
+                <p className="text-xs font-bold leading-snug group-hover:underline">
+                  「お金が減る日」と「お金を使う日」は違う
+                </p>
+                <div className="mt-2 flex items-center text-[10px] font-medium text-blue-100">
+                  <span>詳しく見る</span>
+                  <ChevronRight className="h-3 w-3 ml-0.5 group-hover:translate-x-0.5 transition-transform" />
+                </div>
+              </Link>
+              <Link
                 href="/feature/rakuten-cards"
                 onClick={onClose}
                 className="group block relative overflow-hidden rounded-xl bg-linear-to-br from-blue-600 to-indigo-700 p-3.5 text-white shadow-sm hover:shadow-md transition-all active:scale-[0.98]"
