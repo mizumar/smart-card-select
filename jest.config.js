@@ -11,6 +11,12 @@ const customJestConfig = {
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
   },
+  // e2e ディレクトリ配下のファイルを Jest の実行対象から除外する
+  testPathIgnorePatterns: [
+    "<rootDir>/node_modules/",
+    "<rootDir>/.next/",
+    "<rootDir>/e2e/",
+  ],
 };
 
 module.exports = async () => {
@@ -24,5 +30,3 @@ module.exports = async () => {
 
   return config;
 };
-
-module.exports = createJestConfig(customJestConfig);
