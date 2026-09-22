@@ -1,0 +1,37 @@
+name: CI Tests
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  # 1. まず軽量・爆速な Jest テストを実行
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+      - run: npm ci
+      - name: Run Jest
+        run: npm run test # または npx jest
+
+  # 2. Jest が成功したら Playwright (E2E) を実行
+  e2e-test:
+    needs: unit-test # Jest が通った場合のみ動かすことで無料枠を節約！
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+      - run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: Build App
+        run: npm run build
+      - name: Run Playwright
+        run: npx playwright test
