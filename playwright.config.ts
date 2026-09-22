@@ -37,12 +37,9 @@ export default defineConfig({
 
   /* CI環境でテスト実行前に Next.js アプリを自動起動する設定 */
   webServer: {
-    // --no-turbo フラグを付けて Turbopack のフォントバグを回避
-    command: process.env.CI
-      ? "npx next build --no-turbo && npm run start"
-      : "npm run dev",
+    command: process.env.CI ? "npx next build && npm run start" : "npm run dev",
     url: "http://localhost:3000",
     reuseExistingServer: !process.env.CI,
-    timeout: 120 * 1000, // 2分以内にサーバーが立ち上がればOK
+    timeout: 120 * 1000,
   },
 });
