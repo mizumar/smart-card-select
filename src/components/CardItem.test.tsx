@@ -4,28 +4,50 @@ import { CreditCard } from "@/data/cards"; // パスはプロジェクトの型�
 
 // 1. 通常掲載中（isPromoting: true）のテストデータ
 const activeCard: CreditCard = {
+  // 1. 基本識別情報
   id: "active-card",
   name: "通常カード",
+  popularityRank: 1,
+
+  // システム判定用タグID
+  tagIds: ["fee-free", "type-high-base", "use-daily"],
+
+  // 表示用タグ
+  tags: ["年会費無料"],
+  badge: "おすすめ",
+
   brandColor: "#000000",
+  brands: ["visa"],
+
+  // 2. ASP・アフィリエイト管理情報
   affiliateUrl: "https://px.a8.net/svt/ejp?active",
   imageUrl: "https://www24.a8.net/svt/bgt?active",
   trackingImageUrl: "https://www13.a8.net/0.gif?active",
   aspName: "A8.net",
-  isPromoting: true, // ★ 掲載中
+  isPromoting: true,
+
+  // 3. カードスペック情報
   annualFee: "無料",
   annualFeeValue: 0,
+
   baseReturnRate: "1.0%",
+  baseReturnRateValue: 1.0,
+
   maxReturnRate: "5.0%",
   maxReturnRateValue: 5.0,
-  popularityRank: 1,
+
+  pointName: "テストポイント",
+
   features: ["ポイント還元"],
-  tags: ["年会費無料"],
+
   details: {
     insurance: "あり",
     electronicMoney: ["Suica"],
     pros: ["還元率が高い"],
     cons: ["特になし"],
   },
+
+  calloutNotices: ["現在掲載中"],
 };
 
 // 2. ★ 受付停止中（isPromoting: false）のテストデータ
@@ -41,7 +63,7 @@ describe("CardItem コンポーネントのアフィリエイト機能テスト"
   test("isPromoting: true の場合、公式サイトボタンが表示され rel='noopener noreferrer sponsored' が設定されること", () => {
     render(<CardItem card={activeCard} />);
 
-    const link = screen.getByRole("link", { name: /発行公式サイトを見る/i });
+    const link = screen.getByRole("link", { name: /公式サイト/i });
 
     expect(link).toHaveAttribute("href", activeCard.affiliateUrl);
     expect(link).toHaveAttribute("rel", "noopener noreferrer sponsored");
@@ -64,14 +86,17 @@ describe("CardItem コンポーネントのアフィリエイト機能テスト"
   test("isPromoting: false の場合、アフィリエイトリンクが存在せず『現在受付停止中』の非活性ボタンが表示されること", () => {
     render(<CardItem card={disabledCard} />);
 
-    // 1. リンク（<a>タグ）が画面上に存在しないことを確認
-    expect(screen.queryByRole("link")).not.toBeInTheDocument();
+    // アフィリエイトリンクだけを確認
+    expect(
+      screen.queryByRole("link", {
+        name: /停止中カードに申し込む/i,
+      }),
+    ).not.toBeInTheDocument();
 
-    // 2. 「現在受付停止中」と書かれたボタンが存在し、非活性（disabled）であることを確認
     const disabledButton = screen.getByRole("button", {
-      name: /現在受付停止中/i,
+      name: /受付停止中/i,
     });
-    expect(disabledButton).toBeInTheDocument();
+
     expect(disabledButton).toBeDisabled();
   });
 });

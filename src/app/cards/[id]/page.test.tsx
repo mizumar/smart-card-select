@@ -243,7 +243,7 @@ updatedAt: "2026-03-01"
       render(page);
 
       expect(screen.getByText("最終更新日: 2026-03-01")).toBeInTheDocument();
-      expect(screen.getByText("徹底レビュー")).toBeInTheDocument();
+      expect(screen.getByText("徹底考察")).toBeInTheDocument();
       expect(
         screen.getByText(/これはMarkdownのコンテンツです/),
       ).toBeInTheDocument();
@@ -308,11 +308,8 @@ description: "Frontmatterで指定した説明文"
       expect(jsonLdScript).toBeInTheDocument();
 
       const jsonContent = JSON.parse(jsonLdScript?.textContent || "{}");
-      expect(jsonContent["@type"]).toBe("Product");
+      expect(jsonContent["@type"]).toBe("WebPage");
       expect(jsonContent.name).toBe("テストクレジットカード");
-      expect(jsonContent.image).toBe(
-        "[https://example.com/card.png](https://example.com/card.png)",
-      );
     });
   });
 

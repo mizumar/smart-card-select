@@ -2,12 +2,18 @@ import { render, screen } from "@testing-library/react";
 import { Header } from "../Header";
 import { usePathname } from "next/navigation";
 
-// next/navigation の usePathname をモック化
+// next/navigation のモック（usePathname と useRouter の両方を定義）
 jest.mock("next/navigation", () => ({
   usePathname: jest.fn(),
+  useRouter: jest.fn(() => ({
+    push: jest.fn(),
+    replace: jest.fn(),
+    prefetch: jest.fn(),
+    back: jest.fn(),
+  })),
 }));
 
-const mockUsePathname = usePathname as jest.MockedFunction<typeof usePathname>;
+const mockUsePathname = jest.mocked(usePathname);
 
 describe("Header Component", () => {
   beforeEach(() => {
