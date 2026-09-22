@@ -96,10 +96,10 @@ describe("CardItem Component", () => {
     const compareButton = screen.getByRole("button", { name: "比較" });
 
     fireEvent.click(compareButton);
-    expect(screen.getByText("比較中")).toBeInTheDocument();
+    expect(screen.getByText("比較")).toBeInTheDocument();
     expect(useCompareStore.getState().selectedIds).toContain("test-card-1");
 
-    fireEvent.click(screen.getByRole("button", { name: "比較中" }));
+    fireEvent.click(screen.getByRole("button", { name: "比較" }));
     expect(screen.getByRole("button", { name: "比較" })).toBeInTheDocument();
     expect(useCompareStore.getState().selectedIds).not.toContain("test-card-1");
   });

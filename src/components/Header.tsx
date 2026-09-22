@@ -3,12 +3,14 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronLeft, Menu } from "lucide-react";
+import { ChevronLeft, Menu, HelpCircle } from "lucide-react"; // HelpCircle を追加
 import { HeaderDrawer } from "./HeaderDrawer";
+import { HelpDrawer } from "./HelpDrawer"; // 追加
 
 export function Header() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const [isHelpOpen, setIsHelpOpen] = useState(false); // ヘルプ用 state
 
   // トップページかどうか
   const isTop = pathname === "/";
@@ -69,6 +71,16 @@ export function Header() {
               </div>
             )}
 
+            {/* 🆕 ヘルプボタン（ハンバーガーボタンの左隣） */}
+            <button
+              type="button"
+              onClick={() => setIsHelpOpen(true)}
+              aria-label="使い方・概要を見る"
+              className="p-1.5 text-muted-foreground hover:text-foreground rounded-md hover:bg-slate-100 transition-colors"
+            >
+              <HelpCircle className="h-5 w-5" />
+            </button>
+
             {/* ハンバーガーボタン */}
             <button
               type="button"
@@ -84,6 +96,8 @@ export function Header() {
 
       {/* ドロワーメニュー */}
       <HeaderDrawer isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      {/* 🆕 ヘルプドロワー */}
+      <HelpDrawer isOpen={isHelpOpen} onClose={() => setIsHelpOpen(false)} />
     </>
   );
 }

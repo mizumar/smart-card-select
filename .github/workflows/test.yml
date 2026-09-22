@@ -1,0 +1,56 @@
+name: CI Tests
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  # 1. まず軽量・爆速な Jest テストを実行
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+      - run: npm ci
+      - name: Run Jest
+        run: npm run test
+
+  # 2. Jest が成功したら Playwright (E2E) を実行
+  e2e-test:
+    needs: unit-test # Jest が通った場合のみ動かすことで無料枠を節約！
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+      - run: npm ci
+
+      # ★ Playwright ブラウザのキャッシュ設定を追加
+      - name: Cache Playwright Browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}
+
+      # ★ Chromium のみに限定してダウンロード＆依存関係インストール
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps chromium
+
+      # ★ Next.js ビルドキャッシュ（.next/cache）を追加してコンパイルを爆速化
+      - name: Cache Next.js Build
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+
+      # ビルドと起動は playwright.config.ts の webServer が自動で行うため、
+      # ここでは直接 npx playwright test だけを実行すればOKです！
+      - name: Run Playwright
+        run: npx playwright test

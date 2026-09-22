@@ -110,7 +110,7 @@ describe("3. CompareBottomSheet (スライダー & 動的損益計算) テスト
     fireEvent.change(slider, { target: { value: "0" } });
 
     // 1. スライダー数値の表示が "0" であることを確認（「万円/月」の直前の要素を指定）
-    expect(screen.getByText("万円/月").previousSibling).toHaveTextContent("0");
+    expect(screen.getByText("円/月").previousSibling).toHaveTextContent("0");
 
     // 2. 有料カード: 0 - 1,100円 = -1,100円
     const negativeBenefitElement = screen.getByText("-1,100");

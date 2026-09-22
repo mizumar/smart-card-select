@@ -1,3 +1,8 @@
+jest.mock("remark-gfm", () => ({
+  __esModule: true,
+  default: () => {},
+}));
+
 import { render, screen } from "@testing-library/react";
 import FeatureDetailPage, { generateMetadata } from "@/app/feature/[id]/page";
 
