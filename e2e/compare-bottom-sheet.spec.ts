@@ -39,22 +39,22 @@ test.describe("2.3 外部リンク動作", () => {
       name: "両方の公式サイトを別タブで開く",
     });
 
-    // 1. window.open による新しいタブの発生を待機
-    const newPagePromise = context.waitForEvent("page");
+    // 1. 「別タブが開くイベント」と「元のタブが画面遷移するイベント」を事前に準備し、
+    //    クリック操作と同時に並列で発火させる
+    const [newPage] = await Promise.all([
+      context.waitForEvent("page"), // 1枚目（window.open）の別タブ発生を待機
+      page.waitForURL((url) => url.href.includes("http")), // 2枚目（location.href）の自タブ遷移を待機
+      openBothButton.click(), // クリック実行
+    ]);
 
-    // 2. ボタンをクリック
-    await openBothButton.click();
-
-    // 3. 1枚目（window.open）で開いた新しいタブのURLを検証
-    const newPage = await newPagePromise;
+    // 2. 別タブ（1枚目）の読み込み完了とURL検証
     await newPage.waitForLoadState();
-
-    // 実際のカードAのURLに含まれる文字列に書き換え（例: "smbc-card.com"）
     expect(newPage.url()).toContain("smbc-card.com");
 
-    // 4. 2枚目（window.location.href）による現在のタブの遷移先URLを検証
-    // 実際のカードBのURLパターンに合わせて書き換え（例: rakuten-card などが含まれるパターン）
-    await page.waitForURL((url) => url.href.includes("http"));
-    // ※ もしカードBの特定のドメインが分かっている場合は url.href.includes("rakuten-card.co.jp") のように指定可能です
+    // 3. 元のタブ（2枚目）のURL検証
+    // waitForURL が完了した時点で page.url() は遷移後のURLになっています
+    expect(page.url()).toContain("http");
+    // ※ カードBの特定ドメインがわかっている場合は以下のように書けます
+    // expect(page.url()).toContain("rakuten-card.co.jp");
   });
 });
