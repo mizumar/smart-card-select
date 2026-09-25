@@ -60,5 +60,11 @@
     "affiliateUrl": "https://www.saisoncard.co.jp/creditcard/lineup/048/#features",
     "aspName": "a8",
     "isPromoting": true
+  },
+  {
+    "id": "vandle-card",
+    "affiliateUrl": "https://vandle.jp/",
+    "aspName": "a8",
+    "isPromoting": true
   }
 ]

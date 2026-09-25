@@ -97,5 +97,14 @@
     "badge": "無印良品",
     "brandColor": "from-[#7B0018] to-[#7B0018]",
     "brands": ["visa", "amex"]
+  },
+  {
+    "id": "vandle-card",
+    "name": "バンドルカード",
+    "popularityRank": 12,
+    "tagIds": ["fee-free", "use-daily"],
+    "tags": ["年会費無料", "Visaプリペイド", "学生向け"],
+    "brandColor": "from-[#29227F] to-[#29227F]",
+    "brands": ["visa"]
   }
 ]

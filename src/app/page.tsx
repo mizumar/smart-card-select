@@ -22,6 +22,7 @@ const FILTER_TAGS = [
   "楽天経済圏",
   "初心者",
   "コンビニ高還元",
+  "学生向け",
 ];
 
 type SortOption = "popular" | "rate" | "fee" | "base";
