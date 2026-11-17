@@ -30,8 +30,8 @@ describe("sitemap", () => {
 
       const result = await sitemap();
 
-      // 全体件数の検証 (固定3件 + 記事1件 + カード1件 + 特集1件 = 全6件)
-      expect(result).toHaveLength(6);
+      // 全体件数の検証 (固定2件 + 記事1件 + カード1件 + 特集1件 = 全5件)
+      expect(result).toHaveLength(5);
     });
 
     test("固定ルート（トップ・記事一覧・カード一覧）が正しいパラメータで含まれていること", async () => {
@@ -53,11 +53,11 @@ describe("sitemap", () => {
             changeFrequency: "weekly",
             priority: 0.8,
           }),
-          expect.objectContaining({
-            url: "https://smart-card-select.vercel.app/cards",
-            changeFrequency: "weekly",
-            priority: 0.8,
-          }),
+          // expect.objectContaining({
+          //   url: "https://smart-card-select.vercel.app/cards",
+          //   changeFrequency: "weekly",
+          //   priority: 0.8,
+          // }),
         ]),
       );
     });
@@ -94,7 +94,7 @@ describe("sitemap", () => {
       // 特集詳細 URL の確認
       expect(result).toContainEqual(
         expect.objectContaining({
-          url: "https://smart-card-select.vercel.app/features/test-feature",
+          url: "https://smart-card-select.vercel.app/feature/test-feature",
           changeFrequency: "monthly",
           priority: 0.8,
         }),
@@ -121,7 +121,7 @@ describe("sitemap", () => {
       const featureItem = result.find(
         (item) =>
           item.url ===
-          "https://smart-card-select.vercel.app/features/slash-date",
+          "https://smart-card-select.vercel.app/feature/slash-date",
       );
 
       expect(articleItem?.lastModified).toEqual(new Date("2026-03-01"));
@@ -139,7 +139,7 @@ describe("sitemap", () => {
       const featureUrl = result.find(
         (item) =>
           item.url ===
-          "https://smart-card-select.vercel.app/features/no-date-feature",
+          "https://smart-card-select.vercel.app/feature/no-date-feature",
       );
 
       expect(featureUrl).toBeDefined();

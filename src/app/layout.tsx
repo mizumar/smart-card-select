@@ -13,6 +13,9 @@ const notoSansJP = Noto_Sans_JP({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_BASE_URL || "https://smart-card-select.vercel.app",
+  ),
   title: "スマートクレカ比較 | 10秒で自分に最適な1枚が見つかる",
 
   description:

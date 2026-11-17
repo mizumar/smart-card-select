@@ -1,6 +1,16 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllArticles } from "@/lib/articles";
-import { ArrowLeft, Clock, Calendar, Tag } from "lucide-react";
+import { Clock, Calendar, Tag } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "クレジットカードお役立ちコラム | スマートクレカ比較",
+  description:
+    "クレジットカードの選び方やポイント還元、キャンペーンなど、カード選びに役立つ情報を紹介します。",
+  alternates: {
+    canonical: "/articles",
+  },
+};
 
 export default function ArticlesPage() {
   // getAllArticles() で Markdown から取得（自動で日付降順ソート済み）
