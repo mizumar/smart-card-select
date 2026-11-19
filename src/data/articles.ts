@@ -7,4 +7,5 @@ export interface Article {
   readTime: string;
   content: string;
   relatedCards?: string[];
+  relatedArticles?: string[];
 }

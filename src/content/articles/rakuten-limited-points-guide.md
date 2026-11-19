@@ -5,6 +5,12 @@ excerpt: "5大ポイント大陸時代、重要なのは「いかにポイント
 date: "2026.08.21"
 category: "ポイント還元"
 readTime: "3分"
+relatedCards:
+  - rakuten-card
+  - rakuten-premium-card
+relatedArticles:
+  - credit-card-2350-choices
+  - credit-card-selection-experience-01
 ---
 
 主要なポイントサービスが出揃い、いわゆる「5大ポイント大陸（楽天、d、V、Ponta、PayPay）」の時代になりました。正直なところ、使いやすさで言えばどのポイントも街のお店やオンラインショップで網羅されており、今や大きな差はありません。

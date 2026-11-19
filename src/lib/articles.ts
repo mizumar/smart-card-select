@@ -58,6 +58,7 @@ export function getArticleById(id: string): Article | null {
       readTime: data.readTime,
       content: content,
       relatedCards: data.relatedCards,
+      relatedArticles: data.relatedArticles,
     } as Article;
   } catch (error) {
     return null;
