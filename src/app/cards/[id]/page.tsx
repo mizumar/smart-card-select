@@ -10,6 +10,7 @@ import { cards as cardsData } from "@/data/cards";
 import { DiagnosticBanner } from "@/components/DiagnosticBanner";
 import { CalloutNotice } from "@/components/CalloutNotice";
 import NoteText from "@/components/NoteText";
+import { RelatedCards } from "@/components/cards/RelatedCards";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -356,6 +357,8 @@ export default async function CardDetailPage({ params }: Props) {
             title="※ ご注意・注釈事項"
             items={card.calloutNotices}
           />
+          {/* 関連カード */}
+          <RelatedCards currentCard={card} />
         </section>
       </main>
 
