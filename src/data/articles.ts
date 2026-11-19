@@ -6,4 +6,5 @@ export interface Article {
   excerpt: string;
   readTime: string;
   content: string;
+  relatedCards?: string[];
 }
