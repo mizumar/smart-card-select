@@ -82,7 +82,10 @@ export function RelatedContents({ card }: Props) {
   }
 
   return (
-    <section className="space-y-4 border-t border-slate-200 pt-6">
+    <section
+      aria-label="あわせて読みたいコラム"
+      className="space-y-4 border-t border-slate-200 pt-6"
+    >
       <div>
         <h2 className="text-base font-bold text-slate-900">
           あわせて読みたいコラム

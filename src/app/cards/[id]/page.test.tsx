@@ -14,9 +14,9 @@ jest.mock("react-markdown", () => {
   };
 });
 
-// lucide-react アイコンのモック化
 jest.mock("lucide-react", () => ({
   ArrowLeft: () => <svg data-testid="arrow-left-icon" />,
+  ArrowRight: () => <svg data-testid="arrow-right-icon" />,
   ExternalLink: () => <svg data-testid="external-link-icon" />,
   Check: () => <svg data-testid="check-icon" />,
   Minus: () => <svg data-testid="minus-icon" />,
@@ -42,6 +42,8 @@ const mockCard = {
   baseReturnRate: "0.5%",
   maxReturnRate: "7.0%",
   pointName: "テストポイント",
+  tagIds: ["fee-free", "type-benefits", "use-ec", "type-high-base"],
+  tags: ["年会費無料", "高還元", "楽天経済圏"],
   imageUrl: "[https://example.com/card.png](https://example.com/card.png)",
   trackingImageUrl:
     "[https://example.com/imp.gif](https://example.com/imp.gif)",
@@ -65,6 +67,8 @@ jest.mock("@/data/cards", () => ({
       name: "テストクレジットカード",
       annualFee: "永年無料",
       maxReturnRate: "7.0%",
+      tagIds: ["fee-free", "type-benefits", "use-ec", "type-high-base"],
+      tags: ["年会費無料", "高還元", "楽天経済圏"],
       imageUrl: "[https://example.com/card.png](https://example.com/card.png)",
       trackingImageUrl:
         "[https://example.com/imp.gif](https://example.com/imp.gif)",
@@ -82,6 +86,8 @@ jest.mock("@/data/cards", () => ({
       name: "画像なしカード",
       annualFee: "1,100円",
       maxReturnRate: "1.0%",
+      tagIds: ["fee-free", "type-benefits", "use-ec", "type-high-base"],
+      tags: ["年会費無料", "高還元", "楽天経済圏"],
       brandColor: "from-red-500 to-pink-500",
       affiliateUrl:
         "[https://example.com/affiliate-no-img](https://example.com/affiliate-no-img)",
