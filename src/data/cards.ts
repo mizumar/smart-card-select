@@ -23,6 +23,10 @@ export interface CreditCard {
   popularityRank: number;
   tagIds: CardTagId[]; // 診断判定用システムタグID
   tags: string[];
+  relatedContents?: {
+    type: "article" | "feature";
+    id: string;
+  }[];
   badge?: string;
   brandColor: string;
   brands?: ("visa" | "mastercard" | "jcb" | "amex")[];

@@ -11,6 +11,7 @@ import { DiagnosticBanner } from "@/components/DiagnosticBanner";
 import { CalloutNotice } from "@/components/CalloutNotice";
 import NoteText from "@/components/NoteText";
 import { RelatedCards } from "@/components/cards/RelatedCards";
+import { RelatedContents } from "@/components/cards/RelatedContents";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -332,7 +333,6 @@ export default async function CardDetailPage({ params }: Props) {
           <h2 className="text-sm font-bold text-slate-900 tracking-wide">
             基本スペック詳細
           </h2>
-
           <div className="divide-y divide-slate-100 text-xs">
             {specItems.map(
               (item, i) =>
@@ -359,6 +359,8 @@ export default async function CardDetailPage({ params }: Props) {
           />
           {/* 関連カード */}
           <RelatedCards currentCard={card} />
+          {/* 関連コンテンツ */}
+          <RelatedContents card={card} />
         </section>
       </main>
 
