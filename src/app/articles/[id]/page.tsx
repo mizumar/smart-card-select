@@ -5,6 +5,8 @@ import { ArrowLeft, Calendar, Clock, Tag } from "lucide-react";
 import type { Metadata } from "next";
 import ReactMarkdown from "react-markdown";
 import { DiagnosticBanner } from "@/components/DiagnosticBanner";
+import { RelatedCards } from "@/components/articles/RelatedCards";
+import { RelatedArticles } from "@/components/articles/RelatedArticles";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -146,9 +148,10 @@ export default async function ArticleDetailPage({ params }: Props) {
               {article.content}
             </ReactMarkdown>
           </div>
-
           {/* 下部リンク導線 */}
           <DiagnosticBanner />
+          <RelatedCards article={article} />
+          <RelatedArticles article={article} />
         </article>
       </main>
     </div>

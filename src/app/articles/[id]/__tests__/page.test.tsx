@@ -1,6 +1,18 @@
 import { render, screen } from "@testing-library/react";
 import ArticlePage, { generateMetadata } from "../page";
-import { getArticleById } from "@/lib/articles";
+import { getArticleById, getAllArticles } from "@/lib/articles";
+
+jest.mock("@/lib/articles", () => ({
+  getArticleById: jest.fn(),
+  getAllArticles: jest.fn(() => []),
+}));
+
+const mockGetArticleById = getArticleById as jest.MockedFunction<
+  typeof getArticleById
+>;
+const mockGetAllArticles = getAllArticles as jest.MockedFunction<
+  typeof getAllArticles
+>;
 
 // react-markdown のみをモック化（remark-gfm の行は削除）
 jest.mock("react-markdown", () => {
@@ -10,10 +22,6 @@ jest.mock("react-markdown", () => {
 });
 
 // モックの設定
-jest.mock("@/lib/articles", () => ({
-  getArticleById: jest.fn(),
-}));
-
 jest.mock("next/navigation", () => ({
   notFound: jest.fn(() => {
     throw new Error("NEXT_NOT_FOUND");
@@ -21,19 +29,11 @@ jest.mock("next/navigation", () => ({
 }));
 
 // モックの設定
-jest.mock("@/lib/articles", () => ({
-  getArticleById: jest.fn(),
-}));
-
 jest.mock("next/navigation", () => ({
   notFound: jest.fn(() => {
     throw new Error("NEXT_NOT_FOUND");
   }),
 }));
-
-const mockGetArticleById = getArticleById as jest.MockedFunction<
-  typeof getArticleById
->;
 
 describe("ArticleDetailPage (/articles/[id])", () => {
   const mockArticle = {
