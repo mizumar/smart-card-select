@@ -54,6 +54,16 @@
     "popularityRank": 1,
     "tagIds": ["fee-free", "type-benefits", "use-ec", "type-high-base"],
     "tags": ["年会費無料", "高還元", "楽天経済圏"],
+    "relatedContents": [
+      {
+        "type": "feature",
+        "id": "rakuten-cards"
+      },
+      {
+        "type": "article",
+        "id": "rakuten-limited-points-guide"
+      }
+    ],
     "badge": "発行枚数3,300万枚突破",
     "brandColor": "from-red-600 to-rose-800",
     "brands": ["visa", "mastercard", "jcb", "amex"]
