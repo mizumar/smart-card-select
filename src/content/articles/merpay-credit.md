@@ -5,6 +5,13 @@ excerpt: "メルペイに追加された「クレジット」という機能。�
 date: "2026.09.07"
 category: "お金の使い方"
 readTime: "5分"
+relatedCards:
+  - nudge-card
+  - nexus-card
+  - vandle-card
+relatedArticles:
+  - credit-card-is-like-borrowing
+  - where-credit-card-points-come-from
 ---
 
 ## メルペイの「クレジット」を見て、ちょっと悪魔的だなと思った

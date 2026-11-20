@@ -5,6 +5,14 @@ excerpt: "クレジットカードは、今買って後から支払う仕組み�
 date: "2026.08.26"
 category: "クレジットカードの基礎知識"
 readTime: "5分"
+relatedCards:
+  - nudge-card
+  - nexus-card
+  - vandle-card
+relatedArticles:
+  - merpay-credit
+  - credit-card-too-many
+  - where-credit-card-points-come-from
 ---
 
 クレジットカードって、改めて考えてみるとちょっと不思議な仕組みだと思う。

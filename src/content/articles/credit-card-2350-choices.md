@@ -5,6 +5,13 @@ excerpt: "クレジットカードは世の中に無数にある。2,350枚も�
 date: "2026.08.25"
 category: "クレジットカードの選び方"
 readTime: "5分"
+relatedCards:
+  - rakuten-card
+  - smbc-nl
+  - jcb-w
+relatedArticles:
+  - credit-card-too-many
+  - credit-card-selection-experience-01
 ---
 
 クレジットカードって、世の中にめちゃくちゃたくさんある。

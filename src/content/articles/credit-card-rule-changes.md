@@ -5,6 +5,13 @@ excerpt: "クレジットカードは作ったら終わりではありません�
 date: "2026.09.04"
 category: "クレジットカードの選び方"
 readTime: "5分"
+relatedCards:
+  - rakuten-card
+  - jcb-w
+relatedArticles:
+  - credit-card-too-many
+  - credit-card-selection-experience-01
+  - do-you-need-a-premium-credit-card
 ---
 
 ## クレジットカードは、作った後に放置しがち

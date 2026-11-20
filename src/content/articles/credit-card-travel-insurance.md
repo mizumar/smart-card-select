@@ -5,6 +5,12 @@ excerpt: "海外旅行などで付いてくるクレジットカードの付帯�
 date: "2026.09.06"
 category: "クレジットカードの豆知識"
 readTime: "5分"
+relatedCards:
+  - epos-card
+  - rakuten-premium-card
+relatedArticles:
+  - do-you-need-a-premium-credit-card
+  - where-credit-card-points-come-from
 ---
 
 ## クレジットカードの付帯保険って、なんで成立するんだろう

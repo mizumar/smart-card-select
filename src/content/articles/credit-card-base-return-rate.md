@@ -5,6 +5,14 @@ excerpt: "0.5%という還元率の差は小さく見える。でも、毎日の
 date: "2026.08.24"
 category: "クレジットカードの選び方"
 readTime: "6分"
+relatedCards:
+  - jcb-w
+  - smbc-nl
+  - rakuten-card
+relatedArticles:
+  - where-credit-card-points-come-from
+  - credit-card-2350-choices
+  - credit-card-too-many
 ---
 
 クレジットカードを比較していると、還元率の違いが気になってくる。

@@ -5,6 +5,13 @@ excerpt: "お得だからと増えていったクレジットカードを、母�
 date: "2026.08.22"
 category: "クレジットカード体験談"
 readTime: "5分"
+relatedCards:
+  - rakuten-card
+  - smbc-nl
+relatedArticles:
+  - credit-card-too-many
+  - credit-card-rule-changes
+  - credit-card-2350-choices
 ---
 
 ## 「この店ではこのカードがお得」で増えていったカード

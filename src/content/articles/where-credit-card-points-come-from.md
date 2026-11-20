@@ -5,6 +5,14 @@ excerpt: "0.5%、1%、1.5%、なかには7%以上の還元率をうたうクレ�
 date: "2026.08.30"
 category: "クレジットカードの仕組み"
 readTime: "6分"
+relatedCards:
+  - jcb-w
+  - smbc-nl
+  - rakuten-card
+relatedArticles:
+  - credit-card-base-return-rate
+  - merpay-credit
+  - rakuten-limited-points-guide
 ---
 
 クレジットカードを使うと、ポイントが貯まる。

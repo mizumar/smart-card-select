@@ -5,6 +5,12 @@ excerpt: "ゴールドカードやプラチナカード。年会費を払って�
 date: "2026.08.31"
 category: "クレジットカードの選び方"
 readTime: "5分"
+relatedCards:
+  - rakuten-premium-card
+  - rakuten-card
+relatedArticles:
+  - credit-card-travel-insurance
+  - credit-card-base-return-rate
 ---
 
 クレジットカードには、いろいろなランクがある。

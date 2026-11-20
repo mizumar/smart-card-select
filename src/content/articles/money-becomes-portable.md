@@ -5,6 +5,12 @@ excerpt: "10万円の現金を持ち歩くのが怖い。でも、昔はもっ�
 date: "2026.09.25"
 category: "クレジットカードの豆知識"
 readTime: "4分"
+relatedCards:
+  - paypay
+  - vandle-card
+relatedArticles:
+  - merpay-credit
+  - credit-card-is-like-borrowing
 ---
 
 ## 10万円の現金を持ち歩くのが怖い

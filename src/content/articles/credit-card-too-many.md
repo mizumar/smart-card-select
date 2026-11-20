@@ -5,6 +5,14 @@ excerpt: "クレジットカードは多ければ多いほどお得なのか。�
 date: "2026.08.23"
 category: "クレジットカードの選び方"
 readTime: "6分"
+relatedCards:
+  - cosmo-the-card-opus
+  - muji-card
+  - epos-card
+relatedArticles:
+  - credit-card-selection-experience-01
+  - credit-card-rule-changes
+  - credit-card-is-like-borrowing
 ---
 
 クレジットカードを10枚、20枚、なかには30枚近く持っている人もいる。
