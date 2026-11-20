@@ -1,3 +1,4 @@
+import type { Article } from "@/data/articles";
 import type { CreditCard } from "@/data/cards";
 
 export function getRelatedCards(
@@ -19,14 +20,23 @@ export function getRelatedCards(
       };
     })
     .sort((a, b) => {
-      // 共通タグ数が多い順
       if (b.commonTagCount !== a.commonTagCount) {
         return b.commonTagCount - a.commonTagCount;
       }
 
-      // 同数なら元のカードデータ順
       return a.index - b.index;
     })
     .slice(0, limit)
     .map(({ card }) => card);
+}
+
+export function getRelatedCardsFromArticle(
+  article: Article,
+  cards: CreditCard[],
+): CreditCard[] {
+  return (
+    article.relatedCards
+      ?.map((id) => cards.find((card) => card.id === id))
+      .filter((card): card is CreditCard => card !== undefined) ?? []
+  );
 }

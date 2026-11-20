@@ -2,14 +2,14 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import type { Article } from "@/data/articles";
 import { cards } from "@/data/cards";
-import { getRelatedCards } from "@/lib/related-article-cards";
+import { getRelatedCardsFromArticle } from "@/lib/related-cards";
 
 type Props = {
   article: Article;
 };
 
 export function RelatedCards({ article }: Props) {
-  const relatedCards = getRelatedCards(article, cards);
+  const relatedCards = getRelatedCardsFromArticle(article, cards);
 
   if (relatedCards.length === 0) {
     return null;
