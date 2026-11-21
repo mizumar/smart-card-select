@@ -72,7 +72,7 @@ export function CompareModal({
           </div>
 
           <div className="space-y-5">
-            {/* カードメインエリア（コラム対比） */}
+            {/* カードメインエリア */}
             <div className="grid grid-cols-2 gap-2.5">
               <CompareCard cardA={cardA} cardB={cardB} />
             </div>
@@ -86,7 +86,7 @@ export function CompareModal({
                 monthlySpend={monthlySpend}
               />
 
-              {/* ★★★ 3. 月間利用額コントロール（スライダー & 分岐点ボタン） ★★★ */}
+              {/* 月間利用額スライダー, 分岐点 */}
               <MonthlySpend
                 monthlySpend={monthlySpend}
                 setMonthlySpend={setMonthlySpend}
@@ -100,7 +100,7 @@ export function CompareModal({
 
               <div className="h-px bg-slate-100" />
 
-              {/* ③ 最大還元率 / 年会費 */}
+              {/* ③ 最大還元率, 年会費 */}
               <CardRateComparison cardA={cardA} cardB={cardB} />
 
               <div className="h-px bg-slate-100" />
@@ -108,7 +108,7 @@ export function CompareModal({
               {/* 特徴・注意点 */}
               <CardFeatures cardA={cardA} cardB={cardB} />
 
-              {/* 抽出された calloutNotices の表示エリア */}
+              {/* calloutNoticesの表示 */}
               {hasNotices && (
                 <CalloutNotices
                   activeNoticesA={activeNoticesA}
