@@ -10,6 +10,7 @@ import { MonthlySpend } from "@/components/compare/MonthlySpend";
 import { PointComparison } from "@/components/compare/PointComparison";
 import { CardRateComparison } from "@/components/compare/CardRateComparison";
 import { CardFeatures } from "@/components/compare/CardFeatures";
+import { CalloutNotices } from "@/components/compare/CalloutNotices";
 
 interface Benefit {
   baseRate: number;
@@ -109,30 +110,10 @@ export function CompareModal({
 
               {/* 抽出された calloutNotices の表示エリア */}
               {hasNotices && (
-                <>
-                  <div className="h-px bg-slate-100" />
-                  <div>
-                    <p className="text-[10px] font-bold text-slate-400 tracking-wider uppercase mb-1.5">
-                      注記事項
-                    </p>
-                    <div className="grid grid-cols-2 gap-3 text-[9px] text-slate-400 leading-relaxed font-sans">
-                      <div className="space-y-1">
-                        {activeNoticesA.map((notice, idx) => (
-                          <p key={idx} className="wrap-break-word">
-                            {notice}
-                          </p>
-                        ))}
-                      </div>
-                      <div className="space-y-1">
-                        {activeNoticesB.map((notice, idx) => (
-                          <p key={idx} className="wrap-break-word">
-                            {notice}
-                          </p>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </>
+                <CalloutNotices
+                  activeNoticesA={activeNoticesA}
+                  activeNoticesB={activeNoticesB}
+                />
               )}
             </div>
 
