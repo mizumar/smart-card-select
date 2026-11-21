@@ -1,161 +1,46 @@
 # スマートクレカ比較（smart-card-select）
 
-ライフスタイルに合わせてクレジットカードを**診断・比較**できるモバイルファーストの Web アプリです。  
-タグフィルター、ソート、10秒診断、最大2枚の並列比較、アフィリエイトリンク遷移を提供します。
+ライフスタイルに合わせてクレジットカードを診断・比較できる、モバイルファーストの Web アプリです。
 
 **本番 URL:** https://smart-card-select.vercel.app/
 
----
-
 ## 主な機能
 
-| 機能           | 説明                                                   |
-| -------------- | ------------------------------------------------------ |
-| カード一覧     | `src/data/cards.ts` のマスターデータを一覧表示         |
-| タグフィルター | 「年会費無料」「コンビニ高還元」などで絞り込み         |
-| ソート         | 人気順 / 最大還元率が高い順 / 年会費が安い順           |
-| 10秒診断       | 2問の質問からタグマッチ度でおすすめカードを最大2枚提示 |
-| 2枚比較        | 最大2枚を選択し、仕様を並列比較（Zustand で状態管理）  |
-| コラム導線     | トップ下部に青グラデーションのバナー（診断バナーと同系統） |
-| コラム         | クレカ選びの基礎知識記事（`/articles`、公開日最新順）  |
-| PR表記         | フッター【PR/広告開示】＋ `/privacy`。プライバシーは控えめなテキストリンク |
-
----
+- カード一覧（掲載 11 枚）: タグ絞り込み、キーワード検索、ソート（人気順／還元率順／年会費順）
+- 10 秒診断: 3 つの質問に答えると、タグのマッチ度でおすすめを最大 2 枚提示
+- 2 枚比較: スペックの並列比較に加え、年間メリットと損益分岐のシミュレーション
+- お気に入り: 端末内に保存（Zustand persist）
+- カード詳細: スペック、徹底考察（Markdown）、関連カードとおすすめ記事への内部リンク
+- コラム／特集: クレカ選びの記事（`/articles`）と特集ページ（`/feature`）
 
 ## 技術スタック
 
-- **Framework:** Next.js 16（App Router）
-- **UI:** React 19, Tailwind CSS v4, shadcn/ui（base-nova）
-- **状態管理:** Zustand（比較選択のみ）
-- **アイコン:** lucide-react
-- **フォント:** Noto Sans JP（Google Fonts / next/font）
-- **言語:** TypeScript
+- Next.js 16（App Router）/ React 19 / TypeScript
+- Tailwind CSS v4 / shadcn/ui / lucide-react
+- 状態管理: Zustand（比較・お気に入り）
+- テスト: Jest（単体）＋ Playwright（E2E）、PR で CI が実行される
 
----
+## 開発
 
-## セットアップ
-
-### 必要環境
-
-- Node.js 20 以上推奨
-- npm（または yarn / pnpm / bun）
-
-### インストール & 起動
+必要環境: Node.js 20 以上
 
 ```bash
-# 依存関係のインストール
 npm install
-
-# 開発サーバー起動（http://localhost:3000）
-npm run dev
+npm run dev        # 開発サーバー（http://localhost:3000）
+npm test           # 単体テスト（Jest）
+npx playwright test # E2E テスト
+npm run build      # 本番ビルド
 ```
 
-### その他コマンド
+## データの持ち方
 
-```bash
-npm run build   # 本番ビルド
-npm run start   # 本番サーバー起動
-npm run lint    # ESLint
-```
-
----
-
-## ディレクトリ構成（概要）
-
-```
-src/
-├── app/              # ページ・レイアウト（App Router）
-│   ├── page.tsx      # トップ（カード一覧・診断・比較・コラム導線バナー）
-│   ├── layout.tsx    # ルートレイアウト・metadata・noindex
-│   ├── articles/     # コラム一覧・詳細
-│   └── privacy/      # プライバシーポリシー
-├── components/       # UI コンポーネント
-│   ├── CardItem.tsx
-│   ├── CompareBottomSheet.tsx
-│   ├── DiagnosisModal.tsx
-│   └── ui/
-├── data/             # 静的マスターデータ
-│   ├── cards.ts      # クレジットカード定義
-│   └── articles.ts   # コラム記事定義
-├── store/            # Zustand ストア
-│   └── useCompareStore.ts
-└── lib/
-    └── utils.ts      # cn() 等ユーティリティ
-
-public/
-└── app-logo.png      # ヘッダーロゴ
-```
-
-詳細な仕様・型定義・データフローは [`docs/spec.md`](./docs/spec.md) を参照してください。
-
----
-
-## データの編集方法
-
-### カードを追加・更新する
-
-`src/data/cards.ts` の `CreditCard` 型に従い、`cards` 配列を編集します。
-
-```typescript
-{
-  id: "unique-id",
-  name: "カード名",
-  brandColor: "from-blue-600 to-indigo-800",  // Tailwind グラデーション
-  annualFee: "永年無料",
-  annualFeeValue: 0,           // ソート用（0 = 無料）
-  maxReturnRate: "7.0%",
-  maxReturnRateValue: 7.0,     // ソート用
-  popularityRank: 1,             // 人気順（小さいほど上位）
-  affiliateUrl: "https://...",   // アフィリエイトリンク
-  tags: ["年会費無料", "初心者"],
-  // ...
-}
-```
-
-### コラムを追加する
-
-`src/data/articles.ts` の `ARTICLES` 配列に記事を追加します。  
-URL は `/articles/[id]` 形式で自動生成されます。  
-一覧ページ（`/articles`）では `date` フィールドを基準に**最新順（降順）**で自動ソートされます。
-
----
-
-## ルーティング
-
-| パス             | 説明                           |
-| ---------------- | ------------------------------ |
-| `/`              | カード比較メイン画面           |
-| `/articles`      | コラム一覧                     |
-| `/articles/[id]` | コラム詳細                     |
-| `/privacy`       | プライバシーポリシー・免責事項 |
-
----
-
-## SEO・インデックス設定
-
-`src/app/layout.tsx` で **noindex / nofollow** を設定しています（検索エンジン非公開想定）。
-
-```typescript
-robots: {
-  index: false,
-  follow: false,
-}
-```
-
----
+- カード: `src/data/` の JSON 3 つ（`cards-basic.json` / `cards-spec.json` / `cards-affiliate.json`）を `cards.ts` で結合
+- 記事: `src/content/articles/*.md`（Markdown ＋ frontmatter）。関連カード・関連記事は frontmatter の `relatedCards` / `relatedArticles` で指定する
 
 ## デプロイ
 
-Vercel へのデプロイを想定しています。
-
-```bash
-npm run build
-```
-
-ビルド成功後、Vercel にプッシュするか `vercel` CLI でデプロイしてください。
-
----
+Vercel。main へのプッシュで本番へ自動デプロイされる。
 
 ## ライセンス
 
-Private（`package.json` の `"private": true`）
+Private
