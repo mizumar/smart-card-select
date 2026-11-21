@@ -1,3 +1,5 @@
+"use client";
+
 import { ArrowRight, ArrowLeft, Zap } from "lucide-react";
 
 interface BreakEvenInfo {
