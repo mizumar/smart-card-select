@@ -3,12 +3,13 @@
 import React from "react";
 import type { CreditCard } from "@/data/cards";
 import { useCompareStore } from "@/store/useCompareStore";
-import { X, Check } from "lucide-react";
+import { X } from "lucide-react";
 import { CompareCard } from "@/components/compare/CompareCard";
 import { AnnualBenefit } from "@/components/compare/AnnualBenefit";
 import { MonthlySpend } from "@/components/compare/MonthlySpend";
 import { PointComparison } from "@/components/compare/PointComparison";
 import { CardRateComparison } from "@/components/compare/CardRateComparison";
+import { CardFeatures } from "@/components/compare/CardFeatures";
 
 interface Benefit {
   baseRate: number;
@@ -104,39 +105,7 @@ export function CompareModal({
               <div className="h-px bg-slate-100" />
 
               {/* 特徴・注意点 */}
-              <div>
-                <p className="text-[10px] font-bold text-slate-400 text-center tracking-wider uppercase mb-2">
-                  特徴・注意点
-                </p>
-                <div className="grid grid-cols-2 gap-3">
-                  {[cardA, cardB].map((card) => {
-                    const pros = card.details?.pros?.slice(0, 2) || [];
-                    const cons = card.details?.cons?.slice(0, 1) || [];
-
-                    return (
-                      <div key={card.id} className="space-y-1.5 text-[11px]">
-                        {pros.map((pro, i) => (
-                          <div
-                            key={i}
-                            className="flex items-start gap-1 text-slate-700 leading-tight"
-                          >
-                            <Check className="w-3 h-3 text-emerald-600 shrink-0 mt-0.5" />
-                            <span>{pro}</span>
-                          </div>
-                        ))}
-                        {cons.map((con, i) => (
-                          <p
-                            key={i}
-                            className="text-[10px] text-slate-400 leading-tight pt-0.5"
-                          >
-                            ※ {con}
-                          </p>
-                        ))}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
+              <CardFeatures cardA={cardA} cardB={cardB} />
 
               {/* 抽出された calloutNotices の表示エリア */}
               {hasNotices && (

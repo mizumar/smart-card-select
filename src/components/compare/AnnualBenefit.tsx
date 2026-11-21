@@ -12,6 +12,13 @@ interface AnnualBenefitProps {
   monthlySpend: number;
 }
 
+/**
+ * 年間お得額表示エリア
+ * @param {Benefit} benefitA - Aの利益
+ * @param {Benefit} benefitB - Bの利益
+ * @param {number} monthlySpend - 支出
+ * @returns
+ */
 export function AnnualBenefit({
   benefitA,
   benefitB,
