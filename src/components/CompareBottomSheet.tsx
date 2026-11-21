@@ -17,14 +17,8 @@ export const CompareBottomSheet: React.FC<CompareBottomSheetProps> = ({
   cards,
 }) => {
   // ★ isOpen, setIsOpen をストアから取得
-  const {
-    selectedIds,
-    isOpen,
-    setIsOpen,
-    clearAll,
-    toggleCard,
-    removeAndClose,
-  } = useCompareStore();
+  const { selectedIds, isOpen, setIsOpen, clearAll, toggleCard } =
+    useCompareStore();
 
   // ★ selectedIds と cards.id を型を揃えて照合
   const selectedCards = cards.filter((c) => selectedIds.includes(String(c.id)));
