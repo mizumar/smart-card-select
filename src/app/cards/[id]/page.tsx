@@ -1,17 +1,16 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import ReactMarkdown from "react-markdown";
-import { ArrowLeft, ExternalLink, Check, Minus } from "lucide-react";
+import { ExternalLink, Check, Minus } from "lucide-react";
 import type { Metadata } from "next";
 import { cards as cardsData } from "@/data/cards";
-import { DiagnosticBanner } from "@/components/DiagnosticBanner";
 import { CalloutNotice } from "@/components/CalloutNotice";
 import NoteText from "@/components/NoteText";
 import { RelatedCards } from "@/components/cards/RelatedCards";
 import { RelatedContents } from "@/components/cards/RelatedContents";
+import { FavoriteButton } from "@/components/FavoriteButton";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -196,7 +195,12 @@ export default async function CardDetailPage({ params }: Props) {
             </div>
           </div>
 
-          <div className="pt-2">
+          <div className="pt-2 flex gap-3 justify-center items-center">
+            {/* ハート（お気に入り）ボタン */}
+            <div className="[&>button]:p-2! [&>button>svg]:h-6! [&>button>svg]:w-6!">
+              <FavoriteButton cardId={card.id} />
+            </div>
+
             <a
               href={card.affiliateUrl}
               target="_blank"
