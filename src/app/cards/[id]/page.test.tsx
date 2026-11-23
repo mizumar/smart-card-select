@@ -20,6 +20,7 @@ jest.mock("lucide-react", () => ({
   ExternalLink: () => <svg data-testid="external-link-icon" />,
   Check: () => <svg data-testid="check-icon" />,
   Minus: () => <svg data-testid="minus-icon" />,
+  Heart: () => <svg data-testid="heart-icon" />,
 }));
 
 // Next.js の navigation (notFound) モック
